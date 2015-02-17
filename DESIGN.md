@@ -58,9 +58,13 @@ If we made commmands classes, there was also a problem where it needed to be abl
 
 ###Team Responsibilities
 **This section describes the program components each team member plans to take primary and secondary responsibility for and a high-level plan of how the team will complete the program.**
+
 Front end: John, Kei
 * GUI
-*parser
-*view updater class
+* parser
+* view updater class
+
 Back end: Catherine, Georgia
+
+
 Generally, John and Kei will work on the GUI and the command parser, where as the back end would be Catherine and Georgia to connect the commands of the turtle to its visual counterpart.
