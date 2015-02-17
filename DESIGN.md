@@ -53,6 +53,8 @@ If we made commmands classes, there was also a problem where it needed to be abl
 
 Another design element that we're considering is the use of expression trees to help interpret commands that contain subcommands (for example, fd sum 10 20). Ideally, the parser will be constructing one expression tree for each command. The expression tree will then be traversed recursively with each node in the expression tree being one sub-command. The final value of the command will be returned in the value of the parent node of the tree. Whether using this design structure is a good idea is dependent on where the parser is stored and where the tree is traversed. 
 
+A potential disadvantage of sending commands to either front-end or back-end to process is the added difficulty on the parser to separate out which commands are front-end and back-end. We project that some sort of if-statements will be needed in the Controller, and new commands will either be sent to the View's or Model's update() methods. A simplification of this is to have all commands sent to the back-end. It reduces the need for if-statements, reduces the redundancy of having two update() methods, and lastly, it accounts for potential commands that contain sub-commands that both previously sent separately to front-end and back-end. 
+
 ###Team Responsibilities
 
 Front end: John, Kei
