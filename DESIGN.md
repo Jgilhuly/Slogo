@@ -26,6 +26,8 @@ For the back-end, currently we have the TurtleModel class, which could possibly 
 
 The user interface would contain a menu bar (to contain personalization of the pen, turtle, background color, access to a help page), a text input area (for commands), a console for return values, a sidebar to see previous commands, and the physical canvas/grid. The menu bar will also be used to incorporate additional requirements in the next sprint. The text input area will support commands in a number of different languages, using resource bundles. Lastly, the user will be able to select previous commands in order to run them again.
 
+![UI Picture.JPG] (https://github.com/duke-compsci308-spring2015/slogo_team06/blob/master/UI%20Picture.JPG)
+
 ###Design Details 
 **This section describes each component introduced in the Overview in detail (as well as any other sub-components that may be needed but are not significant to include in a high-level description of the program). It should describe how each component handles specific features given in the assignment specification, what resources it might use, how it collaborates with other components, and how each could be extended to include additional requirements (from the assignment specification or discussed by your team). Finally, justify the decision to create each component with respect to the design's key goals, principles, and abstractions. This section may be as long as it needs to be and go into as much detail as necessary to cover all your team wants to say.**
 
