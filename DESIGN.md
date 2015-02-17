@@ -29,7 +29,7 @@ The user interface would contain a menu bar (to contain personalization of the p
 
 The relationship between the view and the controller would be one way, any commands, or anything that needed to be passed to be interpreted would go to the controller that would then parse the commands and get the appropriate command class or update the appropriate turtle, etc. Any updates to the back end turtle classes would be observed by the view updater that would update instantly. This way, the model could relay information back to the view in this way. This way, the model needs to contain an observer instance of the view updater.
 
-The *Model* itself will contain methods such as update(), which call commands instantiated by the parser. It will also contain data structures that keeps track of called commands and created variables. The *command parser*, which currently resides in the Controller/middle ground, would parse the given String command returns an (or a series of) Command object(s), depending on regex parsing using a customized properties file. A general abstract *command*super class have sub command types so that each command could be generalized into a module, whether it is a math type command, or turtle status command, or a move command, and within those subgroups, and each command would have its own class, but extend these super class. For example, the parser is able to determine that FD 50 is a Move command that takes in parameters (current Direction of Turtle, 50 units), and instantiate the Move. It is also able to distinguish whether the command should be processed by the back-end or directly by the front-end. If it was a view type command, the controller would call on the view to perform the specified command, and if it was a non-view related command, it would call the model classes to reflect that command change. 
+The *Model* itself will contain methods such as update(), which call commands instantiated by the parser. It will also contain data structures that keeps track of called commands and created variables. The *command parser*, which currently resides in the Controller/middle ground, would parse the given String command returns an (or a series of) Command object(s), depending on regex parsing using a customized properties file. A general abstract *command*super class have sub command types so that each command could be generalized into a module, whether it is a math type command, or turtle status command, or a move command, and within those subgroups, some commands would have its own class, but extend these super class. For example, the parser is able to determine that FD 50 is a Move command that takes in parameters (current Direction of Turtle, 50 units), and instantiate the Move. Defining specific commands as more generalized modules will allow us to implement new and related commands without adding an additional class for each new command. Our current design also assigns the Parser the responsibility of distinguishing whether the command should be processed by the back-end or directly by the front-end. If it was a view type command, the controller would call on the view to perform the specified command, and if it was a non-view related command, it would call the model classes to reflect that command change. 
 
 On the front-end side, the three main classes are SceneUpdater, TurtleView and GUI. The SceneUpdater will handle any logic or computation that needs to be done by the front end, for example loading an image file for a new turtle image. Additionally it will handle any updates to the GUI. This class will listen to the TurleModel class, and use any changes to that class in order to update the view. The GUI is simply a collection of Nodes, including a canvas, a text input, a menu bar, and a panel of previous commands. This class will be updated by SceneUpdater. Lastly, the TurtleView will act as a container for various visual attributes of the turtle. These include the image file of the Turtle, the color of the Turtle's pen, etc. None of these classes will directly contact the backend, and only the SceneUpdater will interact with the Controller. Currently, View also holds an update() method that handles view-associated commands. 
 
@@ -37,8 +37,8 @@ On the front-end side, the three main classes are SceneUpdater, TurtleView and G
 **It should be clear from this code which objects are responsible for completing each part of the task, but you do not have to implement the called functions. Show actual "sequence of code" that implements the following use case:  The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail.**
 **Note, clearly show the flow of calls to public methods needed to complete this example, indicating which class contains each method called. It is not necessary to understand exactly how parsing works in order to complete this example, just what the result of parsing the command will be.**
 
- - If the user typed in 'PENDOWN', this command would go through the command parser, and it would see if it is a subtype of a view command and either call the scene updater directly to change the value of the pen status and have the view display the return value
- - If the user typed in 'fd 50' this command would be passed to the controller and then it would give it to the command parser. The command parser determines that is a move sub-type command. The command is called and the value of the turtle's location is updated. The view will display the returned value, reflecting a change in the turtle's locaiton.
+ - If the user typed in 'PENDOWN', this command would go through the command parser, and it would see if it is a subtype of a view command and either call the scene updater directly to change the value of the pen status and have the view display the return value.
+ - If the user typed in 'fd 50' this command would be passed to the controller and then it would give it to the command parser. The command parser determines that is a move sub-type command. The command is called and the value of the turtle's location is updated. The view, which observes turtle's change, will display the returned value, reflecting a change in the turtle's locaiton.
 
 ###Design Considerations 
 
@@ -59,13 +59,13 @@ A potential disadvantage of sending commands to either front-end or back-end to 
 
 Front end: John, Kei
 * GUI
-* parser
-* view updater class
+* Parser
+* View updater class
 Secondary Responsibilities: Controller
 
 Back end: Catherine, Georgia
-* Command class modules classes
+* Command class & modules classes
 * TurtleModel class
 Secondary Responsibilities: Parser
 
-Generally, John and Kei will work on the GUI and the command parser, where as the back end would be Catherine and Georgia to connect the commands of the turtle to its visual counterpart.
+Generally, John and Kei will work on the GUI and the command parser, where as the back end would be Catherine and Georgia to connect the commands of the turtle to its visual counterpart. For Sprint 2, the idea is to have basic components for each front-end and back-end implemented, and implement, as a group, a simple Controller that will connect both parts together. We will then continue to implement more features with our sub-group members before reconvening.
