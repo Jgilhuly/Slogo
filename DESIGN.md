@@ -35,9 +35,9 @@ The *command parser* would return a specific command object and the controller w
 ###API Example code (this is especially important in helping others understand how to use your API)
 **It should be clear from this code which objects are responsible for completing each part of the task, but you do not have to implement the called functions. Show actual "sequence of code" that implements the following use case:  The user types 'fd 50' in the command window, and sees the turtle move in the display window leaving a trail.**
 **Note, clearly show the flow of calls to public methods needed to complete this example, indicating which class contains each method called. It is not necessary to understand exactly how parsing works in order to complete this example, just what the result of parsing the command will be.**
-
+ The commands would be typed directly into the text console 
  - if user typed in 'PENDOWN', this command would go through the command parser, and it would see if it is a subtype of a view command and either call the scene updater directly to change the value of the pen status and have the view display the return value
- - if the user typed in 'fd 50' this command would be passed to the controller and then it would give it to the command parser to then do the apprpriate move methods
+ - if the user typed in 'fd 50' this command would be passed to the controller and then it would give it to the command parser to then do the appropriate move methods
 
 ###Design Considerations 
 **This section describes any issues which need to be addressed or resolved before attempting to devise a complete design solution. It should include any design decisions that the group discussed at length (include pros and cons from all sides of the discussion) as well as any ambiguities, assumptions, or dependencies regarding the program that impact the overall design. This section may be as long as it needs to be and go into as much detail as necessary to cover all your team wants to say.**
@@ -45,10 +45,9 @@ The *command parser* would return a specific command object and the controller w
 We talked about having a turtle view and a turtle model, where the turtle view is the image and any pen drawing methods, and the turtle model contains the x and y locations and store the heading. 
 We considered where the responsability of storing the offset grid view where the back end will send original locations and final locations and the view will store things like if the pen is up/down to interpret whether or not to draw the line. We also considered where the command parser should live / be stored either between the controller and the model, and act as the other middle man between the view and the data.
 We disliked the idea of having the view contain a method in the controller, but then couldn't come to a medium between using an observable and having the controller shuttle information back and forth. 
-
 A huge consideration we had was how exactly to use the obeservable in our turtle classes because we ran into complications with the physical drawing of a line which requires a starting and ending point. If you used the observable, the view turtle would need to have the old position, but once the model turtle was changed, the view turtle would have no idea where it used to be. 
 We decided to not use the observable and just have the back end turtle send information about where a line needs to be drawn/ where a turtle needs to be moved so that given original positions and new positions. This way, the front end turtle does not need to store its location, but just know have a move method, and based on if the pen is up or not, it will draw a line. <-- we are not sure about the best way mediate between these options.
-If we made commmands classes, there was also a problem where it needed to be able to modify the turtle directly, but the command class couldn't have an instance of the turtle so then what is even the purpose of the separate command class? 
+If we made commmands classes, there was also a problem where it needed to be able to modify the turtle directly, but the command class couldn't have an instance of the turtle so then what is even the purpose of the separate command class? We have to consider the actual implementation of the command class further.
 
 ###Team Responsibilities
 **This section describes the program components each team member plans to take primary and secondary responsibility for and a high-level plan of how the team will complete the program.**
