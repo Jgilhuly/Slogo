@@ -29,8 +29,7 @@ The user interface would contain a menu bar (to contain personalization of the p
 
 The relationship between the view and the controller would be one way, any commands, or anything that needed to be passed to be interpreted would go to the controller that would then parse the commands and get the appropriate command class or update the appropriate turtle, etc. Any updates to the back end turtle classes would be observed by the view updater that would update instantly. This way, the model could relay information back to the view in this way. This way, the model needs to contain an observer instance of the view updater.
 
-The *model* would contain a general abstract command super class and have sub command types so that each command could be generalized into a group, whether it is a math type command, or turtle status command, or a move command, and within those subgroups, and each command would have its own class, but extend these super classes.
-The *command parser* would return a specific command object and the controller would determine what type of subcommand that command belonged to, and if it was a view type command, the controller would call on the view to perform the specified command, and if it was a non-view related command, it would call the model classes to reflect that command change.
+The *model* would contain a general abstract *command*super class and have sub command types so that each command could be generalized into a group, whether it is a math type command, or turtle status command, or a move command, and within those subgroups, and each command would have its own class, but extend these super classes. The model itself will contain methods such as update(), which call commands instantiated by the parser. It will also contain data structures that keeps track of called commands and created variables. The *command parser* would return a specific command object and the controller would determine what type of subcommand that command belonged to, and if it was a view type command, the controller would call on the view to perform the specified command, and if it was a non-view related command, it would call the model classes to reflect that command change.
 
 On the front end side, the three main classes are SceneUpdater, TurtleView and GUI. The SceneUpdater will handle any logic or computation that needs to be done by the front end, for example loading an image file for a new turtle image. Additionally it will handle any updates to the GUI. This class will listen to the TurleModel class, and use any changes to that class in order to update the view. The GUI is simply a collection of Nodes, including a canvas, a text input, a menu bar, and a panel of previous commands. This class will be updated by SceneUpdater. Lastly, the TurtleView will act as a container for various visual attributes of the turtle. These include the image file of the Turtle, the color of the Turtle's pen, etc. None of these classes will directly contact the backend, and only the SceneUpdater will interact with the Controller.
 
@@ -49,7 +48,7 @@ We disliked the idea of having the view contain a method in the controller, but 
 
 A huge consideration we had was how exactly to use the obeservable in our turtle classes because we ran into complications with the physical drawing of a line which requires a starting and ending point. If you used the observable, the view turtle would need to have the old position, but once the model turtle was changed, the view turtle would have no idea where it used to be. 
 
-We decided to not use the observable and just have the back end turtle send information about where a line needs to be drawn/ where a turtle needs to be moved so that given original positions and new positions. This way, the front end turtle does not need to store its location, but just know have a move method, and based on if the pen is up or not, it will draw a line. <-- we are not sure about the best way mediate between these options.
+An alternative to using the observable is to just have the back end turtle send information about where a line needs to be drawn/ where a turtle needs to be moved so that given original positions and new positions. This way, the front end turtle does not need to store its location, but just know have a move method, and based on if the pen is up or not, it will draw a line. <-- we are not sure about the best way mediate between these options.
 If we made commmands classes, there was also a problem where it needed to be able to modify the turtle directly, but the command class couldn't have an instance of the turtle so then what is even the purpose of the separate command class? Would it be appropriate of the instance of the turtle (say, View's front-end turtle) is created in the View?
 
 Another design element that we're considering is the use of expression trees to help interpret commands that contain subcommands (for example, fd sum 10 20). Ideally, the parser will be constructing one expression tree for each command. The expression tree will then be traversed recursively with each node in the expression tree being one sub-command. The final value of the command will be returned in the value of the parent node of the tree. Whether using this design structure is a good idea is dependent on where the parser is stored and where the tree is traversed. 
@@ -60,9 +59,11 @@ Front end: John, Kei
 * GUI
 * parser
 * view updater class
+Secondary Responsibilities: Controller
 
 Back end: Catherine, Georgia
 * Command class modules classes
 * TurtleModel class
+Secondary Responsibilities: Parser
 
 Generally, John and Kei will work on the GUI and the command parser, where as the back end would be Catherine and Georgia to connect the commands of the turtle to its visual counterpart.
