@@ -1,7 +1,6 @@
 #Design Document 
 ##Kei Yoshikoshi, John Gilhuly, Georgia Tse, Catherine Zhang
 =======
-
 ###Introduction
 This section describes the problem your team is trying to solve by writing this program, the primary design goals of the project (i.e., where is it most flexible), and the primary architecture of the design (i.e., what is closed and what is open). It should be approximately 200-300 words long and discuss the program at a high-level (i.e., without referencing specific classes, data structures, or code).
 The problem that we want to solve is to structure the front end and back end so that each doesn't have too much information about each other
@@ -44,6 +43,6 @@ If we made commmands classes, there was also a problem where it needed to be abl
 
 ###Team Responsibilities
 This section describes the program components each team member plans to take primary and secondary responsibility for and a high-level plan of how the team will complete the program.
-Front end: John, Kei
-Back end: Catherine, Georgia
+- Front end: John, Kei
+- Back end: Catherine, Georgia
 Generally, John and Kei will work on the GUI and the command parser, where as the back end would be Catherine and Georgia to connect the commands of the turtle to its visual counterpart.
