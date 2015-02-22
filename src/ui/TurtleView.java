@@ -1,3 +1,4 @@
+package ui;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 

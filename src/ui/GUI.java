@@ -1,3 +1,4 @@
+package ui;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ public class GUI {
 	private Stage myStage;
 	private BorderPane myRoot;
 
+	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
 
 	private TextField inputField;
@@ -32,16 +34,18 @@ public class GUI {
 	private Canvas canvas;
 	private MenuBar menuBar;
 
-	public GUI(Stage stageIn, String language) {
+	public GUI(Stage stageIn, String language, SceneUpdater sceneUpIn) {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 				+ language);
 		myStage = stageIn;
+		mySceneUpdater = sceneUpIn;
 		tView = new TurtleView();
 
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
 		myRoot.setCenter(makeCanvas());
 		myRoot.setTop(makeMenuBar());
+		myRoot.setRight(makePrevCommandsPane());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 	}
@@ -95,13 +99,24 @@ public class GUI {
 	private Node makeMenuBar() {
 		Menu fileMenu = new Menu(myResources.getString("File"));
 
-		MenuItem Option1 = new MenuItem(myResources.getString("Option1"));
-		fileMenu.getItems().add(Option1);
+		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
+		fileMenu.getItems().add(fileOp1);
 
+		Menu optionsMenu = new Menu(myResources.getString("Options"));
+		
+		MenuItem optionOp1 = new MenuItem(myResources.getString("OptionOp1"));
+		optionsMenu.getItems().add(optionOp1);
+		
 		menuBar = new MenuBar();
-		menuBar.getMenus().add(fileMenu);
+		menuBar.getMenus().addAll(fileMenu, optionsMenu);
 
 		return menuBar;
+	}
+	
+	private Node makePrevCommandsPane() {
+		VBox result = new VBox();
+		
+		return result;
 	}
 
 	/**
