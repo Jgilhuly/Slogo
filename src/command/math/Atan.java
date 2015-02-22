@@ -1,5 +1,21 @@
 package command.math;
 
-public class Atan {
+import command.Command;
+import command.MathMod;
 
+public class Atan extends MathMod implements Command {
+    private double myValue;
+    private double myParam;
+
+    public Atan(double param){
+        myValue = param;
+    }
+    
+    public void update() {
+        myValue = getAtan(myParam);
+    }
+
+    public double getValue () {
+        return myValue;
+    } 
 }
