@@ -1,9 +1,21 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+	private Master master;
 
-    public static void main (String[] args) {
-        // TODO Auto-generated method stub
+	@Override
+	public void start(Stage s) {
+		try {
+			master = new Master();
+			master.init(s);
+//			s.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    }
-
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
