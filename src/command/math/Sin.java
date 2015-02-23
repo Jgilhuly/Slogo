@@ -1,5 +1,6 @@
 package command.math;
 
-public class Sin {
 
+
+public class Sin {
 }
