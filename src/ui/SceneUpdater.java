@@ -22,6 +22,6 @@ public class SceneUpdater implements Observer {
 	}
 	
 	public void drawLine (int x1, int y1, int x2, int y2) {
-		// either call drawLine method in myGUI, or get the Canvas Graphics Context and draw it
+		// call drawLine method in myGUI
 	}
 }
