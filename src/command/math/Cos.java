@@ -1,22 +1,19 @@
 package command.math;
 
 import command.Command;
-import command.MathMod;
 
 
-public class Cos extends MathMod implements Command{
-    private double myValue;
+public class Cos extends Command{
+  
     private double myParam;
 
     public Cos(double param){
-        myValue = param;
-    }
-    
-    public void update() {
-        myValue = getCos(myParam);
+        myParam = param;
     }
 
-    public double getValue () {
-        return myValue;
-    } 
+	@Override
+	public double calculateValue(Object param) {
+		return Math.cos((double)param);
+	}
+
 }

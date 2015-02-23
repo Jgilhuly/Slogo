@@ -2,6 +2,6 @@ package command.control;
 
 import command.Command;
 
-public class For extends Command {
+public class For {
 
 }
