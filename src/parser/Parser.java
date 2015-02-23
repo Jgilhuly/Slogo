@@ -1,15 +1,13 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import command.Command;
-
-import javax.swing.tree.TreeNode;
+import java.util.AbstractMap.SimpleEntry;
 
 public class Parser {
 	private static final int COMMENT_INDEX = 1;
@@ -23,21 +21,22 @@ public class Parser {
 	private int[] indices = { COMMENT_INDEX, CONSTANT_INDEX, VARIABLE_INDEX,
 			COMMAND_INDEX, LISTSTART_INDEX, LISTEND_INDEX, GROUPSTART_INDEX,
 			GROUPEND_INDEX };
-	private Map<String, String> bundleMap;
+	private List<Entry<String, Pattern>> patternList;
 
 	public Parser(String language) {
-		bundleMap = createBundleMap(language);
+		patternList = makePatterns(language);
 	}
 
 	/**
-	 * Converts inputted string into another string using resource bundle
+	 * Converts inputted string into List using resource bundle
 	 * 
 	 * @param input
 	 *            : String taken from front-end GUI - user syntax
-	 * @return ret: String reformatted and standardized using resource bundle
+	 * @return ret: List of strings reformatted and standardized using resource
+	 *         bundle
 	 */
-	public String parse(String input) {
-		String ret = "";
+	private List<String> parseList(String input) {
+		List<String> ret = new ArrayList<>();
 		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
 				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
 				+ "|(\\[)|(\\])|(\\()|(\\))");
@@ -47,9 +46,9 @@ public class Parser {
 			for (int i = 0; i < indices.length; i++) {
 				if (m.group(indices[i]) != null) {
 					if (indices[i] == COMMAND_INDEX) {
-						ret += useResourceBundle(m.group(indices[i])) + " ";
+						ret.add(useResourceBundle(m.group(indices[i])));
 					} else {
-						ret += m.group(indices[i]) + " ";
+						ret.add(m.group(indices[i]));
 					}
 				}
 			}
@@ -57,52 +56,31 @@ public class Parser {
 		return ret;
 	}
 
-	/**
-	 * Creates HashMap that maps the possible user inputs to standard string
-	 * values
-	 * 
-	 * @return: HashMap with possible user inputs and standard string values
-	 */
-	private HashMap<String, String> createBundleMap(String language) {
+	private List<Entry<String, Pattern>> makePatterns(String language) {
 		ResourceBundle resources = ResourceBundle
 				.getBundle("resources.languages/" + language);
-		Enumeration<String> bundleKeys = resources.getKeys();
-		HashMap<String, String> newMap = new HashMap<>();
-
-		while (bundleKeys.hasMoreElements()) {
-			String Key = bundleKeys.nextElement();
-			String[] commands = resources.getString(Key).split("\\|");
-			for (String com : commands) {
-				newMap.put(com, Key);
-			}
+		List<Entry<String, Pattern>> patterns = new ArrayList<>();
+		Enumeration<String> iter = resources.getKeys();
+		while (iter.hasMoreElements()) {
+			String key = iter.nextElement();
+			String regex = resources.getString(key);
+			patterns.add(new SimpleEntry<String, Pattern>(key, Pattern.compile(
+					regex, Pattern.CASE_INSENSITIVE)));
 		}
-		return newMap;
+		return patterns;
 	}
 
 	private String useResourceBundle(String input) {
-		return bundleMap.get(input);
+		for (Entry<String, Pattern> p : patternList) {
+			if (p.getValue().matcher(input).matches())
+				return p.getKey();
+		}
+		return null;
 	}
-
-	public static void main(String[] args) {
-		String input = "repeat + 20 * 3 5 [ repeat 2 [ repeat 30 [ fd 1 rt 2 ] rt 120 ] rt 60 ]";
-
-		// Representation:
-		// repeat sum 20 30
-		// [
-		// repeat 2
-		// [
-		// repeat 30
-		// [
-		// fd 1
-		// rt 2
-		// ]
-		// rt 120
-		// ]
-		// rt 60
-		// ]
-
-		Parser pp = new Parser("English");
-		pp.parse(input);
-
+	public CommandTreeNode makeTree(String input) {
+		List<String> translate = parseList(input);
+		System.out.println(translate);
+		TreeGenerator tg = new TreeGenerator();
+		return tg.createCommands(translate);
 	}
 }

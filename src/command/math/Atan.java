@@ -1,5 +1,8 @@
 package command.math;
 
-public class Atan {
+
+
+
+public class Atan{
 
 }
