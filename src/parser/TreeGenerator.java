@@ -11,6 +11,7 @@ public class TreeGenerator {
 	private Map<String, Integer> parametersMap;
 	private int index;
 	private int bracketCount = 0;
+	private CommandTreeNode myRoot;
 
 	public TreeGenerator() {
 		parametersMap = createParametersMap();
@@ -19,26 +20,34 @@ public class TreeGenerator {
 	private void printTestStatements(String value, int count, int numParams,
 			String type) {
 		System.out.println(value);
-		System.out.println("Count is: " + count);
-		System.out.println("numParams is: " + numParams);
+//		System.out.println("Count is: " + count);
+//		System.out.println("numParams is: " + numParams);
 		System.out.println("Root value is: " + type);
 		System.out.println();
 	}
 
-	public void createCommands(List<String> input, int count, int numParams,
+	public CommandTreeNode createCommands(List<String> input) {
+		index = 0;
+		myRoot = null;
+		helper(input, 0, Integer.MAX_VALUE, myRoot);
+		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType());
+		return myRoot;
+	}
+
+	private void helper(List<String> input, int count, int numParams,
 			CommandTreeNode root) {
 		if (index >= input.size()) {
 			return;
 		}
 		if (root == null) {
 			root = new CommandTreeNode(input.get(index), 0, null);
+			myRoot = root;
 			numParams = parametersMap.get(input.get(index));
-
 			printTestStatements(input.get(index), count, numParams, null);
 			index++;
 
 			for (int i = 0; i < numParams; i++) {
-				createCommands(input, 0, numParams, root);
+				helper(input, 0, numParams, root);
 			}
 
 		} else if (parametersMap.containsKey(input.get(index))) { // command
@@ -54,33 +63,45 @@ public class TreeGenerator {
 
 			if (repeat) {
 				while (!input.get(index).equals("]")) {
-					createCommands(input, 0, numParams, temp);
+					helper(input, 0, numParams, temp);
 				}
 			} else {
 				for (int i = 0; i < numParams; i++) {
-					createCommands(input, 0, numParams, temp);
+					helper(input, 0, numParams, temp);
 				}
 			}
 
 		} else if (input.get(index).equals("[")) {
 			CommandTreeNode temp = new CommandTreeNode(input.get(index)
-					+ bracketCount++, 0, null);
+					+ "-" + bracketCount++, 0, null);
 			root.add(temp);
 
 			numParams = Integer.MAX_VALUE;
 
-			printTestStatements(input.get(index) + (bracketCount - 1), count,
+			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count,
 					numParams, root.getType());
 
 			index++;
 
 			while (!input.get(index).equals("]")) {
-				createCommands(input, 0, numParams, temp);
+				helper(input, 0, numParams, temp);
 			}
 			if (input.get(index).equals("]")) {
 				index++;
-				createCommands(input, 0, numParams, temp);
+				helper(input, 0, numParams, temp);
 			}
+		} else if (Pattern.matches(":[a-zA-Z]+", input.get(index))) {
+			// Variable
+			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+					null);
+			root.add(temp);
+
+			printTestStatements(input.get(index), 0, 1, root.getType());
+
+			index++;
+			count++;
+			// createCommands(input, 0, 1, temp);
+			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 
 			CommandTreeNode temp = new CommandTreeNode("Constant",
@@ -107,32 +128,4 @@ public class TreeGenerator {
 		}
 		return newMap;
 	}
-
-	public static void main(String[] args) {
-		String input = "chongfu + 20 * 3 5 [ chongfu 2 [ chongfu 30 [ qj 1 yz 2 ] qj 120 ] yz 60 ]";
-		// String input = "repeat + 20 10 [ fd 1 rt 2]";
-		
-		// Representation to first input string:
-		// repeat sum 20 30 product 3 5 
-		// [
-		//   repeat 2
-		//   [
-		//     repeat 30
-		//     [
-		//       fd 1
-		//       rt 2
-		//     ]
-		//     fd 120
-		//   ]
-		//   rt 60
-		// ]
-
-		Parser pp = new Parser("Chinese");
-		System.out.println(pp.parseList(input));
-		TreeGenerator cf = new TreeGenerator();
-
-		CommandTreeNode root = null;
-		cf.createCommands(pp.parseList(input), 0, Integer.MAX_VALUE, root);
-	}
-
 }
