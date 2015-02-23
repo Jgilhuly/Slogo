@@ -16,7 +16,6 @@ public class CommandTreeNode {
 			List<CommandTreeNode> Children) {
 		this.myType = type;
 		this.myChildren = Children;
-		// root = new CommandTreeNode(type, value, Children);
 		myChildren = new ArrayList<>();
 	}
 
@@ -57,7 +56,7 @@ public class CommandTreeNode {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final CommandTreeNode other = (CommandTreeNode) obj;
+//		final CommandTreeNode other = (CommandTreeNode) obj;
 //		if (this.myValue==null)) {
 //			
 //		}
