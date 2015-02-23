@@ -1,5 +1,5 @@
 package command.turtle;
 
-public class Forward {
-
+public class Forward implements Move{
+	
 }
