@@ -14,6 +14,10 @@ import command.Command;
 public class CommandFactory {
 	private Map<String, Integer> parametersMap;
 	private int index;
+	private CommandTreeNode myRoot;
+	private CommandTreeNode myHead;
+	private int myCount;
+	private int myNumParams;
 
 	public CommandFactory() {
 		parametersMap = createParametersMap();
@@ -29,7 +33,6 @@ public class CommandFactory {
 		}
 		if (input.get(index).equals("]"))
 			return;
-
 		if (root == null) {
 			root = new CommandTreeNode(input.get(index), 0, null);
 			numParams = parametersMap.get(input.get(index));
@@ -40,57 +43,44 @@ public class CommandFactory {
 			System.out.println("Root value is: " + root.getType());
 			System.out.println();
 			index++;
-
+			
 			createCommands(input, 0, numParams, root);
-		}
-		else if (parametersMap.containsKey(input.get(index))) { // command
+		} else if (parametersMap.containsKey(input.get(index))) { // command
 			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
 					null);
 			root.add(temp);
 			numParams = parametersMap.get(input.get(index));
+			for (int i=0; i<numParams;i++) {
+				System.out.println(input.get(index));
+				System.out.println("Count is: " + 0);
+				System.out.println("numParams is: " + numParams);
+				System.out.println("Root value is: " + root.getType());
+				System.out.println();
+				index++;
 
-			System.out.println(input.get(index));
-			System.out.println("Count is: " + 0);
-			System.out.println("numParams is: " + numParams);
-			System.out.println("Root value is: " + root.getType());
-			System.out.println();
-			index++;
-
-			createCommands(input, 0, numParams, temp);
-
-			if (++count == numParams) {
-				System.out.println("base case params");
-				return;
+				createCommands(input, 0, numParams, temp);
+				count++;
 			}
-			if (input.get(index).equals("]"))
-				System.out.println("base case ]");
-				return;
-
 		}
 		if (input.get(index).equals("[")) {
-			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
-					null);
-			root.add(temp);
+			while (index<input.size()) {
+				CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+						null);
+				root.add(temp);
 
-			numParams = Integer.MAX_VALUE;
-			System.out.println(input.get(index));
-			System.out.println("Count is: " + count);
-			System.out.println("numParams is: " + numParams);
-			System.out.println("Root value is: " + root.getType());
-			System.out.println();
-			index++;
+				numParams = Integer.MAX_VALUE;
+				System.out.println(input.get(index));
+				System.out.println("Count is: " + count);
+				System.out.println("numParams is: " + numParams);
+				System.out.println("Root value is: " + root.getType());
+				System.out.println();
+				index++;
 
-			createCommands(input, 0, numParams, temp);
-
-			if (++count==numParams) {
-				System.out.println("base case params");
-				return;
+				createCommands(input, 0, numParams, temp);
+				count++;
 			}
-			if (input.get(index).equals("]"))
-				System.out.println("base case ]");
-				return;
-
-		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { //CONSTANT
+		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
+			
 			CommandTreeNode temp = new CommandTreeNode("Constant",
 					Double.parseDouble(input.get(index)), null);
 			root.add(temp);
@@ -103,83 +93,175 @@ public class CommandFactory {
 			index++;
 
 			createCommands(input, count, numParams, root);
-
-			if (++count==numParams) {
-				System.out.println("base case params");
-				return;
-			}
-			if (input.get(index).equals("]"))
-				System.out.println("base case ]");
-				return;
+			count++;
 		}
 		System.out.println("END OF LEVEL");
 	}
-	
-	
-	
-	//	public void createCommands(List<String> input, int count, int numParams,
-	//			CommandTreeNode root) {
-	//		if (count == numParams) {
-	//			System.out.println("base case");
-	//			return;
-	//		} else if (input.get(index).equals("]"))
-	//			return;
-	//
-	//		if (root == null) {
-	//			root = new CommandTreeNode(input.get(index), 0, null);
-	//			numParams = parametersMap.get(input.get(index));
-	//			count = 0;
-	//			System.out.println(input.get(index));
-	//			System.out.println("Count is: " + count);
-	//			System.out.println("numParams is: " + numParams);
-	//			System.out.println();
-	//			index++;
-	//
-	//		} else if (parametersMap.containsKey(input.get(index))) { // command
-	//			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
-	//					null);
-	//			root.add(temp);
-	//			numParams = parametersMap.get(input.get(index));
-	//			count = 0;
-	//			root = temp;
-	//			System.out.println(input.get(index));
-	//			System.out.println("Count is: " + 0);
-	//			System.out.println("numParams is: " + numParams);
-	//			System.out.println("Root value is: " + root.getType());
-	//			System.out.println();
-	//			index++;
-	//		} else if (input.get(index).equals("[")) {
-	//			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
-	//					null);
-	//			root.add(temp);
-	//			root = temp;
-	//			count = 0;
-	//			numParams = Integer.MAX_VALUE;
-	//			System.out.println(input.get(index));
-	//			System.out.println("Count is: " + count);
-	//			System.out.println("numParams is: " + numParams);
-	//			System.out.println("Root value is: " + root.getType());
-	//			System.out.println();
-	//			index++;
-	//
-	//		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
-	//			CommandTreeNode temp = new CommandTreeNode("Constant",
-	//					Double.parseDouble(input.get(index)), null);
-	//			root.add(temp);
-	//			count++;
-	//			System.out.println(input.get(index));
-	//			System.out.println("Count is:" + count);
-	//			System.out.println("numParams is: " + numParams);
-	//			System.out.println("Root value is: " + root.getType());
-	//			System.out.println();
-	//			index++;
-	//		}
-	//		createCommands(input, count, numParams, root);
-	//		System.out.println("reached end of level");
-	//
-	//		// return;
-	//	}
 
+	// public void createCommands(List<String> input, int count, int numParams,
+	// CommandTreeNode root) {
+	// if (count == numParams) {
+	// System.out.println("base case params");
+	//
+	// return;
+	// } else if (input.get(index).equals("]")) {
+	// System.out.println("base case ]");
+	// return;
+	// }
+	// helper(input, count, numParams, root);
+	// createCommands(input, myCount, myNumParams, myRoot);
+	//
+	// System.out.println("reached end of level");
+	// }
+	//
+	// private void helper(List<String> input, int count, int numParams,
+	// CommandTreeNode root) {
+	// if (root == null) {
+	// myRoot = new CommandTreeNode(input.get(index), 0, null);
+	// myNumParams = parametersMap.get(input.get(index));
+	// myCount = 0;
+	// System.out.println(input.get(index));
+	// System.out.println("Count is: " + count);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println();
+	// index++;
+	//
+	// } else if (parametersMap.containsKey(input.get(index))) { // command
+	// CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+	// null);
+	// myRoot.add(temp);
+	// myNumParams = parametersMap.get(input.get(index));
+	// myCount = 0;
+	// myRoot = temp;
+	// System.out.println(input.get(index));
+	// System.out.println("Count is: " + 0);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	// } else if (input.get(index).equals("[")) {
+	// CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+	// null);
+	// myRoot.add(temp);
+	// myRoot = temp;
+	// myCount = 0;
+	// myNumParams = Integer.MAX_VALUE;
+	// System.out.println(input.get(index));
+	// System.out.println("Count is: " + count);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	//
+	// } else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { //
+	// CONSTANT
+	// CommandTreeNode temp = new CommandTreeNode("Constant",
+	// Double.parseDouble(input.get(index)), null);
+	// myRoot.add(temp);
+	// myCount++;
+	// System.out.println(input.get(index));
+	// System.out.println("Count is:" + count);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	// }
+	// }
+
+	// public void createCommands(List<String> input, int count, int numParams,
+	// CommandTreeNode root) {
+	// if (count == numParams) {
+	// System.out.println("base case params");
+	// return;
+	// }
+	// if (input.get(index).equals("]"))
+	// return;
+	//
+	// if (root == null) {
+	// root = new CommandTreeNode(input.get(index), 0, null);
+	// numParams = parametersMap.get(input.get(index));
+	//
+	// System.out.println(input.get(index));
+	// System.out.println("Count is: " + count);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	//
+	// createCommands(input, 0, numParams, root);
+	// }
+	// else if (parametersMap.containsKey(input.get(index))) { // command
+	// CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+	// null);
+	// root.add(temp);
+	// numParams = parametersMap.get(input.get(index));
+	//
+	// System.out.println(input.get(index));
+	// System.out.println("Count is: " + 0);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	//
+	// createCommands(input, 0, numParams, temp);
+	//
+	// if (++count == numParams) {
+	// System.out.println("base case params");
+	// return;
+	// }
+	// if (input.get(index).equals("]"))
+	// System.out.println("base case ]");
+	// return;
+	//
+	// }
+	// if (input.get(index).equals("[")) {
+	// CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+	// null);
+	// root.add(temp);
+	//
+	// numParams = Integer.MAX_VALUE;
+	// System.out.println(input.get(index));
+	// System.out.println("Count is: " + count);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	//
+	// createCommands(input, 0, numParams, temp);
+	//
+	// if (++count==numParams) {
+	// System.out.println("base case params");
+	// return;
+	// }
+	// if (input.get(index).equals("]"))
+	// System.out.println("base case ]");
+	// return;
+	//
+	// } else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) {
+	// //CONSTANT
+	// CommandTreeNode temp = new CommandTreeNode("Constant",
+	// Double.parseDouble(input.get(index)), null);
+	// root.add(temp);
+	// count++;
+	// System.out.println(input.get(index));
+	// System.out.println("Count is:" + count);
+	// System.out.println("numParams is: " + numParams);
+	// System.out.println("Root value is: " + root.getType());
+	// System.out.println();
+	// index++;
+	//
+	// createCommands(input, count, numParams, root);
+	// System.out.println(count);
+	// if (++count==numParams) {
+	// System.out.println("base case params");
+	// return;
+	// }
+	// if (input.get(index).equals("]"))
+	// System.out.println("base case ]");
+	// return;
+	// }
+	// System.out.println("END OF LEVEL");
+	// }
 
 	private HashMap<String, Integer> createParametersMap() {
 		ResourceBundle resources = ResourceBundle
