@@ -57,7 +57,7 @@ public class CommandTreeNode {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final CommandTreeNode other = (CommandTreeNode) obj;
+//		final CommandTreeNode other = (CommandTreeNode) obj;
 //		if (this.myValue==null)) {
 //			
 //		}
