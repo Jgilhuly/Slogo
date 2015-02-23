@@ -26,15 +26,16 @@ public class Parser {
 	public Parser(String language) {
 		patternList = makePatterns(language);
 	}
-	
+
 	/**
 	 * Converts inputted string into List using resource bundle
 	 * 
 	 * @param input
 	 *            : String taken from front-end GUI - user syntax
-	 * @return ret: List of strings reformatted and standardized using resource bundle
+	 * @return ret: List of strings reformatted and standardized using resource
+	 *         bundle
 	 */
-	public List<String> parseList(String input) {
+	private List<String> parseList(String input) {
 		List<String> ret = new ArrayList<>();
 		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
 				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
@@ -55,29 +56,7 @@ public class Parser {
 		return ret;
 	}
 
-	
-	public String parse(String input) {
-		String ret = "";
-		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
-				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
-				+ "|(\\[)|(\\])|(\\()|(\\))");
-		Matcher m = p.matcher(input);
-
-		while (m.find()) {
-			for (int i = 0; i < indices.length; i++) {
-				if (m.group(indices[i]) != null) {
-					if (indices[i] == COMMAND_INDEX) {
-						ret += useResourceBundle(m.group(indices[i])) + " ";
-					} else {
-						ret += m.group(indices[i]) + " ";
-					}
-				}
-			}
-		}
-		return ret;
-	}
-
-	public List<Entry<String, Pattern>> makePatterns(String language) {
+	private List<Entry<String, Pattern>> makePatterns(String language) {
 		ResourceBundle resources = ResourceBundle
 				.getBundle("resources.languages/" + language);
 		List<Entry<String, Pattern>> patterns = new ArrayList<>();
@@ -97,5 +76,11 @@ public class Parser {
 				return p.getKey();
 		}
 		return null;
+	}
+	public CommandTreeNode makeTree(String input) {
+		List<String> translate = parseList(input);
+		System.out.println(translate);
+		TreeGenerator tg = new TreeGenerator();
+		return tg.createCommands(translate);
 	}
 }

@@ -16,7 +16,6 @@ public class CommandTreeNode {
 			List<CommandTreeNode> Children) {
 		this.myType = type;
 		this.myChildren = Children;
-		// root = new CommandTreeNode(type, value, Children);
 		myChildren = new ArrayList<>();
 	}
 
