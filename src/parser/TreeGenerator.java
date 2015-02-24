@@ -100,7 +100,6 @@ public class TreeGenerator {
 
 			index++;
 			count++;
-			// createCommands(input, 0, 1, temp);
 			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 

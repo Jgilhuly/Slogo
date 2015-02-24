@@ -9,6 +9,7 @@ public class Main extends Application {
 		try {
 			Controller master = new Controller();
 			master.init(s);
+			s.show();
 
 		} catch (Exception e) {
 			e.printStackTrace();

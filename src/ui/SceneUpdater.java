@@ -9,12 +9,13 @@ public class SceneUpdater implements Observer {
 
 	private Stage myStage;
 	private GUI myGUI;
+	private String title = "SLogo";
 //	private Controller myController;
 
 	public SceneUpdater (Stage stageIn,String language) {
 		myStage = stageIn;
 		myGUI = new GUI (myStage,language, this);
-//		myStage.show();
+//		
 	}
 	
 	@Override
@@ -24,5 +25,11 @@ public class SceneUpdater implements Observer {
 	
 	public void drawLine (int x1, int y1, int x2, int y2) {
 		// either call drawLine method in myGUI, or get the Canvas Graphics Context and draw it
+	}
+
+	public void newScene() {
+		// TODO Auto-generated method stub
+		myStage.setScene(myGUI.getScene());
+		myStage.setTitle(title);
 	}
 }
