@@ -70,6 +70,7 @@ public class GUI {
 		result.getChildren().add(outputField);
 
 		confirmInput = makeButton("EnterCommand", e -> parseCommand());
+		confirmInput.setDisable(true);
 		result.getChildren().add(confirmInput);
 
 		return result;
@@ -145,7 +146,7 @@ public class GUI {
 	 * @param menu
 	 */
 	private void checkMenuItems(String language, boolean selected, Menu menu) {
-		System.out.println(selected);
+		confirmInput.setDisable(false);
 		if (selected) {
 			selectedLanguage = language;
 			toggleMenuItems(menu, language, true);
