@@ -46,23 +46,24 @@ public class Parser {
 				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
 				+ "|(\\[)|(\\])|(\\()|(\\))");
 		Matcher m = p.matcher(input);
-
 		while (m.find()) {
 			for (int i = 0; i < indices.length; i++) {
 				if (m.group(indices[i]) != null) {
 					if (indices[i] == COMMAND_INDEX) {
 						ret.add(useResourceBundle(m.group(indices[i])));
-					} else if (indices[i] == LISTSTART_INDEX) {
-						ListStartCount++;
-					} else if (indices[i] == LISTEND_INDEX) {
-						ListEndCount++;
 					} else {
 						ret.add(m.group(indices[i]));
+						if (indices[i] == LISTSTART_INDEX) {
+							ListStartCount++;
+						} else if (indices[i] == LISTEND_INDEX) {
+							ListEndCount++;
+						}
 					}
 				}
 			}
 		}
-		if (ListStartCount!=ListEndCount) throw new UnmatchedBracketException();
+		if (ListStartCount != ListEndCount)
+			throw new UnmatchedBracketException();
 		return ret;
 	}
 
