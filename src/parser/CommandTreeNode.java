@@ -12,8 +12,7 @@ public class CommandTreeNode {
 	private double myValue;
 	private List<CommandTreeNode> myChildren;
 
-	public CommandTreeNode(String type, double value,
-			List<CommandTreeNode> Children) {
+	public CommandTreeNode(String type, double value, List<CommandTreeNode> Children) {
 		this.myType = type;
 		this.myChildren = Children;
 		myChildren = new ArrayList<>();

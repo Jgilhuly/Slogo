@@ -20,8 +20,8 @@ public class TreeGenerator {
 	private void printTestStatements(String value, int count, int numParams,
 			String type) {
 		System.out.println(value);
-//		System.out.println("Count is: " + count);
-//		System.out.println("numParams is: " + numParams);
+		// System.out.println("Count is: " + count);
+		// System.out.println("numParams is: " + numParams);
 		System.out.println("Root value is: " + type);
 		System.out.println();
 	}
@@ -52,8 +52,7 @@ public class TreeGenerator {
 
 		} else if (parametersMap.containsKey(input.get(index))) { // command
 			numParams = parametersMap.get(input.get(index));
-			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
-					null);
+			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0, null);
 			root.add(temp);
 
 			printTestStatements(input.get(index), 0, numParams, root.getType());
@@ -72,14 +71,14 @@ public class TreeGenerator {
 			}
 
 		} else if (input.get(index).equals("[")) {
-			CommandTreeNode temp = new CommandTreeNode(input.get(index)
-					+ "-" + bracketCount++, 0, null);
+
+			CommandTreeNode temp = new CommandTreeNode(input.get(index) + "-" + bracketCount++, 0, null);
+
 			root.add(temp);
 
 			numParams = Integer.MAX_VALUE;
+			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count, numParams, root.getType());
 
-			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count,
-					numParams, root.getType());
 
 			index++;
 
@@ -100,25 +99,21 @@ public class TreeGenerator {
 
 			index++;
 			count++;
-			// createCommands(input, 0, 1, temp);
 			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 
-			CommandTreeNode temp = new CommandTreeNode("Constant",
-					Double.parseDouble(input.get(index)), null);
+			CommandTreeNode temp = new CommandTreeNode("CONSTANT", Double.parseDouble(input.get(index)), null);
 			root.add(temp);
 			count++;
 
-			printTestStatements(input.get(index), count, numParams,
-					root.getType());
+			printTestStatements(input.get(index), count, numParams, root.getType());
 			index++;
 			return;
 		}
 	}
 
 	private HashMap<String, Integer> createParametersMap() {
-		ResourceBundle resources = ResourceBundle
-				.getBundle("parser/parameters");
+		ResourceBundle resources = ResourceBundle.getBundle("parser/parameters");
 		Enumeration<String> paramKeys = resources.getKeys();
 		HashMap<String, Integer> newMap = new HashMap<>();
 

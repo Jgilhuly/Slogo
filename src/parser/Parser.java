@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.AbstractMap.SimpleEntry;
 
+import errors.CommandNotFoundException;
+import errors.UnmatchedBracketException;
+
 public class Parser {
 	private static final int COMMENT_INDEX = 1;
 	private static final int CONSTANT_INDEX = 2;
@@ -22,6 +25,8 @@ public class Parser {
 			COMMAND_INDEX, LISTSTART_INDEX, LISTEND_INDEX, GROUPSTART_INDEX,
 			GROUPEND_INDEX };
 	private List<Entry<String, Pattern>> patternList;
+	private int ListStartCount = 0;
+	private int ListEndCount = 0;
 
 	public Parser(String language) {
 		patternList = makePatterns(language);
@@ -41,7 +46,6 @@ public class Parser {
 				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
 				+ "|(\\[)|(\\])|(\\()|(\\))");
 		Matcher m = p.matcher(input);
-
 		while (m.find()) {
 			for (int i = 0; i < indices.length; i++) {
 				if (m.group(indices[i]) != null) {
@@ -49,10 +53,17 @@ public class Parser {
 						ret.add(useResourceBundle(m.group(indices[i])));
 					} else {
 						ret.add(m.group(indices[i]));
+						if (indices[i] == LISTSTART_INDEX) {
+							ListStartCount++;
+						} else if (indices[i] == LISTEND_INDEX) {
+							ListEndCount++;
+						}
 					}
 				}
 			}
 		}
+		if (ListStartCount != ListEndCount)
+			throw new UnmatchedBracketException();
 		return ret;
 	}
 
@@ -75,8 +86,12 @@ public class Parser {
 			if (p.getValue().matcher(input).matches())
 				return p.getKey();
 		}
-		return null;
+		// if not found
+
+		throw new CommandNotFoundException(input);
+		// return this message to the GUI.
 	}
+
 	public CommandTreeNode makeTree(String input) {
 		List<String> translate = parseList(input);
 		System.out.println(translate);
