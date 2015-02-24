@@ -1,22 +1,22 @@
 package command.math;
 
+import java.util.List;
+import parser.CommandTreeNode;
 import command.Command;
-import command.MathMod;
 
 
-public class Cos extends MathMod implements Command{
-    private double myValue;
+public class Cos extends Command{
+  
     private double myParam;
 
     public Cos(double param){
         myParam = param;
+
+
     }
-    
-    public void update() {
-        myValue = getCos(myParam);
+    @Override
+    public double calculateValue (List<CommandTreeNode> list) {
+        return Math.cos((double)param);
     }
 
-    public double getValue () {
-        return myValue;
-    } 
 }

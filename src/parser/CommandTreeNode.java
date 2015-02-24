@@ -12,11 +12,9 @@ public class CommandTreeNode {
 	private double myValue;
 	private List<CommandTreeNode> myChildren;
 
-	public CommandTreeNode(String type, double value,
-			List<CommandTreeNode> Children) {
+	public CommandTreeNode(String type, double value, List<CommandTreeNode> Children) {
 		this.myType = type;
 		this.myChildren = Children;
-		// root = new CommandTreeNode(type, value, Children);
 		myChildren = new ArrayList<>();
 	}
 
@@ -57,7 +55,7 @@ public class CommandTreeNode {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final CommandTreeNode other = (CommandTreeNode) obj;
+//		final CommandTreeNode other = (CommandTreeNode) obj;
 //		if (this.myValue==null)) {
 //			
 //		}

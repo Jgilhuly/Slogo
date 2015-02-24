@@ -2,6 +2,6 @@ package command.control;
 
 import command.Command;
 
-public class DoTimes extends Command {
+public class DoTimes {
 
 }

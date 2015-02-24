@@ -1,10 +1,16 @@
 package command;
 
-public interface Command {
-    
-    abstract public void update();
-    
-    abstract public double getValue();
+
+import java.util.List;
+
+import parser.CommandTreeNode;
+
+
+public abstract class Command {
+
+    public abstract double calculateValue(List<CommandTreeNode> list);
+
+
 }
 
 

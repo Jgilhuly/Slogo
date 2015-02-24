@@ -9,6 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.AbstractMap.SimpleEntry;
 
+import errors.CommandNotFoundException;
+import errors.UnmatchedBracketException;
+
 public class Parser {
 	private static final int COMMENT_INDEX = 1;
 	private static final int CONSTANT_INDEX = 2;
@@ -22,25 +25,27 @@ public class Parser {
 			COMMAND_INDEX, LISTSTART_INDEX, LISTEND_INDEX, GROUPSTART_INDEX,
 			GROUPEND_INDEX };
 	private List<Entry<String, Pattern>> patternList;
+	private int ListStartCount = 0;
+	private int ListEndCount = 0;
 
 	public Parser(String language) {
 		patternList = makePatterns(language);
 	}
-	
+
 	/**
 	 * Converts inputted string into List using resource bundle
 	 * 
 	 * @param input
 	 *            : String taken from front-end GUI - user syntax
-	 * @return ret: List of strings reformatted and standardized using resource bundle
+	 * @return ret: List of strings reformatted and standardized using resource
+	 *         bundle
 	 */
-	public List<String> parseList(String input) {
+	private List<String> parseList(String input) {
 		List<String> ret = new ArrayList<>();
 		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
 				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
 				+ "|(\\[)|(\\])|(\\()|(\\))");
 		Matcher m = p.matcher(input);
-
 		while (m.find()) {
 			for (int i = 0; i < indices.length; i++) {
 				if (m.group(indices[i]) != null) {
@@ -48,36 +53,21 @@ public class Parser {
 						ret.add(useResourceBundle(m.group(indices[i])));
 					} else {
 						ret.add(m.group(indices[i]));
+						if (indices[i] == LISTSTART_INDEX) {
+							ListStartCount++;
+						} else if (indices[i] == LISTEND_INDEX) {
+							ListEndCount++;
+						}
 					}
 				}
 			}
 		}
+		if (ListStartCount != ListEndCount)
+			throw new UnmatchedBracketException();
 		return ret;
 	}
 
-	
-	public String parse(String input) {
-		String ret = "";
-		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
-				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
-				+ "|(\\[)|(\\])|(\\()|(\\))");
-		Matcher m = p.matcher(input);
-
-		while (m.find()) {
-			for (int i = 0; i < indices.length; i++) {
-				if (m.group(indices[i]) != null) {
-					if (indices[i] == COMMAND_INDEX) {
-						ret += useResourceBundle(m.group(indices[i])) + " ";
-					} else {
-						ret += m.group(indices[i]) + " ";
-					}
-				}
-			}
-		}
-		return ret;
-	}
-
-	public List<Entry<String, Pattern>> makePatterns(String language) {
+	private List<Entry<String, Pattern>> makePatterns(String language) {
 		ResourceBundle resources = ResourceBundle
 				.getBundle("resources.languages/" + language);
 		List<Entry<String, Pattern>> patterns = new ArrayList<>();
@@ -96,6 +86,16 @@ public class Parser {
 			if (p.getValue().matcher(input).matches())
 				return p.getKey();
 		}
-		return null;
+		// if not found
+
+		throw new CommandNotFoundException(input);
+		// return this message to the GUI.
+	}
+
+	public CommandTreeNode makeTree(String input) {
+		List<String> translate = parseList(input);
+		System.out.println(translate);
+		TreeGenerator tg = new TreeGenerator();
+		return tg.createCommands(translate);
 	}
 }
