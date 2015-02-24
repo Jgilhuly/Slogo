@@ -9,7 +9,7 @@ public class Cos extends MathMod implements Command{
     private double myParam;
 
     public Cos(double param){
-        myValue = param;
+        myParam = param;
     }
     
     public void update() {
