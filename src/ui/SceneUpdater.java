@@ -8,21 +8,21 @@ import Controller.Controller;
 
 public class SceneUpdater implements Observer {
 
-	private Stage myStage;
 	private GUI myGUI;
-	private String title = "SLogo";
+
 	private Controller myController;
 
-	public SceneUpdater(Stage stageIn, Controller controller) {
-		myStage = stageIn;
-		myGUI = new GUI(myStage, this);
-		myController = controller;
-	}
 
-	public void newScene() {
-		// TODO Auto-generated method stub
-		myStage.setScene(myGUI.getScene());
-		myStage.setTitle(title);
+	public SceneUpdater(Stage s, Controller c) {
+	
+		myGUI = new GUI(s, this);
+		myController = c;	
+		
+	}
+	//SHOULD BE IN THE GUI
+	public void initGUI() {
+		myGUI.initialize();
+		
 	}
 
 	// TEMPORARY METHOD UNTIL WE FIGURE OUT A BETTER WAY TO SEND STRING BACK

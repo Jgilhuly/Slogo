@@ -17,8 +17,9 @@ public class Controller {
 
 	public void init(Stage s) {
 
-		sceneUpdater = new SceneUpdater(s, this);
-		sceneUpdater.newScene();
+		sceneUpdater = new SceneUpdater(s,this);
+		
+		sceneUpdater.initGUI();
 		
 		// get this from front end
 		// String input = "repeat + 20 10 [ fd 1 rt 2]";

@@ -40,14 +40,22 @@ public class GUI {
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
+	private String title = "SLogo";
 
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
 		// myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
 		// + language);
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
-		tView = new TurtleView();
+		
+	}
 
+	/**
+	 * Returns scene for this view so it can be added to stage.
+	 */
+	public void initialize() {
+		tView = new TurtleView();
+		myStage.setTitle(title);
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
 		myRoot.setCenter(makeCanvas());
@@ -55,8 +63,8 @@ public class GUI {
 		myRoot.setRight(makePrevCommandsPane());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
+		myStage.setScene(myScene);
 	}
-
 	private Node makeIOFields() {
 		VBox result = new VBox();
 
@@ -173,10 +181,5 @@ public class GUI {
 		return result;
 	}
 
-	/**
-	 * Returns scene for this view so it can be added to stage.
-	 */
-	public Scene getScene() {
-		return myScene;
-	}
+
 }
