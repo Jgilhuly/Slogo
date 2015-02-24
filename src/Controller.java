@@ -1,13 +1,14 @@
 import javafx.stage.Stage;
 import parser.CommandTreeNode;
 import parser.Parser;
+import ui.SceneUpdater;
 
 public class Controller {
-	private SceneHandler sceneUpdater;
+	private SceneUpdater sceneHandler;
 	
 	public void init(Stage s) {
 		
-		sceneUpdater = new SceneHandler(s);
+		sceneHandler = new SceneUpdater(s);
 		
 		
 		

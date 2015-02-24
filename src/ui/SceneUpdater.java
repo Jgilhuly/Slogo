@@ -9,7 +9,7 @@ public class SceneUpdater implements Observer {
 
 	private Stage myStage;
 	private GUI myGUI;
-//	private Controller myController;
+	private Controller myController;
 
 	public SceneUpdater (Stage stageIn, String language) {
 		myStage = stageIn;
