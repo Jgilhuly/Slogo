@@ -3,11 +3,11 @@ import parser.CommandTreeNode;
 import parser.Parser;
 
 public class Controller {
-	private SceneHandler sceneUpdater;
+//	private SceneHandler sceneUpdater;
 	
 	public void init(Stage s) {
 		
-		sceneUpdater = new SceneHandler(s);
+//		sceneUpdater = new SceneHandler(s);
 		
 		
 		
