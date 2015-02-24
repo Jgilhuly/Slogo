@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 
 public class GUI {
 
-	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
 	private ResourceBundle myResources; // for language support
 
 	private Scene myScene;
@@ -82,8 +82,8 @@ public class GUI {
 	 */
 	private Button makeButton(String property, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
-		String label = myResources.getString(property);
-		result.setText(label);
+//		String label = myResources.getString(property);
+		result.setText("Temp");
 		result.setOnAction(handler);
 		return result;
 	}
@@ -97,14 +97,14 @@ public class GUI {
 	}
 
 	private Node makeMenuBar() {
-		Menu fileMenu = new Menu(myResources.getString("File"));
+		Menu fileMenu = new Menu("File");
 
-		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
+		MenuItem fileOp1 = new MenuItem("FileOp1");
 		fileMenu.getItems().add(fileOp1);
 
-		Menu optionsMenu = new Menu(myResources.getString("Options"));
+		Menu optionsMenu = new Menu("Options");
 		
-		MenuItem optionOp1 = new MenuItem(myResources.getString("OptionOp1"));
+		MenuItem optionOp1 = new MenuItem("OptionOp1");
 		optionsMenu.getItems().add(optionOp1);
 		
 		menuBar = new MenuBar();

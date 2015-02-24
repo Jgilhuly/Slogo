@@ -1,13 +1,14 @@
 import javafx.stage.Stage;
 import parser.CommandTreeNode;
 import parser.Parser;
+import ui.SceneUpdater;
 
 public class Controller {
-	private SceneHandler sceneUpdater;
+	private SceneUpdater sceneUpdater;
 	
 	public void init(Stage s) {
 		
-		sceneUpdater = new SceneHandler(s);
+		sceneUpdater = new SceneUpdater(s,"Chinese");
 		
 		
 		
