@@ -11,9 +11,10 @@ public class SceneUpdater implements Observer {
 	private GUI myGUI;
 //	private Controller myController;
 
-	public SceneUpdater (Stage stageIn, String language) {
+	public SceneUpdater (Stage stageIn,String language) {
 		myStage = stageIn;
-		myGUI = new GUI (myStage, language, this);
+		myGUI = new GUI (myStage,language, this);
+//		myStage.show();
 	}
 	
 	@Override
