@@ -10,13 +10,16 @@ import parser.Parser;
 import ui.SceneUpdater;
 
 public class Controller {
+	private final int SCREEN_WIDTH = 1000;
+	private final int SCREEN_HEIGHT = 1000;
 	private SceneUpdater sceneUpdater;
 	private int fps = 10;
 	private Timeline animation = new Timeline();
 	private KeyFrame frame;
 
 	public void init(Stage s) {
-
+		s.setWidth(SCREEN_WIDTH);
+		s.setHeight(SCREEN_HEIGHT);
 		sceneUpdater = new SceneUpdater(s,this);
 		
 		sceneUpdater.initGUI();

@@ -2,8 +2,6 @@ package ui;
 
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -15,6 +13,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -54,28 +53,32 @@ public class GUI {
 	 * Returns scene for this view so it can be added to stage.
 	 */
 	public void initialize() {
-		tView = new TurtleView();
 		myStage.setTitle(title);
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
 		myRoot.setCenter(makeCanvas());
 		myRoot.setTop(makeMenuBar());
 		myRoot.setRight(makePrevCommandsPane());
+		
+		Image turtleImage = new Image (GUI.class.getResourceAsStream("/resources/images/turtleImage.png"));
+		tView = new TurtleView(turtleImage, Color.BLUE, canvas.getWidth()/2, canvas.getHeight()/2);
+		canvas.getGraphicsContext2D().drawImage(tView.getImageView().getImage(), tView.getImageView().getX(), tView.getImageView().getY());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
 	}
+	
 	private Node makeIOFields() {
 		VBox result = new VBox();
-
-		inputField = new TextField();
-		inputField.setPromptText("Enter your Logo Command");
-		result.getChildren().add(inputField);
 
 		outputField = new TextField();
 		outputField.setPromptText("Output will be displayed here");
 		outputField.setEditable(false);
 		result.getChildren().add(outputField);
+		
+		inputField = new TextField();
+		inputField.setPromptText("Enter your Logo Command");
+		result.getChildren().add(inputField);
 
 		confirmInput = makeButton("EnterCommand", e -> parseCommand());
 		confirmInput.setDisable(true);
@@ -106,7 +109,9 @@ public class GUI {
 
 	private Node makeCanvas() {
 		canvas = new Canvas();
-		canvas.getGraphicsContext2D().setFill(Color.TURQUOISE);
+		canvas.setWidth(myStage.getWidth()/2);
+		canvas.setHeight(myStage.getHeight()/2);
+		canvas.getGraphicsContext2D().setFill(Color.LIGHTGRAY);
 		canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(),
 				canvas.getHeight());
 		return canvas;
@@ -179,6 +184,4 @@ public class GUI {
 		VBox result = new VBox();
 		return result;
 	}
-
-
 }
