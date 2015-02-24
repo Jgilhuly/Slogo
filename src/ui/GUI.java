@@ -1,12 +1,16 @@
 package ui;
+
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -33,10 +37,13 @@ public class GUI {
 	private Button confirmInput;
 	private Canvas canvas;
 	private MenuBar menuBar;
+	private String[] languages = { "Chinese", "English", "French", "German",
+			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
+	private String selectedLanguage;
 
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
-//		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-//				+ language);
+		// myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+		// + language);
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
 		tView = new TurtleView();
@@ -68,8 +75,8 @@ public class GUI {
 		return result;
 	}
 
-	private void parseCommand(){
-		mySceneUpdater.sendCommands(inputField.getText());
+	private void parseCommand() {
+		mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
 	}
 
 	/**
@@ -82,7 +89,7 @@ public class GUI {
 	 */
 	private Button makeButton(String property, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
-//		String label = myResources.getString(property);
+		// String label = myResources.getString(property);
 		result.setText(property);
 		result.setOnAction(handler);
 		return result;
@@ -103,19 +110,64 @@ public class GUI {
 		fileMenu.getItems().add(fileOp1);
 
 		Menu optionsMenu = new Menu("Options");
-		
+
 		MenuItem optionOp1 = new MenuItem("OptionOp1");
 		optionsMenu.getItems().add(optionOp1);
-		
+
+		// ***************************************
+		// added languageMenu
+		Menu languageMenu = new Menu("Languages");
+		for (String string : languages) {
+			CheckMenuItem cmi = new CheckMenuItem(string);
+			languageMenu.getItems().add(cmi);
+			cmi.selectedProperty()
+					.addListener(
+							e -> checkMenuItems(string, cmi.isSelected(),
+									languageMenu));
+		}
+		// ***************************************
+
 		menuBar = new MenuBar();
-		menuBar.getMenus().addAll(fileMenu, optionsMenu);
+		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
 
 		return menuBar;
 	}
-	
+
+	// *****************************
+	/**
+	 * Added the following two methods to have checkable language menu bar that
+	 * disables the rest when one is clicked. Feel free to change them if there
+	 * are other/better ways to choose a language, but I just need the language
+	 * chosen by the user to be passed in the method "parseCommand"
+	 * 
+	 * @param language
+	 * @param selected
+	 * @param menu
+	 */
+	private void checkMenuItems(String language, boolean selected, Menu menu) {
+		System.out.println(selected);
+		if (selected) {
+			selectedLanguage = language;
+			toggleMenuItems(menu, language, true);
+			System.out.println(language);
+		} else {
+			toggleMenuItems(menu, language, false);
+		}
+	}
+
+	private void toggleMenuItems(Menu menu, String language, boolean state) {
+		for (int i = 0; i < languages.length; i++) {
+			MenuItem temp = menu.getItems().get(i);
+			if (!temp.getText().equals(language)) {
+				temp.setDisable(state);
+			}
+		}
+	}
+
+	// *******************************
+
 	private Node makePrevCommandsPane() {
 		VBox result = new VBox();
-		
 		return result;
 	}
 
