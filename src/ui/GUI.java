@@ -34,9 +34,9 @@ public class GUI {
 	private Canvas canvas;
 	private MenuBar menuBar;
 
-	public GUI(Stage stageIn, String language, SceneUpdater sceneUpIn) {
-		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-				+ language);
+	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
+//		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+//				+ language);
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
 		tView = new TurtleView();
@@ -68,8 +68,8 @@ public class GUI {
 		return result;
 	}
 
-	private Object parseCommand() {
-		return null;
+	private void parseCommand(){
+		mySceneUpdater.sendCommands(inputField.getText());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class GUI {
 	private Button makeButton(String property, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
 //		String label = myResources.getString(property);
-		result.setText("Temp");
+		result.setText(property);
 		result.setOnAction(handler);
 		return result;
 	}

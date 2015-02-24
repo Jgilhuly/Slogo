@@ -20,8 +20,8 @@ public class TreeGenerator {
 	private void printTestStatements(String value, int count, int numParams,
 			String type) {
 		System.out.println(value);
-//		System.out.println("Count is: " + count);
-//		System.out.println("numParams is: " + numParams);
+		// System.out.println("Count is: " + count);
+		// System.out.println("numParams is: " + numParams);
 		System.out.println("Root value is: " + type);
 		System.out.println();
 	}
@@ -72,14 +72,14 @@ public class TreeGenerator {
 			}
 
 		} else if (input.get(index).equals("[")) {
-			CommandTreeNode temp = new CommandTreeNode(input.get(index)
-					+ "-" + bracketCount++, 0, null);
+			CommandTreeNode temp = new CommandTreeNode(input.get(index) + "-"
+					+ bracketCount++, 0, null);
 			root.add(temp);
 
 			numParams = Integer.MAX_VALUE;
 
-			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count,
-					numParams, root.getType());
+			printTestStatements(input.get(index) + "-" + (bracketCount - 1),
+					count, numParams, root.getType());
 
 			index++;
 
