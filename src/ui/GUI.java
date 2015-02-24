@@ -152,6 +152,7 @@ public class GUI {
 			toggleMenuItems(menu, language, true);
 			System.out.println(language);
 		} else {
+			confirmInput.setDisable(true);
 			toggleMenuItems(menu, language, false);
 		}
 	}

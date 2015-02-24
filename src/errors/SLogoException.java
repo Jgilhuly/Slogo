@@ -16,7 +16,7 @@ public abstract class SLogoException extends RuntimeException {
 	 * Super class for all Exceptions thrown in this SLogo program
 	 */
 	private static final long serialVersionUID = 1L;
-	protected Stage popupStage;
+	private Stage popupStage;
 
 	protected SLogoException(String format) {
 		super(String.format(format));
@@ -37,6 +37,14 @@ public abstract class SLogoException extends RuntimeException {
 	 */
 	protected SLogoException(Throwable exception) {
 		super(exception);
+	}
+	
+	/**
+	 * disables stack trace
+	 */
+	@Override
+	public Throwable fillInStackTrace() {
+		return null;
 	}
 
 	/**
