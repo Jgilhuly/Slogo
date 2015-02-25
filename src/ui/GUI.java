@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -9,14 +11,21 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -40,7 +49,8 @@ public class GUI {
 	private TextField outputField;
 	private Button confirmInput;
 	private Canvas canvas;
-	private MenuBar menuBar;
+	private StackPane canvasHolder;
+	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -51,7 +61,6 @@ public class GUI {
 		 + "English");
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
-
 	}
 
 	/**
@@ -71,6 +80,8 @@ public class GUI {
 		tView = new TurtleView(turtleImage, canvas, Color.BLUE, canvas.getWidth() / 2,
 				canvas.getHeight() / 2);
 		tView.draw();
+		
+		selectedLanguage = "English"; // default
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -81,15 +92,13 @@ public class GUI {
 
 		outputField = new TextField();
 		outputField.setPromptText(myResources.getString("OutputPrompt"));
-		outputField.setEditable(false);
 
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
-		result.getChildren().add(inputField);
+		inputField.setEditable(INACTIVE);
 
 		confirmInput = makeButton(myResources.getString("Enter"), e -> parseCommand());
 		// confirmInput.setDisable(true);
-		result.getChildren().add(confirmInput);
 		
 		result.getChildren().addAll(inputField,outputField,confirmInput);
 		return result;
@@ -117,13 +126,13 @@ public class GUI {
 	}
 
 	private Node makeCanvas() {
-		canvas = new Canvas();
-		canvas.setWidth(myStage.getWidth() / 1.5);
-		canvas.setHeight(myStage.getHeight() / 1.5);
-		canvas.getGraphicsContext2D().setFill(Color.LIGHTGRAY);
-		canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(),
-				canvas.getHeight());
-		return canvas;
+		canvasHolder = new StackPane();
+		canvas = new Canvas(myStage.getWidth() / 1.5, myStage.getHeight() / 1.5);
+		
+		canvasHolder.getChildren().add(canvas);
+
+		canvasHolder.setBackground(new Background (new BackgroundFill(Color.FUCHSIA, null, null)));
+		return canvasHolder;
 	}
 
 	private Node makeMenuBar() {
@@ -151,7 +160,7 @@ public class GUI {
 		}
 		// ***************************************
 
-		menuBar = new MenuBar();
+		MenuBar menuBar = new MenuBar();
 		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
 
 		return menuBar;
@@ -191,11 +200,11 @@ public class GUI {
 //					 + selectedLanguage);
 			System.out.println(language);
 			toggleMenuItems(menu, language, ACTIVE);
-			inputField.setDisable(false);
+			inputField.setEditable(ACTIVE);
 		} else {
 			confirmInput.setDisable(true);
 			toggleMenuItems(menu, language, INACTIVE);
-			inputField.setDisable(true);
+			inputField.setEditable(INACTIVE);
 		}
 	}
 
@@ -212,6 +221,47 @@ public class GUI {
 
 	private Node makePrevCommandsPane() {
 		VBox result = new VBox();
+		result.setSpacing(5);
+		
+		ArrayList<String> cols = new ArrayList<String>();
+		
+		cols.add("Names");
+		cols.add("Values");
+		result.getChildren().add(makeTable("Variables", cols));
+	
+		cols = new ArrayList<String>();
+		cols.add("Commands");
+		result.getChildren().add(makeTable("Previous Commands", cols));
+		
+		cols = new ArrayList<String>();
+		cols.add("Commands");
+		result.getChildren().add(makeTable("User Commands", cols));
+		
 		return result;
+	}
+	
+	public void setOutputText(String outputText) {
+		outputField.setText(outputText);
+	}
+
+	private Node makeTable(String title, List<String> columnNames) {
+		VBox labelAndTable = new VBox();
+		labelAndTable.setSpacing(5);
+		
+		Label label = new Label(title);
+		label.setFont(new Font("Arial", 14));
+		
+		TableView table = new TableView();
+		
+		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+		
+		for (String s : columnNames) {
+			cols.add(new TableColumn(s));
+		}
+		
+		table.getColumns().addAll(cols);
+		
+		labelAndTable.getChildren().addAll(label, table);
+		return labelAndTable;
 	}
 }
