@@ -1,17 +1,42 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+/**
+ * container class for user defined variables
+ *
+ */
 public class Variable {
-     private Double myValue;
+     private DoubleProperty value;
+     private StringProperty name;
      
-     public Variable(Double num){
-         setValue(num);
+     public Variable(String var, Double num){
+//    	 value = new SimpleDoubleProperty(num);
+//         name = new SimpleStringProperty(var);
      }
      
-     private void setValue(Double num){
-         myValue = num;
-     }
      
      private Double getValue(){
-         return myValue;
+         return value.getValue();
      }
+     private String getName() {
+    	 return name.getValue();
+     }
+
+
+
+
+	public DoubleProperty valueProperty() {
+		if (value == null)
+			value = new SimpleDoubleProperty(this, "value");
+		return value;
+	}
+	public StringProperty nameProperty() {
+		if (name == null)
+			name = new SimpleStringProperty(this, "name");
+		return name;
+	}
 }

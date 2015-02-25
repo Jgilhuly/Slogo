@@ -1,4 +1,4 @@
-package command.turtle.query;
+package command.turtle;
 
 public class YCoordinateCommand {
 
