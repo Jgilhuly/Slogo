@@ -16,6 +16,16 @@ public class Turtle extends Observable {
 	private Color penColor;
 	private int heading; //degrees, 0 is the positive y direction
 	
+	public Turtle (){
+		//set defaults of a new turtle
+	    xLocation = 0;
+	    yLocation = 0;
+	    isDrawingLine = true;
+	    isTurtleShowing = true;
+	    penColor = Color.BLACK;
+	    heading = 0;
+	}
+	
 	public void setHeading(int degrees) {
 		heading = degrees;
 
