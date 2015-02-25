@@ -69,11 +69,11 @@ public class TurtleView implements Observer {
 	}
 
 	private double getCenterX() {
-		return myImageView.getX() + (myCanvas.getWidth() / 20);
+		return myImageView.getX() - (myCanvas.getWidth() / 20);
 	}
 
 	private double getCenterY() {
-		return myImageView.getY() + (myCanvas.getHeight() / 20);
+		return myImageView.getY() - (myCanvas.getHeight() / 20);
 	}
 
 }

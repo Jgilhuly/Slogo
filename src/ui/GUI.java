@@ -19,7 +19,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -46,6 +49,7 @@ public class GUI {
 	private TextField outputField;
 	private Button confirmInput;
 	private Canvas canvas;
+	private StackPane canvasHolder;
 	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
@@ -57,7 +61,6 @@ public class GUI {
 		 + "English");
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
-
 	}
 
 	/**
@@ -77,6 +80,8 @@ public class GUI {
 		tView = new TurtleView(turtleImage, canvas, Color.BLUE, canvas.getWidth() / 2,
 				canvas.getHeight() / 2);
 		tView.draw();
+		
+		selectedLanguage = "English"; // default
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -121,13 +126,13 @@ public class GUI {
 	}
 
 	private Node makeCanvas() {
-		canvas = new Canvas();
-		canvas.setWidth(myStage.getWidth() / 1.5);
-		canvas.setHeight(myStage.getHeight() / 1.5);
-		canvas.getGraphicsContext2D().setFill(Color.LIGHTGRAY);
-		canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(),
-				canvas.getHeight());
-		return canvas;
+		canvasHolder = new StackPane();
+		canvas = new Canvas(myStage.getWidth() / 1.5, myStage.getHeight() / 1.5);
+		
+		canvasHolder.getChildren().add(canvas);
+
+		canvasHolder.setBackground(new Background (new BackgroundFill(Color.FUCHSIA, null, null)));
+		return canvasHolder;
 	}
 
 	private Node makeMenuBar() {
@@ -233,6 +238,10 @@ public class GUI {
 		result.getChildren().add(makeTable("User Commands", cols));
 		
 		return result;
+	}
+	
+	public void setOutputText(String outputText) {
+		outputField.setText(outputText);
 	}
 
 	private Node makeTable(String title, List<String> columnNames) {

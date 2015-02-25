@@ -1,5 +1,6 @@
 package model;
 
-public class GhostView {
 
+public class GhostView {
+	
 }
