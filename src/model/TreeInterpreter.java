@@ -32,8 +32,6 @@ public class TreeInterpreter {
             update(node, paramList);
         }
 
-//this.
-
     private boolean isLeaf (CommandTreeNode node){
         return node.getChildren().isEmpty(); 
     }
@@ -58,14 +56,14 @@ public class TreeInterpreter {
 
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
-            case "command.turtle":
+            case "COMMAND.TURTLE":
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
                 break;
-            case "command.math":
+            case "COMMAND.MATH":
                 executeCommand(node, paramList);
                 break;
-            case "Variable":
+            case "VARIABLE":
                 factory.createVariable(node.getName(), variables);
                 break;
         }
