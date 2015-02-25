@@ -33,7 +33,7 @@ public class GUI {
 	private BorderPane myRoot;
 	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
-	
+
 	private TextField inputField;
 	private TextField outputField;
 	private Button confirmInput;
@@ -41,7 +41,7 @@ public class GUI {
 	private StackPane canvasHolder;
 
 	private Color backgroundColor;
-	
+
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -59,12 +59,13 @@ public class GUI {
 	public void initialize() {
 		// default values
 		selectedLanguage = "English";
-		backgroundColor = Color.FUCHSIA;
-		
+		backgroundColor = Color.BLUE;
+		makeCanvas();
+
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
-		myRoot.setCenter(makeCanvas());
+		myRoot.setCenter(canvasHolder);
 		myRoot.setTop(makeMenuBar());
 		myRoot.setRight(makePrevCommandsPane());
 
@@ -72,11 +73,10 @@ public class GUI {
 				GUI.class
 						.getResourceAsStream("/resources/images/turtleImage.png"));
 		tView = new TurtleView(turtleImage, canvas, Color.BLUE,
-				canvas.getWidth() / 2, canvas.getHeight() / 2);
+				canvas.getWidth() / 2, canvas.getHeight() / 2, canvasHolder);
 		tView.draw();
 
 		selectedLanguage = "English"; // default
-
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -84,6 +84,7 @@ public class GUI {
 
 	/**
 	 * Creates the input and output fields, and the input button
+	 * 
 	 * @return
 	 */
 	private Node makeIOFields() {
@@ -105,7 +106,8 @@ public class GUI {
 	}
 
 	/**
-	 * Sends a string slogo command through the Scene Updater and Controller, all the way to the backend
+	 * Sends a string slogo command through the Scene Updater and Controller,
+	 * all the way to the backend
 	 */
 	private void parseCommand() {
 		if (inputField.getText() != null)
@@ -131,20 +133,18 @@ public class GUI {
 
 	/**
 	 * Creates the canvas that the turtle lives on
+	 * 
 	 * @return
 	 */
-	private Node makeCanvas() {
-		canvasHolder = new StackPane();
-		canvas = new Canvas(myStage.getWidth() / 1.5, myStage.getHeight() / 1.5);
-
-		canvasHolder.getChildren().add(canvas);
-
-		canvasHolder.setBackground(new Background (new BackgroundFill(backgroundColor, null, null)));
-		return canvasHolder;
+	private void makeCanvas() {
+		canvas = CanvasCreator.makeCanvas(myStage.getWidth() / 1.5,
+				myStage.getHeight() / 1.5);
+		canvasHolder = CanvasCreator.makeCanvasHolder(canvas, backgroundColor);
 	}
 
 	/**
 	 * Creates the top menu bar
+	 * 
 	 * @return
 	 */
 	private Node makeMenuBar() {
@@ -240,11 +240,10 @@ public class GUI {
 		cols = new ArrayList<String>();
 		cols.add("Commands");
 		result.getChildren().add(makeTable("Previous Commands", cols));
-		
+
 		cols.add("Names");
 		cols.add("Values");
 		result.getChildren().add(makeTable("Variables", cols));
-		
 
 		cols = new ArrayList<String>();
 		cols.add("Commands");
@@ -266,7 +265,7 @@ public class GUI {
 
 		cols.add(tc);
 
-//		table.getColumns().addAll(cols);
+		// table.getColumns().addAll(cols);
 
 		inputField.getText();
 	}
