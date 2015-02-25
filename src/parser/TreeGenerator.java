@@ -19,18 +19,18 @@ public class TreeGenerator {
 
 	private void printTestStatements(String value, int count, int numParams,
 			String type, String name) {
-		System.out.println(value);
-		// System.out.println("Count is: " + count);
-		// System.out.println("numParams is: " + numParams);
-		System.out.println("Value is: " + type + name);
-		System.out.println();
+//		System.out.println(value);
+//		// System.out.println("Count is: " + count);
+//		// System.out.println("numParams is: " + numParams);
+//		System.out.println("Value is: " + type + name);
+//		System.out.println();
 	}
 
 	public CommandTreeNode createCommands(List<String> input) {
 		index = 0;
 		myRoot = null;
 		helper(input, 0, Integer.MAX_VALUE, myRoot);
-		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType() + myRoot.getName());
+		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType() + myRoot.getValue());
 		return myRoot;
 	}
 

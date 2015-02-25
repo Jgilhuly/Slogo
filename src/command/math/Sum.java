@@ -7,9 +7,8 @@ import command.Command;
 
 public class Sum extends Command {
 
-	@Override
-	public double calculateValue(List<CommandTreeNode> list) {
-		return list.get(0).getValue() + list.get(1).getValue();
+	public double calculateValue(List<Object> param) {
+		return (double) param.get(0) + (double) param.get(1);
 	}
 
 

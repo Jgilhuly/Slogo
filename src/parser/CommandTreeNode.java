@@ -16,6 +16,7 @@ public class CommandTreeNode {
 	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> Children) {
 		this.myType = type;
 		this.myName = name;
+		this.myValue = value;
 		this.myChildren = Children;
 		myChildren = new ArrayList<>();
 	}
