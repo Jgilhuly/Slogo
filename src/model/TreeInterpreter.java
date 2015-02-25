@@ -23,6 +23,9 @@ public class TreeInterpreter {
         variables = v;
         factory = new CommandFactory();
         myTurtle = turtle;
+        /*
+         * RENAME this pls vvvvvvv
+         */
         myController = fuckshit;
         myController.linkTurtles(myTurtle);
     }
@@ -51,7 +54,6 @@ public class TreeInterpreter {
             method = c.getClass().getDeclaredMethod("calculateValue", cArg);
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
-            System.out.println("CURRENT " + value);
             myController.setOutputText(Double.toString(value));
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException

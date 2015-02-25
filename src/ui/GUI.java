@@ -7,14 +7,17 @@ import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -33,7 +36,7 @@ public class GUI {
 	private BorderPane myRoot;
 	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
-	
+
 	private TextField inputField;
 	private TextField outputField;
 	private Button confirmInput;
@@ -43,9 +46,27 @@ public class GUI {
 	private List<String> variables;
 
 	private Color backgroundColor;
-	
+
+	/**
+	 * TODO: MAKE INHERITANCE HIERACHY FOR GUI
+	 * 
+	 */
+
+	/*
+	 * Consider using enums vvvv
+	 */
+	/*****************************/
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
+	// private String[] colors = { "Aqua", "Black", "Blue", "Cyan", "Fuchsia",
+	// "Gray", "Green", "LightBlue", "LightGreen", "Lime", "Navy",
+	// "Orange", "Red", "RoyalBlue", "Snow", "Teal", "Violet", "White",
+	// "Yellow" };
+	// private String[] hexValues = { "#00FFFF", "#000000", "#0000FF",
+	// "#00FFFF",
+	// "#FF00FF", "#808080", "#008000", "#ADD8E6", "90EE90", "#00FF00",
+	// "#000080", "#FFA500", "#FF0000", "#4169E1" };
+	/*****************************/
 	private String selectedLanguage;
 
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
@@ -62,12 +83,12 @@ public class GUI {
 		// default values
 		selectedLanguage = "English";
 		backgroundColor = Color.FUCHSIA;
-		
+
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
-		myRoot.setCenter(makeCanvas());
-		myRoot.setTop(makeMenuBar());
+		myRoot.setCenter(makeCanvas(backgroundColor));
+		myRoot.setTop(makeTopBar());
 		myRoot.setRight(makePrevCommandsPane());
 
 		Image turtleImage = new Image(
@@ -78,13 +99,13 @@ public class GUI {
 
 		selectedLanguage = "English"; // default
 
-
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
 	}
 
 	/**
 	 * Creates the input and output fields, and the input button
+	 * 
 	 * @return
 	 */
 	private Node makeIOFields() {
@@ -106,7 +127,8 @@ public class GUI {
 	}
 
 	/**
-	 * Sends a string slogo command through the Scene Updater and Controller, all the way to the backend
+	 * Sends a string slogo command through the Scene Updater and Controller,
+	 * all the way to the backend
 	 */
 	private void parseCommand() {
 		if (inputField.getText() != null)
@@ -132,20 +154,56 @@ public class GUI {
 
 	/**
 	 * Creates the canvas that the turtle lives on
+	 * 
 	 * @return
 	 */
-	private Node makeCanvas() {
+	private Node makeCanvas(Color color) {
 		canvasHolder = new StackPane();
 		canvas = new Canvas(myStage.getWidth() / 1.5, myStage.getHeight() / 1.5);
 
 		canvasHolder.getChildren().add(canvas);
 
-		canvasHolder.setBackground(new Background (new BackgroundFill(backgroundColor, null, null)));
+		canvasHolder.setBackground(new Background(new BackgroundFill(color,
+				null, null)));
 		return canvasHolder;
+	}
+
+	private Node makeColorPicker() {
+		ColorPicker colorPicker = new ColorPicker();
+		final SVGPath svg = new SVGPath();
+		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
+				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
+				+ "L70,50");
+		svg.setStroke(Color.DARKGREY);
+		svg.setStrokeWidth(2);
+		svg.setEffect(new DropShadow());
+		svg.setFill(colorPicker.getValue());
+
+		colorPicker.setOnAction(e -> {
+			svg.setFill(colorPicker.getValue());
+			changeColor(colorPicker.getValue());
+		});
+		return colorPicker;
+	}
+
+	private void changeColor(Color color) {
+		canvasHolder.setBackground(new Background(new BackgroundFill(color,
+				null, null)));
+	}
+
+	/**
+	 * Creates top bar
+	 */
+	private Node makeTopBar() {
+		ToolBar tb = new ToolBar();
+		tb.getItems().addAll(makeMenuBar(), makeColorPicker());
+
+		return tb;
 	}
 
 	/**
 	 * Creates the top menu bar
+	 * 
 	 * @return
 	 */
 	private Node makeMenuBar() {
@@ -162,21 +220,31 @@ public class GUI {
 
 		// ***************************************
 		// added languageMenu
-		Menu languageMenu = new Menu(myResources.getString("Languages"));
-		for (String string : languages) {
-			CheckMenuItem cmi = new CheckMenuItem(string);
-			languageMenu.getItems().add(cmi);
-			cmi.selectedProperty()
-					.addListener(
-							e -> checkMenuItems(string, cmi.isSelected(),
-									languageMenu));
-		}
+		Menu languageMenu = makeMenu("Languages", languages);
 		// ***************************************
 
 		MenuBar menuBar = new MenuBar();
 		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
 
 		return menuBar;
+	}
+
+	/**
+	 * Creates Menu - temporary method before inheritance hierarchy
+	 */
+	private Menu makeMenu(String name, String[] list) {
+		Menu menu = new Menu(myResources.getString(name));
+		for (String string : list) {
+			CheckMenuItem cmi = new CheckMenuItem(string);
+			menu.getItems().add(cmi);
+
+			cmi.selectedProperty()
+					.addListener(
+							e -> checkLanguageMenuItems(string,
+									cmi.isSelected(), menu));
+
+		}
+		return menu;
 	}
 
 	/**
@@ -207,7 +275,8 @@ public class GUI {
 	 * @param selected
 	 * @param menu
 	 */
-	private void checkMenuItems(String language, boolean selected, Menu menu) {
+	private void checkLanguageMenuItems(String language, boolean selected,
+			Menu menu) {
 		confirmInput.setDisable(false);
 		if (selected) {
 			selectedLanguage = language;
@@ -223,10 +292,10 @@ public class GUI {
 		}
 	}
 
-	private void toggleMenuItems(Menu menu, String language, boolean state) {
+	private void toggleMenuItems(Menu menu, String input, boolean state) {
 		for (int i = 0; i < languages.length; i++) {
 			MenuItem temp = menu.getItems().get(i);
-			if (!temp.getText().equals(language)) {
+			if (!temp.getText().equals(input)) {
 				temp.setDisable(state);
 			}
 		}
@@ -243,11 +312,10 @@ public class GUI {
 		cols = new ArrayList<String>();
 		cols.add("Commands");
 		result.getChildren().add(p.makeTable("Previous Commands", cols));
-		
+
 		cols.add("Names");
 		cols.add("Values");
 		result.getChildren().add(p.makeTable("Variables", cols));
-		
 
 		cols = new ArrayList<String>();
 		cols.add("Commands");
@@ -261,7 +329,6 @@ public class GUI {
 		outputField.setText(outputText);
 	}
 
-
 	private void addHistory() {
 		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
 
@@ -271,7 +338,7 @@ public class GUI {
 
 		cols.add(tc);
 
-//		table.getColumns().addAll(cols);
+		// table.getColumns().addAll(cols);
 
 		inputField.getText();
 	}
@@ -288,7 +355,6 @@ public class GUI {
 		labelAndTable.getChildren().addAll(label, table);
 		return labelAndTable;
 	}
-
 
 	public Observer getTurtleView() {
 		return tView;
