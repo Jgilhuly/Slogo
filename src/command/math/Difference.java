@@ -1,9 +1,11 @@
 package command.math;
 
+import java.util.List;
+import command.Command;
 
+public class Difference extends Command {
 
-public class Difference {
-
-
-
+        public double calculateValue(List<Object> param) {
+                return (double) param.get(0) - (double) param.get(1);
+        }
 }
