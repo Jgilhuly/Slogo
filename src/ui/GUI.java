@@ -85,11 +85,9 @@ public class GUI {
 
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
-		result.getChildren().add(inputField);
 
 		confirmInput = makeButton(myResources.getString("Enter"), e -> parseCommand());
 		// confirmInput.setDisable(true);
-		result.getChildren().add(confirmInput);
 		
 		result.getChildren().addAll(inputField,outputField,confirmInput);
 		return result;
