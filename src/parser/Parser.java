@@ -45,7 +45,7 @@ public class Parser {
 	private List<String> parseList(String input) {
 		List<String> ret = new ArrayList<>();
 		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
-				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([\\-\\+\\-\\%\\*]))"
+				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([*+-/%~]))"
 				+ "|(\\[)|(\\])|(\\()|(\\))");
 		Matcher m = p.matcher(input);
 		while (m.find()) {

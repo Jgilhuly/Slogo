@@ -72,8 +72,7 @@ public class GUI {
 				GUI.class
 						.getResourceAsStream("/resources/images/turtleImage.png"));
 		tView = new TurtleView(turtleImage, canvas, Color.BLUE,
-				canvas.getWidth() / 2, canvas.getHeight() / 2);
-		tView.draw();
+				canvas.getWidth() / 2, canvas.getHeight() / 2, canvasHolder);
 
 		selectedLanguage = "English"; // default
 
