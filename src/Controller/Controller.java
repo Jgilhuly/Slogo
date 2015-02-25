@@ -42,10 +42,16 @@ public class Controller {
 		woot.interpretTree(node);
 		return node;
 	}
+	
+	public void setOutputText(String outputText) {
+		sceneUpdater.setOutputText(outputText);
+	}
 
 	public KeyFrame addKeyFrame(int frameRate) {
 		return new KeyFrame(Duration.millis(1000 / frameRate), e -> update(e));
 	}
+	
+	public void linkTurtles() {}
 
 	private void update(ActionEvent e) {
 		

@@ -22,20 +22,22 @@ public class SceneUpdater implements Observer {
 		myController = c;	
 		
 	}
-	//SHOULD BE IN THE GUI
+	
 	public void initGUI() {
 		myGUI.initialize();
-		
 	}
 
-	// TEMPORARY METHOD UNTIL WE FIGURE OUT A BETTER WAY TO SEND STRING BACK
 	public void sendCommands(String input, String language) {
 		myController.parseCommand(input, language);
+	}
+	
+	public void setOutputText(String outputText) {
+		myGUI.setOutputText(outputText);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// Update TurtleView to move the image
+		// Update things from GhostView?
 	}
 
 }
