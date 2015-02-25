@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
 import controller.Controller;
 import command.Command;
 import parser.CommandTreeNode;
@@ -51,6 +52,7 @@ public class TreeInterpreter {
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
             System.out.println("CURRENT " + value);
+            myController.setOutputText(Double.toString(value));
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
@@ -65,8 +67,6 @@ public class TreeInterpreter {
                 System.out.println("YOLOSWAG");
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
-                
-                
                 break;
             case "COMMAND.CONTROL":
                 paramList.add(this);
