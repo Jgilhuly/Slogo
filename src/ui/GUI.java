@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -9,14 +11,18 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -40,7 +46,7 @@ public class GUI {
 	private TextField outputField;
 	private Button confirmInput;
 	private Canvas canvas;
-	private MenuBar menuBar;
+	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -149,7 +155,7 @@ public class GUI {
 		}
 		// ***************************************
 
-		menuBar = new MenuBar();
+		MenuBar menuBar = new MenuBar();
 		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
 
 		return menuBar;
@@ -210,6 +216,43 @@ public class GUI {
 
 	private Node makePrevCommandsPane() {
 		VBox result = new VBox();
+		result.setSpacing(5);
+		
+		ArrayList<String> cols = new ArrayList<String>();
+		
+		cols.add("Names");
+		cols.add("Values");
+		result.getChildren().add(makeTable("Variables", cols));
+	
+		cols = new ArrayList<String>();
+		cols.add("Commands");
+		result.getChildren().add(makeTable("Previous Commands", cols));
+		
+		cols = new ArrayList<String>();
+		cols.add("Commands");
+		result.getChildren().add(makeTable("User Commands", cols));
+		
 		return result;
+	}
+
+	private Node makeTable(String title, List<String> columnNames) {
+		VBox labelAndTable = new VBox();
+		labelAndTable.setSpacing(5);
+		
+		Label label = new Label(title);
+		label.setFont(new Font("Arial", 14));
+		
+		TableView table = new TableView();
+		
+		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+		
+		for (String s : columnNames) {
+			cols.add(new TableColumn(s));
+		}
+		
+		table.getColumns().addAll(cols);
+		
+		labelAndTable.getChildren().addAll(label, table);
+		return labelAndTable;
 	}
 }
