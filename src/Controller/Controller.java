@@ -1,4 +1,5 @@
 package Controller;
+import model.TreeInterpreter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -16,7 +17,6 @@ public class Controller {
 	private KeyFrame frame;
 
 	public void init(Stage s) {
-
 		sceneUpdater = new SceneUpdater(s,this);
 		
 		sceneUpdater.initGUI();
@@ -37,7 +37,10 @@ public class Controller {
 	// TODO: get the current language for the parser from the view
 	public CommandTreeNode parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
-		return pp.makeTree(input);
+		CommandTreeNode node = pp.makeTree(input);
+		TreeInterpreter woot = new TreeInterpreter();
+		woot.interpretTree(node);
+		return node;
 	}
 
 	public KeyFrame addKeyFrame(int frameRate) {

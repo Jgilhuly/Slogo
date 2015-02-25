@@ -22,5 +22,5 @@ public class UnmatchedBracketException extends SLogoException {
     public UnmatchedBracketException (Throwable exception) {
         super(exception);
     }
-
+    
 }
