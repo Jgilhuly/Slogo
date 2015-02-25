@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 public class TreeGenerator {
-	private Map<String, Integer> parametersMap;
+	private Map<String, Object[]> parametersMap;
 	private int index;
 	private int bracketCount = 0;
 	private CommandTreeNode myRoot;
@@ -115,7 +115,7 @@ public class TreeGenerator {
 	private HashMap<String, Integer> createParametersMap() {
 		ResourceBundle resources = ResourceBundle.getBundle("parser/parameters");
 		Enumeration<String> paramKeys = resources.getKeys();
-		HashMap<String, Integer> newMap = new HashMap<>();
+		Map<String, Object[]> newMap = new HashMap<>();
 
 		while (paramKeys.hasMoreElements()) {
 			String Key = paramKeys.nextElement();
