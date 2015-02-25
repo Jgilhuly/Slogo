@@ -42,8 +42,8 @@ public class TurtleView implements Observer {
 
 	private void drawLine(double x1, double y1, double x2, double y2) {
 		myCanvas.getGraphicsContext2D().setFill(myColor);
-		myCanvas.getGraphicsContext2D().fillRect(x1, y1, Math.abs(x2 - x1),
-				Math.abs(y2 - y1));
+		myCanvas.getGraphicsContext2D().setLineWidth(5);
+		myCanvas.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
 	}
 
 	@Override
