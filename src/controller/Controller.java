@@ -27,6 +27,7 @@ public class Controller {
 	public void init(Stage s) {
 		sceneUpdater = new SceneUpdater(s,this);
 		sceneUpdater.initGUI();
+		linkTurtles(turtle);
 		
 		// get this from front end
 		// String input = "repeat + 20 10 [ fd 1 rt 2]";
@@ -45,7 +46,7 @@ public class Controller {
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
 		CommandTreeNode node = pp.makeTree(input);
-		woot = new TreeInterpreter(commands, variables, turtle, this);
+		woot = new TreeInterpreter(commands, variables, turtle);
 		woot.interpretTree(node);
 	}
 	

@@ -17,13 +17,11 @@ public class TreeInterpreter {
     private Controller myController;
     
     
-    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle, Controller fuckshit) {
+    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle) {
         commands = c;
         variables = v;
         factory = new CommandFactory(variables);
         myTurtle = turtle;
-        myController = fuckshit;
-        myController.linkTurtles(myTurtle);
     }
     
     public void interpretTree (CommandTreeNode node) {
