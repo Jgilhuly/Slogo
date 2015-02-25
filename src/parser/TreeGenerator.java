@@ -118,7 +118,6 @@ public class TreeGenerator {
 			printTestStatements(value, 0, 1, temp.getType(), root.getName());
 			index++;
 			count++;
-			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 			String value = input.get(index);
 			CommandTreeNode temp = new CommandTreeNode("Constant", "Constant",
@@ -129,7 +128,6 @@ public class TreeGenerator {
 			printTestStatements(value, count, numParams, temp.getType(),
 					root.getName());
 			index++;
-			return;
 		} else if (isMethod) {
 			System.out.println("Method name is: " + input.get(index));
 			System.out.println();
@@ -137,7 +135,6 @@ public class TreeGenerator {
 			index++;
 		}
 	}
-
 	private HashMap<String, String[]> createParametersMap() {
 		ResourceBundle resources = ResourceBundle
 				.getBundle("parser/parameters");

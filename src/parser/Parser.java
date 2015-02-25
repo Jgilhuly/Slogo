@@ -28,6 +28,7 @@ public class Parser {
 	private int ListStartCount = 0;
 	private int ListEndCount = 0;
 	private boolean makingUserInstruction = false;
+	private ArrayList<String> methodList = new ArrayList<>();
 
 	public Parser(String language) {
 		patternList = makePatterns(language);
@@ -93,12 +94,15 @@ public class Parser {
 		// if making procedure, return method call
 		if (makingUserInstruction) {
 			makingUserInstruction = false;
+			methodList.add(input);
 			return input;
 		}
 		// if none found
 		throw new CommandNotFoundException(input);
 	}
-
+	public String method() {
+		return input;
+	}
 	public CommandTreeNode makeTree(String input) {
 		List<String> translate = parseList(input);
 		TreeGenerator tg = new TreeGenerator();
