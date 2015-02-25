@@ -9,11 +9,14 @@ import java.util.List;
 // important : http://math.hws.edu/javanotes/c9/s4.html
 public class CommandTreeNode {
 	private String myType;
+	private String myName;
 	private double myValue;
 	private List<CommandTreeNode> myChildren;
 
-	public CommandTreeNode(String type, double value, List<CommandTreeNode> Children) {
+	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> Children) {
 		this.myType = type;
+		this.myName = name;
+		this.myValue = value;
 		this.myChildren = Children;
 		myChildren = new ArrayList<>();
 	}
@@ -43,6 +46,9 @@ public class CommandTreeNode {
 		return myType;
 	}
 
+	public String getName() {
+	        return myName;
+	}
 	public List<CommandTreeNode> getChildren() {
 		return myChildren;
 	}

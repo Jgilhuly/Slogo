@@ -95,6 +95,7 @@ public class Parser {
 	public CommandTreeNode makeTree(String input) {
 		List<String> translate = parseList(input);
 		TreeGenerator tg = new TreeGenerator();
+		
 		return tg.createCommands(translate);
 	}
 }
