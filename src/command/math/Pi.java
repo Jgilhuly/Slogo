@@ -1,5 +1,11 @@
 package command.math;
 
-public class Pi {
+import java.util.List;
+import command.Command;
 
+public class Pi extends Command {
+
+        public double calculateValue(List<Object> param) {
+                return Math.PI;
+        }
 }
