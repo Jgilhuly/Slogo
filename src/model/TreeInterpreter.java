@@ -12,26 +12,12 @@ import command.Command;
 import parser.CommandTreeNode;
 
 public class TreeInterpreter {
-//	private Map<String, Integer> parametersMap;
 	private CommandFactory factory;
 	
 	public TreeInterpreter(){
 		factory = new CommandFactory();
-//		parametersMap = createParametersMap();
 
 	}
-	
-//	private HashMap<String, Integer> createParametersMap() {
-//		ResourceBundle resources = ResourceBundle.getBundle("parser/parameters");
-//		Enumeration<String> paramKeys = resources.getKeys();
-//		HashMap<String, Integer> newMap = new HashMap<>();
-//
-//		while (paramKeys.hasMoreElements()) {
-//			String Key = paramKeys.nextElement();
-//			newMap.put(Key, Integer.parseInt(resources.getString(Key)));
-//		}
-//		return newMap;
-//	}
 	
 	public void interpretTree(CommandTreeNode node){
 	    if(node.getChildren().isEmpty()){ //Leaf node is reached
@@ -68,7 +54,6 @@ public class TreeInterpreter {
 	public CommandTreeNode helper(CommandTreeNode node){
 	    switch (node.getType()){
 	        case "COMMAND":
-	            System.out.println("COMMAND");
 	            Command c = factory.createCommand(node.getName());
 	            break;
 	        case "VARIABLE":

@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import errors.NoInputFoundException;
+
 public class TreeGenerator {
-	private Map<String, Object[]> parametersMap;
+	private Map<String, Object[]> parametersMap; //toDo: implement the correct parametersMap
 	private int index;
 	private int bracketCount = 0;
 	private CommandTreeNode myRoot;
@@ -27,11 +29,15 @@ public class TreeGenerator {
 	}
 
 	public CommandTreeNode createCommands(List<String> input) {
-		index = 0;
-		myRoot = null;
-		helper(input, 0, Integer.MAX_VALUE, myRoot);
-		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType() + myRoot.getValue());
-		return myRoot;
+		try {
+			index = 0;
+			myRoot = null;
+			helper(input, 0, Integer.MAX_VALUE, myRoot);
+			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType());
+			return myRoot;
+		} catch (NullPointerException e) {
+			throw new NoInputFoundException();
+		}
 	}
 
 	private void helper(List<String> input, int count, int numParams,
@@ -72,7 +78,6 @@ public class TreeGenerator {
 			}
 
 		} else if (input.get(index).equals("[")) {
-
 			CommandTreeNode temp = new CommandTreeNode("BRACKET", input.get(index) + "-" + bracketCount++, 0, null);
 
 			root.add(temp);
@@ -101,7 +106,6 @@ public class TreeGenerator {
 			count++;
 			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
-
 			CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT", Double.parseDouble(input.get(index)), null);
 			root.add(temp);
 			count++;
@@ -113,7 +117,8 @@ public class TreeGenerator {
 	}
 
 	private HashMap<String, Integer> createParametersMap() {
-		ResourceBundle resources = ResourceBundle.getBundle("parser/parameters");
+		ResourceBundle resources = ResourceBundle
+				.getBundle("parser/parameters");
 		Enumeration<String> paramKeys = resources.getKeys();
 		Map<String, Object[]> newMap = new HashMap<>();
 
