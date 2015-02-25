@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javafx.stage.Stage;
-import Controller.Controller;
+import controller.Controller;
 
 public class SceneUpdater implements Observer {
 	private final int SCREEN_WIDTH = 600;
