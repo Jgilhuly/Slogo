@@ -51,6 +51,7 @@ public class TreeInterpreter {
             }
 	}
 	
+
 	public CommandTreeNode helper(CommandTreeNode node){
 	    switch (node.getType()){
 	        case "COMMAND":
@@ -67,6 +68,7 @@ public class TreeInterpreter {
 	            break;       
 	    }
 	    return node;
+
 	}
 	
 }

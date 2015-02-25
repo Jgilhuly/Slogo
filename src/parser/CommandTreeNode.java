@@ -61,17 +61,7 @@ public class CommandTreeNode {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-//		final CommandTreeNode other = (CommandTreeNode) obj;
-//		if (this.myValue==null)) {
-//			
-//		}
-//		if ((this.name == null) ? (other.name != null) : !this.name
-//				.equals(other.name)) {
-//			return false;
-//		}
-//		if (this.age != other.age) {
-//			return false;
-//		}
+
 		return true;
 	}
 
