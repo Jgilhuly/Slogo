@@ -17,7 +17,7 @@ public class Forward extends Command {
 		double newX = t.getX() * Math.sin(t.getHeading());
 		double newY = t.getY() * Math.cos(t.getHeading());
 		t.setXY(newX, newY);
-		//NOTIFY 
+		t.updateTurtleViewers();
 	}
 	
 }

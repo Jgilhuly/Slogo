@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
+import Controller.Controller;
 import command.Command;
 import parser.CommandTreeNode;
 
@@ -14,12 +14,16 @@ public class TreeInterpreter {
     private CommandList commands;
     private VariableList variables;
     private Turtle myTurtle;
+    private Controller myController;
     
     
-    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle) {
+    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle, Controller fuckshit) {
         commands = c;
         variables = v;
         factory = new CommandFactory(variables);
+        myTurtle = turtle;
+        myController = fuckshit;
+        myController.linkTurtles(myTurtle);
     }
     
     public void interpretTree (CommandTreeNode node) {
@@ -58,8 +62,11 @@ public class TreeInterpreter {
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
             case "COMMAND.TURTLE":
+                System.out.println("YOLOSWAG");
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
+                
+                
                 break;
             case "COMMAND.CONTROL":
                 paramList.add(this);
