@@ -11,21 +11,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
@@ -43,10 +31,9 @@ public class GUI {
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
-
 	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
-
+	
 	private TextField inputField;
 	private TextField outputField;
 	private Button confirmInput;
@@ -95,15 +82,19 @@ public class GUI {
 		myStage.setScene(myScene);
 	}
 
+	/**
+	 * Creates the input and output fields, and the input button
+	 * @return
+	 */
 	private Node makeIOFields() {
 		VBox result = new VBox();
 
 		outputField = new TextField();
 		outputField.setPromptText(myResources.getString("OutputPrompt"));
+		outputField.setEditable(INACTIVE);
 
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
-		inputField.setEditable(INACTIVE);
 
 		confirmInput = makeButton(myResources.getString("Enter"),
 				e -> parseCommand());
@@ -113,6 +104,9 @@ public class GUI {
 		return result;
 	}
 
+	/**
+	 * Sends a string slogo command through the Scene Updater and Controller, all the way to the backend
+	 */
 	private void parseCommand() {
 		if (inputField.getText() != null)
 			mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
@@ -135,6 +129,10 @@ public class GUI {
 		return result;
 	}
 
+	/**
+	 * Creates the canvas that the turtle lives on
+	 * @return
+	 */
 	private Node makeCanvas() {
 		canvasHolder = new StackPane();
 		canvas = new Canvas(myStage.getWidth() / 1.5, myStage.getHeight() / 1.5);
@@ -145,6 +143,10 @@ public class GUI {
 		return canvasHolder;
 	}
 
+	/**
+	 * Creates the top menu bar
+	 * @return
+	 */
 	private Node makeMenuBar() {
 		Menu fileMenu = new Menu(myResources.getString("File"));
 
@@ -176,6 +178,9 @@ public class GUI {
 		return menuBar;
 	}
 
+	/**
+	 * Shows the HTML Help window
+	 */
 	private void showHTMLHelp() {
 		WebView browser = new WebView();
 		WebEngine webEngine = browser.getEngine();
@@ -191,7 +196,6 @@ public class GUI {
 		stage.show();
 	}
 
-	// *****************************
 	/**
 	 * Added the following two methods to have checkable language menu bar that
 	 * disables the rest when one is clicked. Feel free to change them if there
@@ -226,8 +230,6 @@ public class GUI {
 			}
 		}
 	}
-
-	// *******************************
 
 	private Node makePrevCommandsPane() {
 		VBox result = new VBox();
