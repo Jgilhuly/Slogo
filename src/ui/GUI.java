@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 public class GUI {
 
-	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
 	private ResourceBundle myResources; // for language support
 
 	private Scene myScene;
@@ -41,56 +41,62 @@ public class GUI {
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
-	private String title = "SLogo";
 
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
-		// myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-		// + language);
+		 myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+		 + "English");
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
-		
+
 	}
 
 	/**
 	 * Returns scene for this view so it can be added to stage.
 	 */
 	public void initialize() {
-		myStage.setTitle(title);
+		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
 		myRoot.setCenter(makeCanvas());
 		myRoot.setTop(makeMenuBar());
 		myRoot.setRight(makePrevCommandsPane());
-		
-		Image turtleImage = new Image (GUI.class.getResourceAsStream("/resources/images/turtleImage.png"));
-		tView = new TurtleView(turtleImage, Color.BLUE, canvas.getWidth()/2, canvas.getHeight()/2);
-		canvas.getGraphicsContext2D().drawImage(tView.getImageView().getImage(), tView.getImageView().getX(), tView.getImageView().getY());
+
+		Image turtleImage = new Image(
+				GUI.class
+						.getResourceAsStream("/resources/images/turtleImage.png"));
+		tView = new TurtleView(turtleImage, Color.BLUE, canvas.getWidth() / 2,
+				canvas.getHeight() / 2);
+		canvas.getGraphicsContext2D().drawImage(
+				tView.getImageView().getImage(), tView.getImageView().getX(),
+				tView.getImageView().getY(), canvas.getHeight() / 10,
+				canvas.getWidth() / 10);
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
 	}
-	
+
 	private Node makeIOFields() {
 		VBox result = new VBox();
 
 		outputField = new TextField();
-		outputField.setPromptText("Output will be displayed here");
+		outputField.setPromptText(myResources.getString("OutputPrompt"));
 		outputField.setEditable(false);
 		result.getChildren().add(outputField);
-		
+
 		inputField = new TextField();
-		inputField.setPromptText("Enter your Logo Command");
+		inputField.setPromptText(myResources.getString("InputPrompt"));
 		result.getChildren().add(inputField);
 
-		confirmInput = makeButton("EnterCommand", e -> parseCommand());
-		confirmInput.setDisable(true);
+		confirmInput = makeButton(myResources.getString("Enter"), e -> parseCommand());
+		// confirmInput.setDisable(true);
 		result.getChildren().add(confirmInput);
 
 		return result;
 	}
 
 	private void parseCommand() {
-		mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
+		if (inputField.getText() != null)
+			mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
 	}
 
 	/**
@@ -111,8 +117,8 @@ public class GUI {
 
 	private Node makeCanvas() {
 		canvas = new Canvas();
-		canvas.setWidth(myStage.getWidth()/2);
-		canvas.setHeight(myStage.getHeight()/2);
+		canvas.setWidth(myStage.getWidth() / 2);
+		canvas.setHeight(myStage.getHeight() / 2);
 		canvas.getGraphicsContext2D().setFill(Color.LIGHTGRAY);
 		canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(),
 				canvas.getHeight());
@@ -120,20 +126,20 @@ public class GUI {
 	}
 
 	private Node makeMenuBar() {
-		Menu fileMenu = new Menu("File");
+		Menu fileMenu = new Menu(myResources.getString("File"));
 
-		MenuItem fileOp1 = new MenuItem("FileOp1");
+		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
 		fileMenu.getItems().add(fileOp1);
 
-		Menu optionsMenu = new Menu("Options");
+		Menu optionsMenu = new Menu(myResources.getString("Options"));
 
-		MenuItem htmlHelp = new MenuItem("Help");
+		MenuItem htmlHelp = new MenuItem(myResources.getString("Help"));
 		htmlHelp.setOnAction(e -> showHTMLHelp());
 		optionsMenu.getItems().add(htmlHelp);
 
 		// ***************************************
 		// added languageMenu
-		Menu languageMenu = new Menu("Languages");
+		Menu languageMenu = new Menu(myResources.getString("Languages"));
 		for (String string : languages) {
 			CheckMenuItem cmi = new CheckMenuItem(string);
 			languageMenu.getItems().add(cmi);
@@ -152,16 +158,17 @@ public class GUI {
 
 	private void showHTMLHelp() {
 		WebView browser = new WebView();
-	    WebEngine webEngine = browser.getEngine();
-	    webEngine.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
-	    
-	    VBox helpRoot = new VBox();
-	    helpRoot.getChildren().add(browser);
-	    
-	    Stage stage = new Stage();
-	    stage.setTitle("Help Page");
-	    stage.setScene(new Scene(helpRoot, 500, 500));
-	    stage.show();
+		WebEngine webEngine = browser.getEngine();
+		webEngine
+				.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
+
+		VBox helpRoot = new VBox();
+		helpRoot.getChildren().add(browser);
+
+		Stage stage = new Stage();
+		stage.setTitle(myResources.getString("HelpPageTitle"));
+		stage.setScene(new Scene(helpRoot, 500, 500));
+		stage.show();
 	}
 
 	// *****************************
@@ -179,6 +186,8 @@ public class GUI {
 		confirmInput.setDisable(false);
 		if (selected) {
 			selectedLanguage = language;
+//			 myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+//					 + selectedLanguage);
 			toggleMenuItems(menu, language, true);
 			System.out.println(language);
 		} else {

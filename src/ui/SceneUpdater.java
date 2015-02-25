@@ -7,14 +7,17 @@ import javafx.stage.Stage;
 import Controller.Controller;
 
 public class SceneUpdater implements Observer {
-
+	private final int SCREEN_WIDTH = 1000;
+	private final int SCREEN_HEIGHT = 1000;
 	private GUI myGUI;
 
 	private Controller myController;
 
 
 	public SceneUpdater(Stage s, Controller c) {
-	
+		s.setWidth(SCREEN_WIDTH);
+		s.setHeight(SCREEN_HEIGHT);
+		
 		myGUI = new GUI(s, this);
 		myController = c;	
 		

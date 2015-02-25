@@ -9,9 +9,9 @@ import javafx.scene.paint.Color;
 
 
 public class TurtleView implements Observer {
-	ImageView myImageView;
-	Color myColor;
-	int myHeading; // in degrees, 0 is north
+	private ImageView myImageView;
+	private Color myColor;
+	private int myHeading; // in degrees, 0 is north
 	
 	public TurtleView(Image imageIn, Color colorIn, double xIn, double yIn) {
 		myImageView = new ImageView();
@@ -21,10 +21,6 @@ public class TurtleView implements Observer {
 		myColor = colorIn;
 		
 		myHeading = 0;
-		
-		myImageView.setFitWidth(10);
-		myImageView.setPreserveRatio(true);
-		myImageView.setSmooth(true);
 	}
 	
 	public ImageView getImageView() {
