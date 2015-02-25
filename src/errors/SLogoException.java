@@ -68,7 +68,7 @@ public abstract class SLogoException extends RuntimeException {
 		});
 		HBox layout = new HBox(10);
 		layout.setStyle("-fx-background-color: cornsilk; -fx-padding: 10;");
-		layout.getChildren().addAll(ok, prompt);
+		layout.getChildren().addAll(prompt, ok);
 		popupStage.setScene(new Scene(layout));
 		popupStage.show();
 	}
