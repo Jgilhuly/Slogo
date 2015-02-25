@@ -4,7 +4,7 @@ import command.Command;
 import model.*;
 
 public class CommandFactory {
-        private VariableList variableList;
+    private VariableList variableList;
         
 	public CommandFactory(VariableList vList){
 	    variableList = vList;
@@ -12,7 +12,9 @@ public class CommandFactory {
 	public Command createCommand(String prefix, String commandName) {
 		Command object = null;
 		try {
+
 			Class<?> command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
+
 			object = (Command) command.newInstance();
 			
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
