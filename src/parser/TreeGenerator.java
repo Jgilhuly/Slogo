@@ -91,7 +91,7 @@ public class TreeGenerator {
 			}
 		} else if (input.get(index).equals("[")) {
 			String value = input.get(index);
-			CommandTreeNode temp = new CommandTreeNode("Bracket", value + "-"
+			CommandTreeNode temp = new CommandTreeNode("BRACKET", value + "-"
 					+ bracketCount++, 0, null);
 
 			root.add(temp);
@@ -111,7 +111,7 @@ public class TreeGenerator {
 			}
 		} else if (Pattern.matches(":[a-zA-Z]+", input.get(index))) { // Variable
 			String value = input.get(index);
-			CommandTreeNode temp = new CommandTreeNode("Variable", value, 0,
+			CommandTreeNode temp = new CommandTreeNode("VARIABLE", value, 0,
 					null);
 			root.add(temp);
 
@@ -120,7 +120,7 @@ public class TreeGenerator {
 			count++;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 			String value = input.get(index);
-			CommandTreeNode temp = new CommandTreeNode("Constant", "Constant",
+			CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT",
 					Double.parseDouble(input.get(index)), null);
 			root.add(temp);
 			count++;
@@ -153,6 +153,6 @@ public class TreeGenerator {
 	}
 
 	private String obtainSubCommand(String key) {
-		return "command." + parametersMap.get(key)[TYPE_INDEX];
+		return "COMMAND." + parametersMap.get(key)[TYPE_INDEX];
 	}
 }
