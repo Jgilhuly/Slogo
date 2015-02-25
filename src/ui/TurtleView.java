@@ -14,6 +14,8 @@ public class TurtleView implements Observer {
 	private Canvas myCanvas;
 	private Color myColor;
 	private double myHeading; // in degrees, 0 is north
+	private double myWidthOffset;
+	private double myHeightOffset;
 
 	public TurtleView(Image imageIn, Canvas canvasIn, Color colorIn,
 			double xIn, double yIn) {
@@ -23,6 +25,9 @@ public class TurtleView implements Observer {
 		myImageView.setX(xIn);
 		myImageView.setY(yIn);
 		myColor = colorIn;
+		
+		myWidthOffset = myCanvas.getWidth()/2;
+		myHeightOffset = myCanvas.getHeight()/2;
 
 		myHeading = 50;
 		myImageView.setPreserveRatio(true);
@@ -69,11 +74,11 @@ public class TurtleView implements Observer {
 	}
 
 	private double getCenterX() {
-		return myImageView.getX() - (myCanvas.getWidth() / 20);
+		return (myImageView.getX() - (myCanvas.getWidth() / 20)) - myWidthOffset;
 	}
 
 	private double getCenterY() {
-		return myImageView.getY() - (myCanvas.getHeight() / 20);
+		return (myImageView.getY() - (myCanvas.getHeight() / 20)) - myHeightOffset;
 	}
 
 }
