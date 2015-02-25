@@ -23,8 +23,11 @@ import javafx.stage.Stage;
 public class GUI {
 
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.languages/";
+	private static final boolean ACTIVE = true;
+	private static final boolean INACTIVE = false;
+	
 	private ResourceBundle myResources; // for language support
-
+	
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
@@ -41,6 +44,7 @@ public class GUI {
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
 	private String title = "SLogo";
+
 
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
 		// myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
@@ -70,17 +74,16 @@ public class GUI {
 
 		inputField = new TextField();
 		inputField.setPromptText("Enter your Logo Command");
-		result.getChildren().add(inputField);
-
+		inputField.setDisable(true);
+		
 		outputField = new TextField();
 		outputField.setPromptText("Output will be displayed here");
 		outputField.setEditable(false);
-		result.getChildren().add(outputField);
 
 		confirmInput = makeButton("EnterCommand", e -> parseCommand());
 		confirmInput.setDisable(true);
-		result.getChildren().add(confirmInput);
-
+		
+		result.getChildren().addAll(inputField,outputField,confirmInput);
 		return result;
 	}
 
@@ -147,7 +150,7 @@ public class GUI {
 	 * Added the following two methods to have checkable language menu bar that
 	 * disables the rest when one is clicked. Feel free to change them if there
 	 * are other/better ways to choose a language, but I just need the language
-	 * chosen by the user to be passed in the method "parseCommand"
+	 * chosen by the user to be passed in the method "parseCommand" - Kei
 	 * 
 	 * @param language
 	 * @param selected
@@ -157,11 +160,12 @@ public class GUI {
 		confirmInput.setDisable(false);
 		if (selected) {
 			selectedLanguage = language;
-			toggleMenuItems(menu, language, true);
-			System.out.println(language);
+			toggleMenuItems(menu, language, ACTIVE);
+			inputField.setDisable(false);
 		} else {
 			confirmInput.setDisable(true);
-			toggleMenuItems(menu, language, false);
+			toggleMenuItems(menu, language, INACTIVE);
+			inputField.setDisable(true);
 		}
 	}
 
