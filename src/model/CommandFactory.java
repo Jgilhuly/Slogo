@@ -12,7 +12,7 @@ public class CommandFactory {
 	public Command createCommand(String commandName) {
 		Command object = null;
 		try {
-			Class<?> command = Class.forName("command.math."+commandName);
+			Class<?> command = Class.forName("command.math."+commandName + "Command");
 			object = (Command) command.newInstance();
 			
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
