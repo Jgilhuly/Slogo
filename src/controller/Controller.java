@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.util.List;
@@ -26,36 +25,39 @@ public class Controller {
 
 	private Turtle turtle = new Turtle();
 	private TreeInterpreter woot;
-       
+
 	public void init(Stage s) {
-		sceneUpdater = new SceneUpdater(s,this);
+		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
-		
+
 		// get this from front end
 		// String input = "repeat + 20 10 [ fd 1 rt 2]";
-
+		
+		// TEST THIS CASE - DOESNT WORK RIGHT NOW
+		// String input = fd product 100 tan 30
+		
 		// other possible examples:
 		// String input =
 		// "chongfu + 20 * 3 5 [ chongfu 2 [ chongfu 30 [ qj 1 yz 2 ] qj 120 ] yz 60 ]";
 		// String input = "repeat + 20 10 [ fd 1 rt 2]";
 		// String input = "make :random sum 1 random 100 ";
 		// String input2 = "fd :random";
-//		play();
-//		animation.play();
+		// play();
+		// animation.play();
 	}
-	
+
 	public void syncCommandandVariableLists() {
 		variables = new SimpleListProperty<Variable>();
-		
+
 	}
-	
+
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
 		CommandTreeNode node = pp.makeTree(input);
 		woot = new TreeInterpreter(commands, variables, turtle, this);
 		woot.interpretTree(node);
 	}
-	
+
 	public void setOutputText(String outputText) {
 		sceneUpdater.setOutputText(outputText);
 	}
@@ -63,7 +65,7 @@ public class Controller {
 	public KeyFrame addKeyFrame(int frameRate) {
 		return new KeyFrame(Duration.millis(1000 / frameRate), e -> update(e));
 	}
-	
+
 	public void linkTurtles(Turtle turtleModel) {
 		turtleModel.addObserver(sceneUpdater.getTurtleView());
 	}
@@ -71,9 +73,9 @@ public class Controller {
 	private void update(ActionEvent e) {
 	}
 
-//	public void play() {
-//		frame = addKeyFrame(fps);
-//		animation.getKeyFrames().add(frame);
-//		animation.setCycleCount(Animation.INDEFINITE);
-//	}
+	// public void play() {
+	// frame = addKeyFrame(fps);
+	// animation.getKeyFrames().add(frame);
+	// animation.setCycleCount(Animation.INDEFINITE);
+	// }
 }
