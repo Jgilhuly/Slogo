@@ -53,8 +53,8 @@ public class TurtleView implements Observer {
 		 int newY = tModel.getY();
 		 int newHeading = tModel.getHeading();
 		
-		 if (heading != newHeading) {
-		 heading = newHeading;
+		 if (myHeading != newHeading) {
+		 myHeading = newHeading;
 		 myCanvas.getGraphicsContext2D().save();
 		 myCanvas.getGraphicsContext2D().rotate(myHeading);
 		 }

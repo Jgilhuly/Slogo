@@ -40,4 +40,8 @@ public class SceneUpdater implements Observer {
 		// Update things from GhostView?
 	}
 
+	public Observer getTurtleView() {
+		return myGUI.getTurtleView();
+	}
+
 }

@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -50,6 +51,7 @@ public class GUI {
 	private Button confirmInput;
 	private Canvas canvas;
 	private StackPane canvasHolder;
+	private Color backgroundColor;
 	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
@@ -81,7 +83,9 @@ public class GUI {
 				canvas.getHeight() / 2);
 		tView.draw();
 		
-		selectedLanguage = "English"; // default
+		// default
+		selectedLanguage = "English";
+		backgroundColor = Color.FUCHSIA;
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -131,7 +135,7 @@ public class GUI {
 		
 		canvasHolder.getChildren().add(canvas);
 
-		canvasHolder.setBackground(new Background (new BackgroundFill(Color.FUCHSIA, null, null)));
+		canvasHolder.setBackground(new Background (new BackgroundFill(backgroundColor, null, null)));
 		return canvasHolder;
 	}
 
@@ -263,5 +267,9 @@ public class GUI {
 		
 		labelAndTable.getChildren().addAll(label, table);
 		return labelAndTable;
+	}
+
+	public Observer getTurtleView() {
+		return tView;
 	}
 }
