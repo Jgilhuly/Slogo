@@ -1,4 +1,5 @@
 package Controller;
+
 import model.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -6,6 +7,8 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.TreeInterpreter;
+import model.Turtle;
 import parser.CommandTreeNode;
 import parser.Parser;
 import ui.SceneUpdater;
@@ -52,7 +55,9 @@ public class Controller {
 		return new KeyFrame(Duration.millis(1000 / frameRate), e -> update(e));
 	}
 	
-	public void linkTurtles() {}
+	public void linkTurtles(Turtle turtleModel) {
+		turtleModel.addObserver(sceneUpdater.getTurtleView());
+	}
 
 	private void update(ActionEvent e) {
 		

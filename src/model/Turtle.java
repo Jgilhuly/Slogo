@@ -1,47 +1,51 @@
 package model;
 import java.util.Observable;
 
+import javafx.scene.paint.Color;
+
 /**
  * Container for anything that draws on the canvas 
  * @author GA
  *
  */
 public class Turtle extends Observable {
-	private double x;
-	private double y;
+	private double xLocation;
+	private double yLocation;
 	private boolean isDrawingLine; //true for pen down, false for pen up
 	private boolean isTurtleShowing;
+	private Color penColor;
 	private int heading; //degrees, 0 is the positive y direction
-	
 	
 	public void setHeading(int degrees) {
 		heading = degrees;
-		setChanged();
-		notifyObservers();
+
 	}
 	
 	public void setLine(boolean tf) {
 		isDrawingLine = tf; 
-		setChanged();
-		notifyObservers();
+		
 	}
 	
 	public void setTurtleVisibility(boolean tf) {
 		isTurtleShowing =tf;
+		
+	}
+	public void updateTurtleViewers() {
 		setChanged();
 		notifyObservers();
 	}
 	
 	public void setXY(double x, double y) {
-		
+		xLocation = x;
+		yLocation = y;
 	}
 	
 	public double getX() {
-		return x;
+		return xLocation;
 	}
 		
 	public double getY() {
-		return y;
+		return yLocation;
 	}
 	public double getHeading() {
 		return heading;

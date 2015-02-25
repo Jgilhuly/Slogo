@@ -2,6 +2,6 @@ package command.bool;
 
 import command.Command;
 
-public class Equal {
+public class GreaterCommand {
 
 }

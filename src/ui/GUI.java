@@ -2,6 +2,7 @@ package ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -50,6 +51,7 @@ public class GUI {
 	private Button confirmInput;
 	private Canvas canvas;
 	private StackPane canvasHolder;
+	private Color backgroundColor;
 	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
@@ -67,6 +69,10 @@ public class GUI {
 	 * Returns scene for this view so it can be added to stage.
 	 */
 	public void initialize() {
+		// default values
+		selectedLanguage = "English";
+		backgroundColor = Color.FUCHSIA;
+		
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
@@ -81,7 +87,6 @@ public class GUI {
 				canvas.getHeight() / 2);
 		tView.draw();
 		
-		selectedLanguage = "English"; // default
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -131,7 +136,7 @@ public class GUI {
 		
 		canvasHolder.getChildren().add(canvas);
 
-		canvasHolder.setBackground(new Background (new BackgroundFill(Color.FUCHSIA, null, null)));
+		canvasHolder.setBackground(new Background (new BackgroundFill(backgroundColor, null, null)));
 		return canvasHolder;
 	}
 
@@ -225,13 +230,13 @@ public class GUI {
 		
 		ArrayList<String> cols = new ArrayList<String>();
 		
-		cols.add("Names");
-		cols.add("Values");
-		result.getChildren().add(makeTable("Variables", cols));
-	
 		cols = new ArrayList<String>();
 		cols.add("Commands");
 		result.getChildren().add(makeTable("Previous Commands", cols));
+		
+		cols.add("Names");
+		cols.add("Values");
+		result.getChildren().add(makeTable("Variables", cols));
 		
 		cols = new ArrayList<String>();
 		cols.add("Commands");
@@ -263,5 +268,9 @@ public class GUI {
 		
 		labelAndTable.getChildren().addAll(label, table);
 		return labelAndTable;
+	}
+
+	public Observer getTurtleView() {
+		return tView;
 	}
 }
