@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
+import controller.Controller;
 import command.Command;
 import parser.CommandTreeNode;
 
@@ -14,12 +14,16 @@ public class TreeInterpreter {
     private CommandList commands;
     private VariableList variables;
     private Turtle myTurtle;
+    private Controller myController;
     
     
-    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle) {
+    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle, Controller fuckshit) {
         commands = c;
         variables = v;
         factory = new CommandFactory(variables);
+        myTurtle = turtle;
+        myController = fuckshit;
+        myController.linkTurtles(myTurtle);
     }
     
     public void interpretTree (CommandTreeNode node) {
@@ -38,7 +42,7 @@ public class TreeInterpreter {
     }
 
     public void executeCommand (CommandTreeNode node, List<Object> paramList) {
-        Command c = factory.createCommand(node.getName());
+        Command c = factory.createCommand(node.getType(), node.getName());
         Class[] cArg = new Class[1];
         cArg[0] = List.class;
         Method method;
@@ -58,15 +62,22 @@ public class TreeInterpreter {
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
             case "COMMAND.TURTLE":
+                System.out.println("YOLOSWAG");
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
+                
+                
                 break;
-            case "COMMAND.MATH":
-                executeCommand(node, paramList);
-                break;
+            case "COMMAND.CONTROL":
+                paramList.add(this);
+                executeCommand(node,paramList);
             case "VARIABLE":
                 factory.createVariable(node.getName(), variables);
                 break;
+            case "CONSTANT":
+                break; //Do nothing
+            default: //referring to commands that are not TURTLE type
+                executeCommand(node,paramList);
         }
     }
     

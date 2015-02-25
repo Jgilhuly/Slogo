@@ -47,7 +47,7 @@ public class TurtleView implements Observer {
 
 	private void drawLine(double x1, double y1, double x2, double y2) {
 		myCanvas.getGraphicsContext2D().setFill(myColor);
-		myCanvas.getGraphicsContext2D().setLineWidth(5);
+		myCanvas.getGraphicsContext2D().setLineWidth(3);
 		myCanvas.getGraphicsContext2D().strokeLine(x1, y1, x2, y2);
 	}
 
@@ -67,9 +67,10 @@ public class TurtleView implements Observer {
 		
 		 if (newX != getCenterX() || newY != getCenterY()) {
 		 drawLine(getCenterX(), getCenterY(), newX, newY);
-		 // draw();
+
 		 myImageView.setX(newX);
 		 myImageView.setY(newY);
+	         draw();
 		 }
 	}
 
