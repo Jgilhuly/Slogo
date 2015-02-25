@@ -58,14 +58,7 @@ public class GUI {
 	/*****************************/
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
-	// private String[] colors = { "Aqua", "Black", "Blue", "Cyan", "Fuchsia",
-	// "Gray", "Green", "LightBlue", "LightGreen", "Lime", "Navy",
-	// "Orange", "Red", "RoyalBlue", "Snow", "Teal", "Violet", "White",
-	// "Yellow" };
-	// private String[] hexValues = { "#00FFFF", "#000000", "#0000FF",
-	// "#00FFFF",
-	// "#FF00FF", "#808080", "#008000", "#ADD8E6", "90EE90", "#00FF00",
-	// "#000080", "#FFA500", "#FF0000", "#4169E1" };
+
 	/*****************************/
 	private String selectedLanguage;
 
@@ -168,8 +161,8 @@ public class GUI {
 		return canvasHolder;
 	}
 
-	private Node makeColorPicker() {
-		ColorPicker colorPicker = new ColorPicker();
+	private Node makeColorPicker(Color defaultColor) {
+		ColorPicker colorPicker = new ColorPicker(defaultColor);
 		final SVGPath svg = new SVGPath();
 		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
 				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
@@ -196,7 +189,7 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		tb.getItems().addAll(makeMenuBar(), makeColorPicker());
+		tb.getItems().addAll(makeMenuBar(), makeColorPicker(backgroundColor));
 
 		return tb;
 	}
