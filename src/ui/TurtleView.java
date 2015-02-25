@@ -62,9 +62,10 @@ public class TurtleView implements Observer {
 		
 		 if (newX != getCenterX() || newY != getCenterY()) {
 		 drawLine(getCenterX(), getCenterY(), newX, newY);
-		 // draw();
+
 		 myImageView.setX(newX);
 		 myImageView.setY(newY);
+	         draw();
 		 }
 	}
 
