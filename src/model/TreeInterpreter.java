@@ -52,7 +52,7 @@ public class TreeInterpreter {
 			
 		}
 		
-		if(root.getChildren().isEmpty()) { //you are at a leaf node, and that node could have been a command
+		if(root.getChildren().isEmpty()) { //you are at a leaf node, and you are a constant
 			return;
 		}
 		

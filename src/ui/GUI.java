@@ -65,6 +65,7 @@ public class GUI {
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
 	}
+	
 	private Node makeIOFields() {
 		VBox result = new VBox();
 
