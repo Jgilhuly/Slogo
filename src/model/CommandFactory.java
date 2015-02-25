@@ -9,10 +9,10 @@ public class CommandFactory {
 	public CommandFactory(VariableList vList){
 	    variableList = vList;
 	}
-	public Command createCommand(String commandName) {
+	public Command createCommand(String prefix, String commandName) {
 		Command object = null;
 		try {
-			Class<?> command = Class.forName("command.math."+commandName);
+			Class<?> command = Class.forName("command.turtle." + commandName);
 			object = (Command) command.newInstance();
 			
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {

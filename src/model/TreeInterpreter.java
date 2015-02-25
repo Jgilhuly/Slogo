@@ -37,7 +37,7 @@ public class TreeInterpreter {
     }
 
     public void executeCommand (CommandTreeNode node, List<Object> paramList) {
-        Command c = factory.createCommand(node.getName());
+        Command c = factory.createCommand(node.getType(), node.getName());
         Class[] cArg = new Class[1];
         cArg[0] = List.class;
         Method method;
@@ -60,12 +60,16 @@ public class TreeInterpreter {
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
                 break;
-            case "COMMAND.MATH":
-                executeCommand(node, paramList);
-                break;
+            case "COMMAND.CONTROL":
+                paramList.add(this);
+                executeCommand(node,paramList);
             case "VARIABLE":
                 factory.createVariable(node.getName(), variables);
                 break;
+            case "CONSTANT":
+                break; //Do nothing
+            default: //referring to commands that are not TURTLE type
+                executeCommand(node,paramList);
         }
     }
     
