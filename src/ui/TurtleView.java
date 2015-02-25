@@ -2,6 +2,7 @@ package ui;
 import java.util.Observable;
 import java.util.Observer;
 
+import model.Turtle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -10,6 +11,7 @@ import javafx.scene.paint.Color;
 public class TurtleView implements Observer {
 	ImageView myImageView;
 	Color myColor;
+	int myHeading; // in degrees, 0 is north
 	
 	public TurtleView(Image imageIn, Color colorIn, double xIn, double yIn) {
 		myImageView = new ImageView();
@@ -17,6 +19,8 @@ public class TurtleView implements Observer {
 		myImageView.setX(xIn);
 		myImageView.setY(yIn);
 		myColor = colorIn;
+		
+		myHeading = 0;
 		
 		myImageView.setFitWidth(10);
 		myImageView.setPreserveRatio(true);
@@ -28,7 +32,14 @@ public class TurtleView implements Observer {
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {		
+	public void update(Observable o, Object arg) {
+//		Turtle tModel = (Turtle) o;
+//		int newX = tModel.getX();
+//		int newY = tModel.getY();
+//		int newHeading = tModel.getHeading();
+//		
+//		myHeading = newHeading;
+//		
 	}
 
 }

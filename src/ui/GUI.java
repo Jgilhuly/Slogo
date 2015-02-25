@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class GUI {
@@ -125,8 +127,9 @@ public class GUI {
 
 		Menu optionsMenu = new Menu("Options");
 
-		MenuItem optionOp1 = new MenuItem("OptionOp1");
-		optionsMenu.getItems().add(optionOp1);
+		MenuItem htmlHelp = new MenuItem("Help");
+		htmlHelp.setOnAction(e -> showHTMLHelp());
+		optionsMenu.getItems().add(htmlHelp);
 
 		// ***************************************
 		// added languageMenu
@@ -145,6 +148,20 @@ public class GUI {
 		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
 
 		return menuBar;
+	}
+
+	private void showHTMLHelp() {
+		WebView browser = new WebView();
+	    WebEngine webEngine = browser.getEngine();
+	    webEngine.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
+	    
+	    VBox helpRoot = new VBox();
+	    helpRoot.getChildren().add(browser);
+	    
+	    Stage stage = new Stage();
+	    stage.setTitle("Help Page");
+	    stage.setScene(new Scene(helpRoot, 500, 500));
+	    stage.show();
 	}
 
 	// *****************************
