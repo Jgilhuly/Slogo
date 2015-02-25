@@ -81,10 +81,10 @@ public class GUI {
 
 		outputField = new TextField();
 		outputField.setPromptText(myResources.getString("OutputPrompt"));
-		outputField.setEditable(false);
 
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
+		inputField.setEditable(INACTIVE);
 
 		confirmInput = makeButton(myResources.getString("Enter"), e -> parseCommand());
 		// confirmInput.setDisable(true);
@@ -189,11 +189,11 @@ public class GUI {
 //					 + selectedLanguage);
 			System.out.println(language);
 			toggleMenuItems(menu, language, ACTIVE);
-			inputField.setDisable(false);
+			inputField.setEditable(ACTIVE);
 		} else {
 			confirmInput.setDisable(true);
 			toggleMenuItems(menu, language, INACTIVE);
-			inputField.setDisable(true);
+			inputField.setEditable(INACTIVE);
 		}
 	}
 
