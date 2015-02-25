@@ -4,12 +4,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import model.Turtle;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
@@ -21,7 +18,6 @@ public class TurtleView implements Observer {
 	private double canvasCenterY;
 	private double myHeading; // in degrees, 0 is north
 	private StackPane myCanvasHolder;
-	private StackPane turtlePane;
 
 	public TurtleView(Image imageIn, Canvas canvasIn, Color colorIn,
 			double xIn, double yIn, StackPane canvasHolder) {
@@ -77,6 +73,9 @@ public class TurtleView implements Observer {
 		// move image
 		myImageView.setTranslateX(x2);
 		myImageView.setTranslateY(-y2);
+		//set values - different coordinates
+		myImageView.setX(canvasCenterX+x2);
+		myImageView.setY(canvasCenterY-y2);
 		
 		// rotate image
 		myImageView.setRotate(myHeading);
@@ -89,11 +88,6 @@ public class TurtleView implements Observer {
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
 
-		if (myHeading != newHeading) {
-			myHeading = newHeading;
-			myCanvas.getGraphicsContext2D().save();
-			myCanvas.getGraphicsContext2D().rotate(myHeading);
-		}
 		myHeading = newHeading;
 		if (newX != getCenterX() || newY != getCenterY()) {
 			draw(myImageView.getX(), myImageView.getY(), newX, newY);
