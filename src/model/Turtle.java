@@ -33,7 +33,6 @@ public class Turtle extends Observable {
 	
 	public void setLine(boolean tf) {
 		isDrawingLine = tf; 
-		
 	}
 	
 	public void setTurtleVisibility(boolean tf) {
@@ -59,5 +58,11 @@ public class Turtle extends Observable {
 	}
 	public double getHeading() {
 		return heading;
+	}
+	public boolean getLine() {
+		return isDrawingLine;
+	}
+	public boolean getVisibility() {
+		return isTurtleShowing;
 	}
 }
