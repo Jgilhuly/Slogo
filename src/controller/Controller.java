@@ -22,7 +22,7 @@ public class Controller {
         private CommandList commands = new CommandList();
         private VariableList variables = new VariableList();
         private Turtle turtle = new Turtle();
-        private TreeInterpreter woot = new TreeInterpreter(commands, variables, turtle);
+        private TreeInterpreter woot;
         
 	public void init(Stage s) {
 		sceneUpdater = new SceneUpdater(s,this);
@@ -45,6 +45,7 @@ public class Controller {
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
 		CommandTreeNode node = pp.makeTree(input);
+		woot = new TreeInterpreter(commands, variables, turtle, this);
 		woot.interpretTree(node);
 	}
 	
