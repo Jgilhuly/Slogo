@@ -14,7 +14,7 @@ public class Turtle extends Observable {
 	private boolean isDrawingLine; //true for pen down, false for pen up
 	private boolean isTurtleShowing;
 	private Color penColor;
-	private int heading; //degrees, 0 is the positive y direction
+	private double heading; //degrees, 0 is the positive y direction
 	
 	public Turtle (){
 		//set defaults of a new turtle
@@ -26,7 +26,7 @@ public class Turtle extends Observable {
 	    heading = 0;
 	}
 	
-	public void setHeading(int degrees) {
+	public void setHeading(double degrees) {
 		heading = degrees;
 
 	}

@@ -21,9 +21,10 @@ public class TurtleView implements Observer {
 	private double canvasCenterY;
 	private double myHeading; // in degrees, 0 is north
 	private StackPane myCanvasHolder;
+	private StackPane turtlePane;
 
 	public TurtleView(Image imageIn, Canvas canvasIn, Color colorIn,
-			double xIn, double yIn) {
+			double xIn, double yIn, StackPane canvasHolder) {
 		myImageView = new ImageView();
 		myCanvas = canvasIn;
 		myImageView.setImage(imageIn);
@@ -32,33 +33,53 @@ public class TurtleView implements Observer {
 		myImageView.setX(xIn);
 		myImageView.setY(yIn);
 		myColor = colorIn;
+		myCanvas.toBack();
+
+		// I added an ImageView of the turtle onto StackPane
+		myCanvasHolder = canvasHolder;
+		addTurtle(myImageView);
 
 		myHeading = 50;
 		myImageView.setPreserveRatio(true);
 		myImageView.setSmooth(true);
 	}
 
+	/**
+	 * 
+	 * @param ID
+	 *            : ID of turtle
+	 * @param turtle
+	 *            : Image of turtle
+	 */
+	private void addTurtle(ImageView turtle) {
+		myImageView.setScaleX(0.1);
+		myImageView.setScaleY(0.1);
+		myCanvasHolder.getChildren().add(turtle);
+	}
+
 	public ImageView getImageView() {
 		return myImageView;
 	}
 
-	public void draw() {
-		// myCanvas.getGraphicsContext2D().rotate(myHeading);
-		// remakeCanvas();
-		myCanvas.getGraphicsContext2D().drawImage(myImageView.getImage(),
-				getCenterX(), getCenterY(), myCanvas.getHeight() / 10,
-				myCanvas.getWidth() / 10);
-	}
+	// public void draw() {
+	// // myCanvas.getGraphicsContext2D().rotate(myHeading);
+	// myCanvas.getGraphicsContext2D().drawImage(myImageView.getImage(),
+	// getCenterX(), getCenterY(), myCanvas.getHeight() / 10,
+	// myCanvas.getWidth() / 10);
+	// }
 
-	private void drawLine(double x1, double y1, double x2, double y2) {
+	private void draw(double x1, double y1, double x2, double y2) {
 		myCanvas.getGraphicsContext2D().setFill(myColor);
 		myCanvas.getGraphicsContext2D().setLineWidth(3);
 		// minus y since it's flipped in the canvas
 		myCanvas.getGraphicsContext2D().strokeLine(x1, y1, canvasCenterX + x2,
 				canvasCenterY - y2);
-		myImageView.setX(canvasCenterX + x2);
-		myImageView.setY(canvasCenterY - y2);
-		// draw();
+		// move image
+		myImageView.setTranslateX(x2);
+		myImageView.setTranslateY(-y2);
+		
+		// rotate image
+		myImageView.setRotate(myHeading);
 	}
 
 	@Override
@@ -75,8 +96,7 @@ public class TurtleView implements Observer {
 		}
 		myHeading = newHeading;
 		if (newX != getCenterX() || newY != getCenterY()) {
-			drawLine(myImageView.getX(), myImageView.getY(), newX, newY);
-			draw();
+			draw(myImageView.getX(), myImageView.getY(), newX, newY);
 		}
 	}
 
