@@ -100,9 +100,9 @@ public class Parser {
 		// if none found
 		throw new CommandNotFoundException(input);
 	}
-	public String method() {
-		return input;
-	}
+//	public String method() {
+//		return input;
+//	}
 	public CommandTreeNode makeTree(String input) {
 		List<String> translate = parseList(input);
 		TreeGenerator tg = new TreeGenerator();
