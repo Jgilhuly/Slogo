@@ -69,6 +69,10 @@ public class GUI {
 	 * Returns scene for this view so it can be added to stage.
 	 */
 	public void initialize() {
+		// default values
+		selectedLanguage = "English";
+		backgroundColor = Color.FUCHSIA;
+		
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
@@ -83,9 +87,6 @@ public class GUI {
 				canvas.getHeight() / 2);
 		tView.draw();
 		
-		// default
-		selectedLanguage = "English";
-		backgroundColor = Color.FUCHSIA;
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -229,13 +230,13 @@ public class GUI {
 		
 		ArrayList<String> cols = new ArrayList<String>();
 		
-		cols.add("Names");
-		cols.add("Values");
-		result.getChildren().add(makeTable("Variables", cols));
-	
 		cols = new ArrayList<String>();
 		cols.add("Commands");
 		result.getChildren().add(makeTable("Previous Commands", cols));
+		
+		cols.add("Names");
+		cols.add("Values");
+		result.getChildren().add(makeTable("Variables", cols));
 		
 		cols = new ArrayList<String>();
 		cols.add("Commands");

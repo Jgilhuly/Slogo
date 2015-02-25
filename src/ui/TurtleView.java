@@ -49,9 +49,9 @@ public class TurtleView implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		 Turtle tModel = (Turtle) o;
-		 int newX = tModel.getX();
-		 int newY = tModel.getY();
-		 int newHeading = tModel.getHeading();
+		 double newX = tModel.getX();
+		 double newY = tModel.getY();
+		 double newHeading = tModel.getHeading();
 		
 		 if (myHeading != newHeading) {
 		 myHeading = newHeading;
