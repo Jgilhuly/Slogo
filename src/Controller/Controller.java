@@ -17,7 +17,6 @@ public class Controller {
 	private KeyFrame frame;
 
 	public void init(Stage s) {
-
 		sceneUpdater = new SceneUpdater(s,this);
 		
 		sceneUpdater.initGUI();
