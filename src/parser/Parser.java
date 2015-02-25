@@ -96,6 +96,7 @@ public class Parser {
 		List<String> translate = parseList(input);
 		System.out.println(translate);
 		TreeGenerator tg = new TreeGenerator();
+		
 		return tg.createCommands(translate);
 	}
 }

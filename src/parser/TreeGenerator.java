@@ -18,11 +18,11 @@ public class TreeGenerator {
 	}
 
 	private void printTestStatements(String value, int count, int numParams,
-			String type) {
+			String type, String name) {
 		System.out.println(value);
 		// System.out.println("Count is: " + count);
 		// System.out.println("numParams is: " + numParams);
-		System.out.println("Root value is: " + type);
+		System.out.println("Value is: " + type + name);
 		System.out.println();
 	}
 
@@ -30,7 +30,7 @@ public class TreeGenerator {
 		index = 0;
 		myRoot = null;
 		helper(input, 0, Integer.MAX_VALUE, myRoot);
-		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType());
+		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType() + myRoot.getName());
 		return myRoot;
 	}
 
@@ -40,10 +40,11 @@ public class TreeGenerator {
 			return;
 		}
 		if (root == null) {
-			root = new CommandTreeNode(input.get(index), 0, null);
+		        System.out.println("accessed"); //consider moving this outside of the helper method
+			root = new CommandTreeNode("COMMAND", input.get(index), 0, null);
 			myRoot = root;
 			numParams = parametersMap.get(input.get(index));
-			printTestStatements(input.get(index), count, numParams, null);
+			printTestStatements(input.get(index), count, numParams, null, root.getName());
 			index++;
 
 			for (int i = 0; i < numParams; i++) {
@@ -52,10 +53,10 @@ public class TreeGenerator {
 
 		} else if (parametersMap.containsKey(input.get(index))) { // command
 			numParams = parametersMap.get(input.get(index));
-			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0, null);
+			CommandTreeNode temp = new CommandTreeNode("COMMAND", input.get(index), 0, null);
 			root.add(temp);
 
-			printTestStatements(input.get(index), 0, numParams, root.getType());
+			printTestStatements(input.get(index), 0, numParams, temp.getType(), temp.getName());
 
 			boolean repeat = input.get(index).equals("Repeat");
 			index++;
@@ -72,12 +73,12 @@ public class TreeGenerator {
 
 		} else if (input.get(index).equals("[")) {
 
-			CommandTreeNode temp = new CommandTreeNode(input.get(index) + "-" + bracketCount++, 0, null);
+			CommandTreeNode temp = new CommandTreeNode("BRACKET", input.get(index) + "-" + bracketCount++, 0, null);
 
 			root.add(temp);
 
 			numParams = Integer.MAX_VALUE;
-			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count, numParams, root.getType());
+			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count, numParams, temp.getType(), temp.getName());
 
 
 			index++;
@@ -89,24 +90,23 @@ public class TreeGenerator {
 				index++;
 				helper(input, 0, numParams, temp);
 			}
-		} else if (Pattern.matches(":[a-zA-Z]+", input.get(index))) {
-			// Variable
-			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+		} else if (Pattern.matches(":[a-zA-Z]+", input.get(index))) { // Variable
+			CommandTreeNode temp = new CommandTreeNode("VARIABLE", input.get(index), 0,
 					null);
 			root.add(temp);
 
-			printTestStatements(input.get(index), 0, 1, root.getType());
+			printTestStatements(input.get(index), 0, 1, temp.getType(), temp.getName());
 
 			index++;
 			count++;
 			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 
-			CommandTreeNode temp = new CommandTreeNode("CONSTANT", Double.parseDouble(input.get(index)), null);
+			CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT", Double.parseDouble(input.get(index)), null);
 			root.add(temp);
 			count++;
 
-			printTestStatements(input.get(index), count, numParams, root.getType());
+			printTestStatements(input.get(index), count, numParams, temp.getType(), temp.getName());
 			index++;
 			return;
 		}
