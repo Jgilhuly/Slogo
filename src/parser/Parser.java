@@ -27,6 +27,8 @@ public class Parser {
 	private List<Entry<String, Pattern>> patternList;
 	private int ListStartCount = 0;
 	private int ListEndCount = 0;
+	private boolean makingUserInstruction = false;
+	private ArrayList<String> methodList = new ArrayList<>();
 
 	public Parser(String language) {
 		patternList = makePatterns(language);
@@ -50,7 +52,10 @@ public class Parser {
 			for (int i = 0; i < indices.length; i++) {
 				if (m.group(indices[i]) != null) {
 					if (indices[i] == COMMAND_INDEX) {
-						ret.add(useResourceBundle(m.group(indices[i])));
+						String command = useResourceBundle(m.group(indices[i]));
+						if (command.equals("MakeUserInstruction"))
+							makingUserInstruction = true;
+						ret.add(command);
 					} else {
 						ret.add(m.group(indices[i]));
 						if (indices[i] == LISTSTART_INDEX) {
@@ -86,16 +91,21 @@ public class Parser {
 			if (p.getValue().matcher(input).matches())
 				return p.getKey();
 		}
-		// if not found
-
+		// if making procedure, return method call
+		if (makingUserInstruction) {
+			makingUserInstruction = false;
+			methodList.add(input);
+			return input;
+		}
+		// if none found
 		throw new CommandNotFoundException(input);
-		// return this message to the GUI.
 	}
-
+	public String method() {
+		return input;
+	}
 	public CommandTreeNode makeTree(String input) {
 		List<String> translate = parseList(input);
 		TreeGenerator tg = new TreeGenerator();
-		
 		return tg.createCommands(translate);
 	}
 }

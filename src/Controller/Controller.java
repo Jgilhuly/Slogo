@@ -21,7 +21,6 @@ public class Controller {
         private TreeInterpreter woot = new TreeInterpreter(commands, variables, turtle);
         
 	public void init(Stage s) {
-
 		sceneUpdater = new SceneUpdater(s,this);
 		sceneUpdater.initGUI();
 		
@@ -39,16 +38,21 @@ public class Controller {
 	}
 
 	// TODO: get the current language for the parser from the view
-	public CommandTreeNode parseCommand(String input, String language) {
+	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
 		CommandTreeNode node = pp.makeTree(input);
 		woot.interpretTree(node);
-		return node;
+	}
+	
+	public void setOutputText(String outputText) {
+		sceneUpdater.setOutputText(outputText);
 	}
 
 	public KeyFrame addKeyFrame(int frameRate) {
 		return new KeyFrame(Duration.millis(1000 / frameRate), e -> update(e));
 	}
+	
+	public void linkTurtles() {}
 
 	private void update(ActionEvent e) {
 		
