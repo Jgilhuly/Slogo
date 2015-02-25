@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
 import java.util.ResourceBundle;
+
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -23,8 +25,9 @@ public class GUI {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
 	private static final boolean ACTIVE = true;
 	private static final boolean INACTIVE = false;
-	
+
 	private ResourceBundle myResources; // for language support
+
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
@@ -36,16 +39,16 @@ public class GUI {
 	private Button confirmInput;
 	private Canvas canvas;
 	private StackPane canvasHolder;
-	
+
 	private Color backgroundColor;
+	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
 
-
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
-		 myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-		 + "English");
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+				+ "English");
 		myStage = stageIn;
 		mySceneUpdater = sceneUpIn;
 	}
@@ -68,10 +71,12 @@ public class GUI {
 		Image turtleImage = new Image(
 				GUI.class
 						.getResourceAsStream("/resources/images/turtleImage.png"));
-		tView = new TurtleView(turtleImage, canvas, Color.BLUE, canvas.getWidth() / 2,
-				canvas.getHeight() / 2);
+		tView = new TurtleView(turtleImage, canvas, Color.BLUE,
+				canvas.getWidth() / 2, canvas.getHeight() / 2);
 		tView.draw();
-		
+
+		selectedLanguage = "English"; // default
+
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -91,10 +96,11 @@ public class GUI {
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
 
-		confirmInput = makeButton(myResources.getString("Enter"), e -> parseCommand());
+		confirmInput = makeButton(myResources.getString("Enter"),
+				e -> parseCommand());
 		// confirmInput.setDisable(true);
-		
-		result.getChildren().addAll(inputField,outputField,confirmInput);
+
+		result.getChildren().addAll(inputField, outputField, confirmInput);
 		return result;
 	}
 
@@ -104,6 +110,7 @@ public class GUI {
 	private void parseCommand() {
 		if (inputField.getText() != null)
 			mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
+		addHistory();
 	}
 
 	/**
@@ -129,7 +136,7 @@ public class GUI {
 	private Node makeCanvas() {
 		canvasHolder = new StackPane();
 		canvas = new Canvas(myStage.getWidth() / 1.5, myStage.getHeight() / 1.5);
-		
+
 		canvasHolder.getChildren().add(canvas);
 
 		canvasHolder.setBackground(new Background (new BackgroundFill(backgroundColor, null, null)));
@@ -203,8 +210,8 @@ public class GUI {
 		confirmInput.setDisable(false);
 		if (selected) {
 			selectedLanguage = language;
-//			 myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
-//					 + selectedLanguage);
+			// myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
+			// + selectedLanguage);
 			System.out.println(language);
 			toggleMenuItems(menu, language, ACTIVE);
 			inputField.setEditable(ACTIVE);
@@ -227,9 +234,9 @@ public class GUI {
 	private Node makePrevCommandsPane() {
 		VBox result = new VBox();
 		result.setSpacing(5);
-		
+
 		ArrayList<String> cols = new ArrayList<String>();
-		
+
 		cols = new ArrayList<String>();
 		cols.add("Commands");
 		result.getChildren().add(makeTable("Previous Commands", cols));
@@ -238,34 +245,41 @@ public class GUI {
 		cols.add("Values");
 		result.getChildren().add(makeTable("Variables", cols));
 		
+
 		cols = new ArrayList<String>();
 		cols.add("Commands");
 		result.getChildren().add(makeTable("User Commands", cols));
-		
+
 		return result;
 	}
-	
+
 	public void setOutputText(String outputText) {
 		outputField.setText(outputText);
+	}
+
+	private void addHistory() {
+		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+
+		TableColumn<String, String> tc = new TableColumn<>("Previous Commands");
+		tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
+				.getText()));
+
+		cols.add(tc);
+
+//		table.getColumns().addAll(cols);
+
+		inputField.getText();
 	}
 
 	private Node makeTable(String title, List<String> columnNames) {
 		VBox labelAndTable = new VBox();
 		labelAndTable.setSpacing(5);
-		
+
 		Label label = new Label(title);
 		label.setFont(new Font("Arial", 14));
-		
+
 		TableView table = new TableView();
-		
-		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-		
-		for (String s : columnNames) {
-			cols.add(new TableColumn(s));
-		}
-		
-		table.getColumns().addAll(cols);
-		
+
 		labelAndTable.getChildren().addAll(label, table);
 		return labelAndTable;
 	}
