@@ -39,4 +39,8 @@ public class SceneUpdater implements Observer {
 		// Context and draw it
 	}
 
+	public Observer getTurtleView() {
+		return myGUI.getTurtleView();
+	}
+
 }

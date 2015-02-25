@@ -48,24 +48,24 @@ public class TurtleView implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// Turtle tModel = (Turtle) o;
-		// int newX = tModel.getX();
-		// int newY = tModel.getY();
-		// int newHeading = tModel.getHeading();
-		//
-		// if (heading != newHeading) {
-		// heading = newHeading;
-		// myCanvas.getGraphicsContext2D().save();
-		// myCanvas.getGraphicsContext2D().rotate(myHeading);
-		// }
-		// myHeading = newHeading;
-		//
-		// if (newX != getCenterX() || newY != getCenterY()) {
-		// drawLine(getCenterX(), getCenterY(), newX, newY);
-		// // draw();
-		// myImageView.setX(newX);
-		// myImageView.setY(newY);
-		// }
+		 Turtle tModel = (Turtle) o;
+		 double newX = tModel.getX();
+		 double newY = tModel.getY();
+		 double newHeading = tModel.getHeading();
+		
+		 if (myHeading != newHeading) {
+		 myHeading = newHeading;
+		 myCanvas.getGraphicsContext2D().save();
+		 myCanvas.getGraphicsContext2D().rotate(myHeading);
+		 }
+		 myHeading = newHeading;
+		
+		 if (newX != getCenterX() || newY != getCenterY()) {
+		 drawLine(getCenterX(), getCenterY(), newX, newY);
+		 // draw();
+		 myImageView.setX(newX);
+		 myImageView.setY(newY);
+		 }
 	}
 
 	private double getCenterX() {
