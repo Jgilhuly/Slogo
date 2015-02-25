@@ -4,7 +4,7 @@ import command.Command;
 import model.*;
 
 public class CommandFactory {
-        private VariableList variableList;
+    private VariableList variableList;
         
 	public CommandFactory(VariableList vList){
 	    variableList = vList;
