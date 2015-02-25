@@ -64,12 +64,9 @@ public class GUI {
 		Image turtleImage = new Image(
 				GUI.class
 						.getResourceAsStream("/resources/images/turtleImage.png"));
-		tView = new TurtleView(turtleImage, Color.BLUE, canvas.getWidth() / 2,
+		tView = new TurtleView(turtleImage, canvas, Color.BLUE, canvas.getWidth() / 2,
 				canvas.getHeight() / 2);
-		canvas.getGraphicsContext2D().drawImage(
-				tView.getImageView().getImage(), tView.getImageView().getX(),
-				tView.getImageView().getY(), canvas.getHeight() / 10,
-				canvas.getWidth() / 10);
+		tView.draw();
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		myStage.setScene(myScene);
@@ -117,8 +114,8 @@ public class GUI {
 
 	private Node makeCanvas() {
 		canvas = new Canvas();
-		canvas.setWidth(myStage.getWidth() / 2);
-		canvas.setHeight(myStage.getHeight() / 2);
+		canvas.setWidth(myStage.getWidth() / 1.5);
+		canvas.setHeight(myStage.getHeight() / 1.5);
 		canvas.getGraphicsContext2D().setFill(Color.LIGHTGRAY);
 		canvas.getGraphicsContext2D().fillRect(0, 0, canvas.getWidth(),
 				canvas.getHeight());

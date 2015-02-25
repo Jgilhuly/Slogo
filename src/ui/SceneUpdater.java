@@ -37,9 +37,5 @@ public class SceneUpdater implements Observer {
 	public void update(Observable o, Object arg) {
 		// Update TurtleView to move the image
 	}
-	
-	public void drawLine (int x1, int y1, int x2, int y2) {
-		// call drawLine method in myGUI
-	}
 
 }
