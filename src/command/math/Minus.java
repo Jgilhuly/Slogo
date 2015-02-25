@@ -1,5 +1,11 @@
 package command.math;
 
-public class Minus {
+import java.util.List;
+import command.Command;
 
+public class Minus extends Command {
+
+        public double calculateValue(List<Object> param) {
+                return - (double) param.get(0);
+        }
 }
