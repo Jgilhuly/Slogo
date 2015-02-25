@@ -1,29 +1,32 @@
 
 package controller;
 
+import java.util.List;
+
 import model.*;
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.beans.property.SimpleListProperty;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.TreeInterpreter;
 import model.Turtle;
+import model.Variable;
 import parser.CommandTreeNode;
 import parser.Parser;
 import ui.SceneUpdater;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
-//	private int fps = 10;
-//	private Timeline animation = new Timeline();
-//	private KeyFrame frame;
-        private CommandList commands = new CommandList();
-        private VariableList variables = new VariableList();
-        private Turtle turtle = new Turtle();
-        private TreeInterpreter woot;
-        
+	// private int fps = 10;
+	// private Timeline animation = new Timeline();
+	// private KeyFrame frame;
+	private CommandList commands = new CommandList();
+	private List<Variable> variables;
+
+	private Turtle turtle = new Turtle();
+	private TreeInterpreter woot;
+       
 	public void init(Stage s) {
 		sceneUpdater = new SceneUpdater(s,this);
 		sceneUpdater.initGUI();
@@ -40,8 +43,12 @@ public class Controller {
 //		play();
 //		animation.play();
 	}
-
-	// TODO: get the current language for the parser from the view
+	
+	public void syncCommandandVariableLists() {
+		variables = new SimpleListProperty<Variable>();
+		
+	}
+	
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
 		CommandTreeNode node = pp.makeTree(input);

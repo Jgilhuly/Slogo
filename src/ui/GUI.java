@@ -40,6 +40,8 @@ public class GUI {
 	private Canvas canvas;
 	private StackPane canvasHolder;
 
+	private List<String> variables;
+
 	private Color backgroundColor;
 	
 	private String[] languages = { "Chinese", "English", "French", "German",
@@ -234,20 +236,23 @@ public class GUI {
 		VBox result = new VBox();
 		result.setSpacing(5);
 
+		DisplayPanel p = new DisplayPanel();
+
 		ArrayList<String> cols = new ArrayList<String>();
 
 		cols = new ArrayList<String>();
 		cols.add("Commands");
-		result.getChildren().add(makeTable("Previous Commands", cols));
+		result.getChildren().add(p.makeTable("Previous Commands", cols));
 		
 		cols.add("Names");
 		cols.add("Values");
-		result.getChildren().add(makeTable("Variables", cols));
+		result.getChildren().add(p.makeTable("Variables", cols));
 		
 
 		cols = new ArrayList<String>();
 		cols.add("Commands");
-		result.getChildren().add(makeTable("User Commands", cols));
+
+		result.getChildren().add(p.makeTable("User Commands", cols));
 
 		return result;
 	}
@@ -255,6 +260,7 @@ public class GUI {
 	public void setOutputText(String outputText) {
 		outputField.setText(outputText);
 	}
+
 
 	private void addHistory() {
 		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
@@ -282,6 +288,7 @@ public class GUI {
 		labelAndTable.getChildren().addAll(label, table);
 		return labelAndTable;
 	}
+
 
 	public Observer getTurtleView() {
 		return tView;

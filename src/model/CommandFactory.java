@@ -1,14 +1,10 @@
 package model;
 
 import command.Command;
-import model.*;
+
 
 public class CommandFactory {
-    private VariableList variableList;
-        
-	public CommandFactory(VariableList vList){
-	    variableList = vList;
-	}
+
 	public Command createCommand(String prefix, String commandName) {
 		Command object = null;
 		try {
@@ -26,11 +22,6 @@ public class CommandFactory {
 		
 	}
 
-    public void createVariable (String name, VariableList variables) {
-        if(!variables.contains(name)){
-            variables.addNewVariable(name);
-        }
-    }
 
     public Command createBracket (String name) {
         // TODO Auto-generated method stub
