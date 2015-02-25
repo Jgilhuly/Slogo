@@ -10,7 +10,10 @@ import java.util.regex.Pattern;
 import errors.NoInputFoundException;
 
 public class TreeGenerator {
-	private Map<String, Object[]> parametersMap; //toDo: implement the correct parametersMap
+	private static final int PARAM_INDEX = 0;
+	private static final int TYPE_INDEX = 1;
+	private Map<String, String[]> parametersMap; // toDo: implement the correct
+													// parametersMap
 	private int index;
 	private int bracketCount = 0;
 	private CommandTreeNode myRoot;
@@ -21,11 +24,12 @@ public class TreeGenerator {
 
 	private void printTestStatements(String value, int count, int numParams,
 			String type, String name) {
-//		System.out.println(value);
-//		// System.out.println("Count is: " + count);
-//		// System.out.println("numParams is: " + numParams);
-//		System.out.println("Value is: " + type + name);
-//		System.out.println();
+		System.out.println(value);
+		// // System.out.println("Count is: " + count);
+		// // System.out.println("numParams is: " + numParams);
+		System.out.println("Type is: " + type);
+		System.out.println("Root value is: " + name);
+		 System.out.println();
 	}
 
 	public CommandTreeNode createCommands(List<String> input) {
@@ -33,7 +37,7 @@ public class TreeGenerator {
 			index = 0;
 			myRoot = null;
 			helper(input, 0, Integer.MAX_VALUE, myRoot);
-			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType());
+			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
 			return myRoot;
 		} catch (NullPointerException e) {
 			throw new NoInputFoundException();
@@ -46,11 +50,13 @@ public class TreeGenerator {
 			return;
 		}
 		if (root == null) {
-		        System.out.println("accessed"); //consider moving this outside of the helper method
-			root = new CommandTreeNode("COMMAND", input.get(index), 0, null);
+			// consider moving this outside of the helper method
+			String key = input.get(index);
+			root = new CommandTreeNode(obtainSubCommand(key), key, 0, null);
 			myRoot = root;
-			numParams = parametersMap.get(input.get(index));
-			printTestStatements(input.get(index), count, numParams, null, root.getName());
+			numParams = obtainNumParams(key);
+			printTestStatements(key, count, numParams, obtainSubCommand(key),
+					null);
 			index++;
 
 			for (int i = 0; i < numParams; i++) {
@@ -58,13 +64,16 @@ public class TreeGenerator {
 			}
 
 		} else if (parametersMap.containsKey(input.get(index))) { // command
-			numParams = parametersMap.get(input.get(index));
-			CommandTreeNode temp = new CommandTreeNode("COMMAND", input.get(index), 0, null);
+			String value = input.get(index);
+			numParams = obtainNumParams(value);
+			CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
+					value, 0, null);
 			root.add(temp);
 
-			printTestStatements(input.get(index), 0, numParams, temp.getType(), temp.getName());
+			printTestStatements(value, 0, numParams, temp.getType(),
+					root.getName());
 
-			boolean repeat = input.get(index).equals("Repeat");
+			boolean repeat = value.equals("Repeat");
 			index++;
 
 			if (repeat) {
@@ -78,13 +87,15 @@ public class TreeGenerator {
 			}
 
 		} else if (input.get(index).equals("[")) {
-			CommandTreeNode temp = new CommandTreeNode("BRACKET", input.get(index) + "-" + bracketCount++, 0, null);
+			String value = input.get(index);
+			CommandTreeNode temp = new CommandTreeNode("Bracket", value + "-"
+					+ bracketCount++, 0, null);
 
 			root.add(temp);
 
 			numParams = Integer.MAX_VALUE;
-			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count, numParams, temp.getType(), temp.getName());
-
+			printTestStatements(value + "-" + (bracketCount - 1), count,
+					numParams, temp.getType(), root.getName());
 
 			index++;
 
@@ -96,36 +107,47 @@ public class TreeGenerator {
 				helper(input, 0, numParams, temp);
 			}
 		} else if (Pattern.matches(":[a-zA-Z]+", input.get(index))) { // Variable
-			CommandTreeNode temp = new CommandTreeNode("VARIABLE", input.get(index), 0,
+			String value = input.get(index);
+			CommandTreeNode temp = new CommandTreeNode("Variable", value, 0,
 					null);
 			root.add(temp);
 
-			printTestStatements(input.get(index), 0, 1, temp.getType(), temp.getName());
-
+			printTestStatements(value, 0, 1, temp.getType(), root.getName());
 			index++;
 			count++;
 			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
-			CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT", Double.parseDouble(input.get(index)), null);
+			String value = input.get(index);
+			CommandTreeNode temp = new CommandTreeNode("Constant", "Constant",
+					Double.parseDouble(input.get(index)), null);
 			root.add(temp);
 			count++;
 
-			printTestStatements(input.get(index), count, numParams, temp.getType(), temp.getName());
+			printTestStatements(value, count, numParams,
+					temp.getType(), root.getName());
 			index++;
 			return;
 		}
 	}
 
-	private HashMap<String, Integer> createParametersMap() {
+	private HashMap<String, String[]> createParametersMap() {
 		ResourceBundle resources = ResourceBundle
 				.getBundle("parser/parameters");
 		Enumeration<String> paramKeys = resources.getKeys();
-		Map<String, Object[]> newMap = new HashMap<>();
+		HashMap<String, String[]> newMap = new HashMap<>();
 
 		while (paramKeys.hasMoreElements()) {
 			String Key = paramKeys.nextElement();
-			newMap.put(Key, Integer.parseInt(resources.getString(Key)));
+			newMap.put(Key, resources.getString(Key).split(","));
 		}
 		return newMap;
+	}
+
+	private int obtainNumParams(String key) {
+		return Integer.parseInt(parametersMap.get(key)[PARAM_INDEX]);
+	}
+
+	private String obtainSubCommand(String key) {
+		return "command." + parametersMap.get(key)[TYPE_INDEX];
 	}
 }
