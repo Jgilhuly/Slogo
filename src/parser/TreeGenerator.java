@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import errors.NoInputFoundException;
+
 public class TreeGenerator {
 	private Map<String, Integer> parametersMap;
 	private int index;
@@ -27,11 +29,15 @@ public class TreeGenerator {
 	}
 
 	public CommandTreeNode createCommands(List<String> input) {
-		index = 0;
-		myRoot = null;
-		helper(input, 0, Integer.MAX_VALUE, myRoot);
-		System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType());
-		return myRoot;
+		try {
+			index = 0;
+			myRoot = null;
+			helper(input, 0, Integer.MAX_VALUE, myRoot);
+			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getType());
+			return myRoot;
+		} catch (NullPointerException e) {
+			throw new NoInputFoundException();
+		}
 	}
 
 	private void helper(List<String> input, int count, int numParams,
@@ -52,7 +58,8 @@ public class TreeGenerator {
 
 		} else if (parametersMap.containsKey(input.get(index))) { // command
 			numParams = parametersMap.get(input.get(index));
-			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0, null);
+			CommandTreeNode temp = new CommandTreeNode(input.get(index), 0,
+					null);
 			root.add(temp);
 
 			printTestStatements(input.get(index), 0, numParams, root.getType());
@@ -72,13 +79,14 @@ public class TreeGenerator {
 
 		} else if (input.get(index).equals("[")) {
 
-			CommandTreeNode temp = new CommandTreeNode(input.get(index) + "-" + bracketCount++, 0, null);
+			CommandTreeNode temp = new CommandTreeNode(input.get(index) + "-"
+					+ bracketCount++, 0, null);
 
 			root.add(temp);
 
 			numParams = Integer.MAX_VALUE;
-			printTestStatements(input.get(index) + "-" + (bracketCount - 1), count, numParams, root.getType());
-
+			printTestStatements(input.get(index) + "-" + (bracketCount - 1),
+					count, numParams, root.getType());
 
 			index++;
 
@@ -102,18 +110,21 @@ public class TreeGenerator {
 			return;
 		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", input.get(index))) { // CONSTANT
 
-			CommandTreeNode temp = new CommandTreeNode("CONSTANT", Double.parseDouble(input.get(index)), null);
+			CommandTreeNode temp = new CommandTreeNode("CONSTANT",
+					Double.parseDouble(input.get(index)), null);
 			root.add(temp);
 			count++;
 
-			printTestStatements(input.get(index), count, numParams, root.getType());
+			printTestStatements(input.get(index), count, numParams,
+					root.getType());
 			index++;
 			return;
 		}
 	}
 
 	private HashMap<String, Integer> createParametersMap() {
-		ResourceBundle resources = ResourceBundle.getBundle("parser/parameters");
+		ResourceBundle resources = ResourceBundle
+				.getBundle("parser/parameters");
 		Enumeration<String> paramKeys = resources.getKeys();
 		HashMap<String, Integer> newMap = new HashMap<>();
 

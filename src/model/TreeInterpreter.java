@@ -20,7 +20,11 @@ public class TreeInterpreter {
 		parametersMap = createParametersMap();
 
 	}
-	
+	/**
+	 * Ideally we would get rid of this method since it's duplicate to Parser.
+	 * Could make it in the Controller? - Kei
+	 * @return
+	 */
 	private HashMap<String, Integer> createParametersMap() {
 		ResourceBundle resources = ResourceBundle.getBundle("parser/parameters");
 		Enumeration<String> paramKeys = resources.getKeys();
