@@ -14,8 +14,8 @@ public class Variable {
      private StringProperty name;
      
      public Variable(String var, Double num){
-//    	 value = new SimpleDoubleProperty(num);
-//         name = new SimpleStringProperty(var);
+    	 value = new SimpleDoubleProperty(num);
+         name = new SimpleStringProperty(var);
      }
      
      
@@ -39,5 +39,8 @@ public class Variable {
 		if (name == null)
 			name = new SimpleStringProperty(this, "name");
 		return name;
+	}
+	public String toString(){
+	    return this.getName();
 	}
 }

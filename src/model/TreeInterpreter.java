@@ -35,6 +35,7 @@ public class TreeInterpreter {
                 }
             }
             update(node, paramList);
+            System.out.println("Variable list:");
             System.out.println(variables);
         }
 

@@ -1,7 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import model.*;
 import javafx.animation.KeyFrame;
 import javafx.beans.property.SimpleListProperty;
@@ -21,8 +21,8 @@ public class Controller {
 	// private Timeline animation = new Timeline();
 	// private KeyFrame frame;
 	private CommandList commands = new CommandList();
-	private List<Variable> variables;
-
+//	private List<Variable> variables = new SimpleListProperty<Variable>(); //taken out of the method syncCommandListblah
+	private List<Variable> variables = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
 	private Turtle turtle = new Turtle();
 	private TreeInterpreter woot;
 
@@ -48,7 +48,6 @@ public class Controller {
 
 	public void syncCommandandVariableLists() {
 		variables = new SimpleListProperty<Variable>();
-
 	}
 
 	public void parseCommand(String input, String language) {

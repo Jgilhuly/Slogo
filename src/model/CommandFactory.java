@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import command.Command;
 
@@ -32,7 +33,9 @@ public class CommandFactory {
 
     public void createVariable (String name, List<Variable> variables) {
         Variable var = new Variable(name, 0.0);
-        variables.add(var);
+        System.out.println(var);
+        System.out.println(variables.getClass().getName());
+        (variables).add(var);
         
     }
 	
