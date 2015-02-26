@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import model.*;
-
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.TreeInterpreter;
 import model.Turtle;
@@ -31,6 +31,7 @@ public class Controller {
 		sceneUpdater.initGUI();
 		variables = new VariableList();
 		commands = new HashMap<String, CommandTreeNode>();
+		linkTurtles(turtle);
 	}
 
 //	public void syncCommandandVariableLists() {
@@ -48,11 +49,11 @@ public class Controller {
 		List<String> inputList = pp.parseList(input);
 		TreeGenerator tg = new TreeGenerator();
 		CommandTreeNode node = tg.createCommands(inputList);
-		linkTurtles(turtle);
-		interpreter = new TreeInterpreter(variables, turtle);
-		linkTurtles(turtle);
-		
+		interpreter = new TreeInterpreter(variables, turtle);		
 		interpreter.interpretTree(node);
+		if (variables != null) {
+			sceneUpdater.setListBind("Variable", variables.getList());
+		}
 		setOutputText(Double.toString(node.getValue()));
 	}
 
@@ -69,14 +70,13 @@ public class Controller {
 		turtleModel.addObserver(sceneUpdater.getTurtleView());
 	}
 	
+	
 
-
-	public List<Variable> getVariableList() {
+	public ObservableList<Variable> getVariableList() {
 		return variables.getList();
 	}
 
 	public Set<String> getPrevCommandList() {
-		
 		return commands.keySet();
 	}
 	

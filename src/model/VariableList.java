@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javafx.beans.property.SimpleListProperty;
+import javafx.collections.ObservableList;
 
 /**
  * 
@@ -12,7 +13,7 @@ import javafx.beans.property.SimpleListProperty;
  *
  */
 public class VariableList{
-    private List<Variable> list;
+    private ObservableList<Variable> list;
     
     public VariableList(){
         list = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
@@ -48,7 +49,7 @@ public class VariableList{
         }
     }
 
-    public List<Variable> getList() {
+    public ObservableList<Variable> getList() {
     	return list;
     	
     }

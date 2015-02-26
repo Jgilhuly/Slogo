@@ -1,21 +1,26 @@
 package ui;
 
+
 import java.io.File;
 import java.util.*;
 
 import model.Variable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -29,7 +34,7 @@ public class GUI {
 	private static final boolean INACTIVE = false;
 
 	private ResourceBundle myResources; // for node text/names
-
+	private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
@@ -37,7 +42,7 @@ public class GUI {
 	private TurtleView tView;
 
 	private TextField inputField;
-	private TextField outputField;
+	private Text outputField;
 	private Button confirmInput;
 	private Canvas canvas;
 	private StackPane canvasHolder;
@@ -50,7 +55,8 @@ public class GUI {
 	private TableView prevCommandsTable;
 	private TableView variablesTable;
 	private TableView userCommandsTable;
-
+	
+	private String DEFAULT_LANG = "English";
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -69,8 +75,8 @@ public class GUI {
 	 */
 	public void initialize() {
 		// default values
-		selectedLanguage = "English";
-		backgroundColor = Color.FUCHSIA;
+		selectedLanguage = DEFAULT_LANG;
+		backgroundColor = DEFAULT_BACKGROUND;
 
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
@@ -117,10 +123,8 @@ public class GUI {
 	private Node makeIOFields() {
 		VBox result = new VBox();
 
-		outputField = new TextField();
-		outputField.setPromptText(myResources.getString("OutputPrompt"));
-		outputField.setEditable(INACTIVE);
-
+		outputField = new Text();
+		
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
 
@@ -137,7 +141,7 @@ public class GUI {
 	 */
 	private void parseCommand() {
 		if (inputField.getText() != null)
-			mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
+		mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
 		addHistory(); // for previous commands tab
 		inputField.setText("");
 	}
@@ -169,8 +173,7 @@ public class GUI {
 
 		canvasHolder.getChildren().add(canvas);
 
-		canvasHolder.setBackground(new Background(new BackgroundFill(color,
-				null, null)));
+		canvasHolder.setBackground(new Background(new BackgroundFill(color, null, null)));
 		return canvasHolder;
 	}
 
@@ -179,14 +182,10 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		backgroundColorPicker = makeColorPicker(backgroundColor,
-				e -> changeBackgroundColor());
-		penColorPicker = makeColorPicker(tView.getColor(),
-				e -> changePenColor());
+		backgroundColorPicker = makeColorPicker(backgroundColor, e -> changeBackgroundColor());
+		penColorPicker = makeColorPicker(tView.getColor(), e -> changePenColor());
 
-		tb.getItems().addAll(makeMenuBar(),
-				new Label(myResources.getString("BackgroundColor")),
-				backgroundColorPicker,
+		tb.getItems().addAll(makeMenuBar(), new Label(myResources.getString("BackgroundColor")), backgroundColorPicker,
 				new Label(myResources.getString("PenColor")), penColorPicker);
 
 		return tb;
@@ -199,13 +198,11 @@ public class GUI {
 	 * @param handler
 	 * @return
 	 */
-	private ColorPicker makeColorPicker(Color defaultColor,
-			EventHandler<ActionEvent> handler) {
+	private ColorPicker makeColorPicker(Color defaultColor, EventHandler<ActionEvent> handler) {
 		ColorPicker colorPicker = new ColorPicker(defaultColor);
 		svg = new SVGPath();
 		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
-				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
-				+ "L70,50");
+				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90" + "L70,50");
 		svg.setStroke(Color.DARKGREY);
 		svg.setStrokeWidth(2);
 		svg.setEffect(new DropShadow());
@@ -228,6 +225,7 @@ public class GUI {
 	 */
 	private void changePenColor() {
 		tView.setColor(penColorPicker.getValue());
+		
 	}
 
 	/**
@@ -267,7 +265,8 @@ public class GUI {
 		if (file != null) {
 			tView.setImage(new Image(file.toURI().toString()));
 		} else {
-			System.err.println("Error Loading Image File");
+			System.err.println("Error Loading Image File"); 
+			//TODO: MAKE SLOGO EXCEPTION POPUP
 		}
 	}
 
@@ -314,8 +313,7 @@ public class GUI {
 	 * @param selected
 	 * @param menu
 	 */
-	private void checkLanguageMenuItems(String language, boolean selected,
-			Menu menu) {
+	private void checkLanguageMenuItems(String language, boolean selected, Menu menu) {
 		confirmInput.setDisable(false);
 		if (selected) {
 			selectedLanguage = language;
@@ -378,15 +376,21 @@ public class GUI {
 		result.getChildren().add(userCommandsTable);
 		return result;
 	}
+	public void bindTable(String type, ObservableList<Variable> l) {
+		if (type.equals("Variable")) {
+			variablesTable.setItems(l);
+		}  
+	}
 
 	private TableView makeTable(String title, List<String> columnNames) {
 		// VBox labelAndTable = new VBox();
 		// labelAndTable.setSpacing(5);
 		//
-		// Label label = new Label(title);
-		// label.setFont(new Font("Arial", 14));
+		Label label = new Label(title);
+		label.setFont(new Font("Arial", 14));
 
 		TableView table = new TableView();
+
 		for (String s : columnNames) {
 			table.getColumns().add((new TableColumn(s)));
 		}
@@ -394,7 +398,7 @@ public class GUI {
 		// labelAndTable.getChildren().addAll(label, table);
 		return table;
 	}
-
+	
 	/**
 	 * Updates the right side info tables
 	 */
@@ -413,27 +417,25 @@ public class GUI {
 		//
 		// inputField.getText();
 		//
-		// TableColumn<Variable, String> tc = (TableColumn)
-		// variablesTable.getColumns().get(0);
-		// for (Variable s : mySceneUpdater.getVariableList()) {
-		// tc.setCellValueFactory(
-		// new PropertyValueFactory<Variable,String>(s.getName()));
-		// }
-		//
-		// TableColumn<Variable, Double> tc2 = (TableColumn)
-		// variablesTable.getColumns().get(1);
-		// for (Variable s : mySceneUpdater.getVariableList()) {
-		// tc2.setCellValueFactory(
-		// cellData -> cellData.getValue().valueProperty());
-		// }
-
-		for (String s : mySceneUpdater.getPrevCommandList()) {
-			System.out.println(s);
+		TableColumn<Variable, String> tc = (TableColumn) variablesTable.getColumns().get(0);
+		
+		for (Variable s : mySceneUpdater.getVariableList()) {
+			tc.setCellValueFactory(new PropertyValueFactory("name"));
+			
 		}
 		
-		for (Variable v : mySceneUpdater.getVariableList()) {
-			System.out.println(v.getName() + " - " + v.getValue());
+		TableColumn<Variable, Double> tc2 = (TableColumn) variablesTable.getColumns().get(1);
+		for (Variable s : mySceneUpdater.getVariableList()) {
+			tc2.setCellValueFactory(new PropertyValueFactory("value"));
 		}
+//
+//		for (String s : mySceneUpdater.getPrevCommandList()) {
+//			System.out.println(s);
+//		}
+//		
+//		for (Variable v : mySceneUpdater.getVariableList()) {
+//			System.out.println(v.getName() + " - " + v.getValue());
+//		}
 	}
 
 	/**
