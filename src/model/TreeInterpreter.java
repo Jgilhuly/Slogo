@@ -12,14 +12,13 @@ import parser.CommandTreeNode;
 
 public class TreeInterpreter {
     private CommandFactory factory;
-    private CommandList commands;
-    private List<Variable> variables;
+    private VariableList variables;
     private Turtle myTurtle;
     private Controller myController;
     
-    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller controller) {
-        commands = c;
-        variables = v;
+    public TreeInterpreter (VariableList varList, Turtle turtle, Controller controller) {
+
+        variables = varList;
         factory = new CommandFactory();
         myTurtle = turtle;
         myController = controller;
@@ -31,10 +30,11 @@ public class TreeInterpreter {
             if (!isLeaf(node)){
                 for (CommandTreeNode child : node.getChildren()) { // can be refactored
                     interpretTree(child);
-                    paramList.add(child.getValue());
+                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
                 }
             }
             update(node, paramList);
+//            variables.printThing();   
         }
 
     private boolean isLeaf (CommandTreeNode node){
@@ -70,9 +70,7 @@ public class TreeInterpreter {
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
-                if(!variables.contains(node.getName())){
-                    node.setValue(factory.createVariable(node.getName(), variables));
-                }
+                node.setValue((variables.get(node.getName())).getValue()); 
                 break;
             case "CONSTANT":
                 break; //Do nothing
@@ -81,8 +79,6 @@ public class TreeInterpreter {
         }
     }
     
-    public CommandList getCommandList(){
-        return commands;
-    }
+    
 
 }

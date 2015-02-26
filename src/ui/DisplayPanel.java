@@ -1,10 +1,7 @@
 package ui;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import model.Variable;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

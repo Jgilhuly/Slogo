@@ -43,6 +43,6 @@ public class Variable {
 		return name;
 	}
 	public String toString(){
-	    return this.getName();
+	    return this.getName() + this.getValue().toString();
 	}
 }

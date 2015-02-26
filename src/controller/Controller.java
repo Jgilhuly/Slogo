@@ -1,7 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.*;
 import javafx.animation.KeyFrame;
@@ -15,25 +17,28 @@ import model.Turtle;
 import model.Variable;
 import parser.CommandTreeNode;
 import parser.Parser;
+import parser.TreeGenerator;
 import ui.SceneUpdater;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
-	private CommandList commands = new CommandList();
-	private List<Variable> variables; 
+	private Map<String, CommandTreeNode> commands;
+
+	private VariableList variables;
 	private Turtle turtle = new Turtle();
-	private TreeInterpreter woot;
+	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
 
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
-		variables = new SimpleListProperty<Variable>(FXCollections.observableList(new ArrayList<Variable>()));
+		variables = new VariableList();
+		commands = new HashMap<String, CommandTreeNode>();
 	}
 
-	public void syncCommandandVariableLists() {
-		variables = new SimpleListProperty<Variable>();
-	}
+//	public void syncCommandandVariableLists() {
+//		variables = new SimpleListProperty<Variable>();
+//	}
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -43,9 +48,11 @@ public class Controller {
 	 */
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
-		CommandTreeNode node = pp.makeTree(input);
-		woot = new TreeInterpreter(commands, variables, turtle, this);
-		woot.interpretTree(node);
+		List<String> inputList = pp.parseList(input);
+		TreeGenerator tg = new TreeGenerator();
+		CommandTreeNode node = tg.createCommands(inputList);
+		interpreter = new TreeInterpreter(variables, turtle, this);
+		interpreter.interpretTree(node);
 	}
 
 	/**

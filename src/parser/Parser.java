@@ -33,7 +33,7 @@ public class Parser {
 	 * @return ret: List of strings reformatted and standardized using resource
 	 *         bundle
 	 */
-	private List<String> parseList(String input) {
+	public List<String> parseList(String input) {
 		List<String> ret = new ArrayList<>();
 		String[] split = input.split(" ");
 		for (String sp : split) {
@@ -89,13 +89,4 @@ public class Parser {
 		throw new CommandNotFoundException(input);
 	}
 
-	// public String method() {
-	// return input;
-	// }
-
-	public CommandTreeNode makeTree(String input) {
-		List<String> translate = parseList(input);
-		TreeGenerator tg = new TreeGenerator();
-		return tg.createCommands(translate);
-	}
 }
