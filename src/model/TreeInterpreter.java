@@ -26,18 +26,18 @@ public class TreeInterpreter {
     }
     
     public void interpretTree (CommandTreeNode node) {
-            List<Object> paramList = new ArrayList<>();
-            if (!isLeaf(node)){
-                if(!(node.getType().equals("BRACKET"))){
-                    for (CommandTreeNode child : node.getChildren()) { // can be refactored
-                        interpretTree(child);
-                        paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
-                    }
-                }
-                }
-            update(node, paramList);
-//            variables.printThing();   
-        }
+		List<Object> paramList = new ArrayList<>();
+		if (!isLeaf(node)) {
+			if (!(node.getType().equals("BRACKET"))) {
+				for (CommandTreeNode child : node.getChildren()) { 
+					interpretTree(child);
+					paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
+				}
+			}
+		}
+		update(node, paramList);
+		// variables.printThing();
+	}
 
     private boolean isLeaf (CommandTreeNode node){
         return node.getChildren().isEmpty(); 
@@ -68,7 +68,8 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(this); //maybe should extract out for specific make/set variable commandg
+                paramList.add(this); //maybe should extract out for specific make/set variable commands
+                //the class is added to the last value
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
@@ -77,7 +78,7 @@ public class TreeInterpreter {
             case "CONSTANT":
                 break; //Do nothing
             case "BRACKET":
-                break;
+                break; 
             default: //referring to commands that are not TURTLE type
                 executeCommand(node,paramList);
         }

@@ -6,7 +6,8 @@ import model.TreeInterpreter;
 import command.Command;
 
 public class RepeatCommand extends Command {
-    public double calculateValue(List<Object> param) {
+    
+	public double calculateValue(List<Object> param) {
         TreeInterpreter yay = (TreeInterpreter) param.get(2);
         CommandTreeNode num = (CommandTreeNode) param.get(0); 
         CommandTreeNode subCommands = (CommandTreeNode) param.get(1);

@@ -1,18 +1,17 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javafx.animation.KeyFrame;
-import javafx.event.ActionEvent;
+import model.*;
+
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.TreeInterpreter;
 import model.Turtle;
 import model.Variable;
-import model.VariableList;
 import parser.CommandTreeNode;
 import parser.Parser;
 import parser.TreeGenerator;
@@ -21,13 +20,13 @@ import ui.SceneUpdater;
 public class Controller {
 	private SceneUpdater sceneUpdater;
 	private Map<String, CommandTreeNode> commands;
-
+	private Turtle turtle;
 	private VariableList variables;
-	private Turtle turtle = new Turtle();
+
 	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
-
+		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
 		variables = new VariableList();
@@ -66,20 +65,17 @@ public class Controller {
 		turtleModel.addObserver(sceneUpdater.getTurtleView());
 	}
 	
-	public KeyFrame addKeyFrame(int frameRate) {
-		return new KeyFrame(Duration.millis(1000 / frameRate), e -> update(e));
-	}
 
-	private void update(ActionEvent e) {
-	}
-	
+
 	public List<Variable> getVariableList() {
 		return variables.getList();
 	}
-	
+
 	public Set<String> getPrevCommandList() {
+		
 		return commands.keySet();
 	}
+	
 
 	// public void play() {
 	// frame = addKeyFrame(fps);
