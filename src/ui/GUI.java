@@ -1,11 +1,9 @@
 package ui;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import javafx.beans.property.SimpleStringProperty;
+import model.Variable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -48,7 +46,11 @@ public class GUI {
 	private SVGPath svg;
 	private ColorPicker backgroundColorPicker;
 	private ColorPicker penColorPicker;
-	
+
+	private TableView prevCommandsTable;
+	private TableView variablesTable;
+	private TableView userCommandsTable;
+
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -177,25 +179,28 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		backgroundColorPicker = makeColorPicker(backgroundColor, e -> changeBackgroundColor());
-		penColorPicker = makeColorPicker(tView.getColor(), e -> changePenColor());
-		
+		backgroundColorPicker = makeColorPicker(backgroundColor,
+				e -> changeBackgroundColor());
+		penColorPicker = makeColorPicker(tView.getColor(),
+				e -> changePenColor());
+
 		tb.getItems().addAll(makeMenuBar(),
 				new Label(myResources.getString("BackgroundColor")),
 				backgroundColorPicker,
-				new Label(myResources.getString("PenColor")),
-				penColorPicker);
-		
+				new Label(myResources.getString("PenColor")), penColorPicker);
+
 		return tb;
 	}
-	
+
 	/**
 	 * Makes a color picker with the given default color and handler
+	 * 
 	 * @param defaultColor
 	 * @param handler
 	 * @return
 	 */
-	private ColorPicker makeColorPicker(Color defaultColor, EventHandler<ActionEvent> handler) {
+	private ColorPicker makeColorPicker(Color defaultColor,
+			EventHandler<ActionEvent> handler) {
 		ColorPicker colorPicker = new ColorPicker(defaultColor);
 		svg = new SVGPath();
 		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -214,8 +219,8 @@ public class GUI {
 	 * Handler for the background color picker
 	 */
 	private void changeBackgroundColor() {
-		canvasHolder.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(),
-				null, null)));
+		canvasHolder.setBackground(new Background(new BackgroundFill(
+				backgroundColorPicker.getValue(), null, null)));
 	}
 
 	/**
@@ -276,9 +281,9 @@ public class GUI {
 			menu.getItems().add(cmi);
 
 			cmi.selectedProperty()
-					.addListener(
-							e -> checkLanguageMenuItems(string,
-									cmi.isSelected(), menu));
+			.addListener(
+					e -> checkLanguageMenuItems(string,
+							cmi.isSelected(), menu));
 
 		}
 		return menu;
@@ -290,7 +295,8 @@ public class GUI {
 	private void showHTMLHelp() {
 		WebView browser = new WebView();
 		WebEngine webEngine = browser.getEngine();
-		webEngine.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
+		webEngine
+		.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
 
 		VBox helpRoot = new VBox();
 		helpRoot.getChildren().add(browser);
@@ -353,17 +359,81 @@ public class GUI {
 
 		DisplayPanel p = new DisplayPanel();
 
+		ArrayList<String> cols = new ArrayList<String>();
 
-		result.getChildren().add()
+		cols = new ArrayList<String>();
+		cols.add("Commands");
+		prevCommandsTable = makeTable("Previous Commands", cols);
+		result.getChildren().add(prevCommandsTable);
 
-		result.getChildren().add(p.makeTable("Previous Commands"));
-		
-		result.getChildren().add(p.makeTable("Variables"));
-		
+		cols = new ArrayList<String>();
+		cols.add("Names");
+		cols.add("Values");
+		variablesTable = makeTable("Variables", cols);
+		result.getChildren().add(variablesTable);
 
-		result.getChildren().add(p.makeTable("User Commands"));
-
+		cols = new ArrayList<String>();
+		cols.add("Commands");
+		userCommandsTable = makeTable("User Commands", cols);
+		result.getChildren().add(userCommandsTable);
 		return result;
+	}
+
+	private TableView makeTable(String title, List<String> columnNames) {
+		// VBox labelAndTable = new VBox();
+		// labelAndTable.setSpacing(5);
+		//
+		// Label label = new Label(title);
+		// label.setFont(new Font("Arial", 14));
+
+		TableView table = new TableView();
+		for (String s : columnNames) {
+			table.getColumns().add((new TableColumn(s)));
+		}
+
+		// labelAndTable.getChildren().addAll(label, table);
+		return table;
+	}
+
+	/**
+	 * Updates the right side info tables
+	 */
+
+	private void addHistory() {
+		// ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+		//
+		// TableColumn<String, String> tc = new
+		// TableColumn<>("Previous Commands");
+		// tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
+		// .getText()));
+		//
+		// cols.add(tc);
+		//
+		// // table.getColumns().addAll(cols);
+		//
+		// inputField.getText();
+		//
+		// TableColumn<Variable, String> tc = (TableColumn)
+		// variablesTable.getColumns().get(0);
+		// for (Variable s : mySceneUpdater.getVariableList()) {
+		// tc.setCellValueFactory(
+		// new PropertyValueFactory<Variable,String>(s.getName()));
+		// }
+		//
+		// TableColumn<Variable, Double> tc2 = (TableColumn)
+		// variablesTable.getColumns().get(1);
+		// for (Variable s : mySceneUpdater.getVariableList()) {
+		// tc2.setCellValueFactory(
+		// cellData -> cellData.getValue().valueProperty());
+		// }
+
+		for (String s : mySceneUpdater.getPrevCommandList()) {
+			System.out.println(s);
+		}
+		
+		for (Variable v : mySceneUpdater.getVariableList()) {
+			System.out.println(v.getName() + " - " + v.getValue());
+		}
 	}
 
 	/**
@@ -376,24 +446,6 @@ public class GUI {
 	}
 
 	/**
-	 * Updates the right side info tables
-	 */
-	
-	private void addHistory() {
-		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-
-		TableColumn<String, String> tc = new TableColumn<>("Previous Commands");
-		tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
-				.getText()));
-
-		cols.add(tc);
-
-		// table.getColumns().addAll(cols);
-
-		inputField.getText();
-	}
-
-	/**
 	 * Returns the TurtleView so that it can be linked to its model
 	 * 
 	 * @return
@@ -401,17 +453,4 @@ public class GUI {
 	public Observer getTurtleView() {
 		return tView;
 	}
-
-	// private Node makeTable(String title, List<String> columnNames) {
-	// VBox labelAndTable = new VBox();
-	// labelAndTable.setSpacing(5);
-	//
-	// Label label = new Label(title);
-	// label.setFont(new Font("Arial", 14));
-	//
-	// TableView table = new TableView();
-	//
-	// labelAndTable.getChildren().addAll(label, table);
-	// return labelAndTable;
-	// }
 }

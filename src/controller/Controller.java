@@ -1,19 +1,18 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import model.*;
 import javafx.animation.KeyFrame;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.TreeInterpreter;
 import model.Turtle;
+import model.Variable;
+import model.VariableList;
 import parser.CommandTreeNode;
 import parser.Parser;
 import parser.TreeGenerator;
@@ -72,6 +71,14 @@ public class Controller {
 	}
 
 	private void update(ActionEvent e) {
+	}
+	
+	public List<Variable> getVariableList() {
+		return variables.getList();
+	}
+	
+	public Set<String> getPrevCommandList() {
+		return commands.keySet();
 	}
 
 	// public void play() {
