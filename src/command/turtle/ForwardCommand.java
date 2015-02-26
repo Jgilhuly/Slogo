@@ -8,16 +8,14 @@ import command.Command;
 public class ForwardCommand extends Command {
 
 	public double calculateValue(List<Object> param) {
-		updateTurtle((Turtle) param.get(1));
+		Turtle t = (Turtle) param.get(1);
+		double newX = t.getX() + (double) param.get(0) * Math.sin(t.getHeading()*Math.PI/180);
+		double newY = t.getY() + (double) param.get(0) * Math.cos(t.getHeading()*Math.PI/180);
+		t.setXY(newX, newY);
+		t.updateTurtleViewers();
 		return (double) param.get(0);
 		
 	}
-	
-	private void updateTurtle(Turtle t) {
-		double newX = t.getX() * Math.sin(t.getHeading());
-		double newY = t.getY() * Math.cos(t.getHeading());
-		t.setXY(newX, newY);
-		t.updateTurtleViewers();
-	}
+
 	
 }

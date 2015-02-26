@@ -6,8 +6,9 @@ import command.Command;
 
 public class RandomCommand extends Command {
 
-        public double calculateValue(List<Object> param) {
-            Random r = new Random();
-            return r.nextInt((int) param.get(0));
-        }
+	public double calculateValue(List<Object> param) {
+		Random r = new Random();
+
+		return r.nextInt((int) (double) param.get(0));
+	}
 }

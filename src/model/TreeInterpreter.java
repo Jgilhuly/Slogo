@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
 import controller.Controller;
 import command.Command;
 import parser.CommandTreeNode;
@@ -12,16 +13,20 @@ import parser.CommandTreeNode;
 public class TreeInterpreter {
     private CommandFactory factory;
     private CommandList commands;
-    private VariableList variables;
+    private List<Variable> variables;
     private Turtle myTurtle;
     private Controller myController;
     
-    
-    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle) {
+    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller fuckshit) {
         commands = c;
         variables = v;
-        factory = new CommandFactory(variables);
+        factory = new CommandFactory();
         myTurtle = turtle;
+        /*
+         * RENAME this pls vvvvvvv
+         */
+        myController = fuckshit;
+        myController.linkTurtles(myTurtle);
     }
     
     public void interpretTree (CommandTreeNode node) {
@@ -48,7 +53,7 @@ public class TreeInterpreter {
             method = c.getClass().getDeclaredMethod("calculateValue", cArg);
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
-            System.out.println("CURRENT " + value);
+            myController.setOutputText(Double.toString(value));
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
@@ -60,17 +65,18 @@ public class TreeInterpreter {
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
             case "COMMAND.TURTLE":
-                System.out.println("YOLOSWAG");
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
-                
-                
                 break;
             case "COMMAND.CONTROL":
                 paramList.add(this);
                 executeCommand(node,paramList);
             case "VARIABLE":
-                factory.createVariable(node.getName(), variables);
+                if(!variables.contains(node.getName())){
+                	createVariable(node.getName()); //HOW TO GET VALUE?
+                }
+                
+                
                 break;
             case "CONSTANT":
                 break; //Do nothing
@@ -78,9 +84,10 @@ public class TreeInterpreter {
                 executeCommand(node,paramList);
         }
     }
-    
-    public VariableList getVariableList (){
-        return variables;
+    public void createVariable (String name) {
+//     
+//          variables.addVariable(new Variable(name));
+        
     }
     
     public CommandList getCommandList(){
