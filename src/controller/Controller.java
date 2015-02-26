@@ -62,7 +62,6 @@ public class Controller {
 	}
 
 	private void update(ActionEvent e) {
-		
 	}
 
 //	public void play() {
