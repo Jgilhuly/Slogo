@@ -35,7 +35,7 @@ public class TurtleView implements Observer {
 		myCanvasHolder = canvasHolder;
 		addTurtle(myImageView);
 
-		myHeading = 0;
+		myHeading = 50;
 		myImageView.setPreserveRatio(true);
 		myImageView.setSmooth(true);
 	}
@@ -53,18 +53,8 @@ public class TurtleView implements Observer {
 		myCanvasHolder.getChildren().add(turtle);
 	}
 
-<<<<<<< HEAD
-	public void draw() {
-	        System.out.println(myCanvas.getLayoutX());
-	        System.out.println(myCanvas.getLayoutY());
-//		myCanvas.getGraphicsContext2D().rotate(myHeading);
-		myCanvas.getGraphicsContext2D().drawImage(myImageView.getImage(),
-				getCenterX(), getCenterY(), myCanvas.getHeight() / 10,
-				myCanvas.getWidth() / 10);
-=======
 	public ImageView getImageView() {
 		return myImageView;
->>>>>>> 0fd6b3ec70d9b29fee476d321381f65888672a6c
 	}
 
 	private void draw(double x1, double y1, double x2, double y2,
@@ -88,31 +78,6 @@ public class TurtleView implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-<<<<<<< HEAD
-		 Turtle tModel = (Turtle) o;
-		 double newX = tModel.getX();
-		 double newY = tModel.getY();
-		 double newHeading = tModel.getHeading();
-		
-		 if (myHeading != newHeading) {
-		 myHeading = newHeading;
-		 myCanvas.getGraphicsContext2D().save();
-		 myCanvas.getGraphicsContext2D().rotate(myHeading);
-		 }
-		 myHeading = newHeading;
-		
-		 if (newX != getCenterX() || newY != getCenterY()) {
-		 System.out.println(getCenterX());
-		 System.out.println(getCenterY());
-		 System.out.println(newX);
-		 System.out.println(newY);
-		 drawLine(getCenterX(), getCenterY(), newX, newY);
-
-		 myImageView.setX(newX);
-		 myImageView.setY(newY);
-	         draw();
-		 }
-=======
 		Turtle tModel = (Turtle) o;
 		double newX = tModel.getX();
 		double newY = tModel.getY();
@@ -126,7 +91,6 @@ public class TurtleView implements Observer {
 			myCanvas.getGraphicsContext2D().clearRect(0, 0,
 					myCanvas.getWidth(), myCanvas.getHeight());
 		}
->>>>>>> 0fd6b3ec70d9b29fee476d321381f65888672a6c
 	}
 
 	private double getCenterX() {

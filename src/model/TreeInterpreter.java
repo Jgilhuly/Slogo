@@ -17,15 +17,12 @@ public class TreeInterpreter {
     private Turtle myTurtle;
     private Controller myController;
     
-    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller fuckshit) {
+    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller controller) {
         commands = c;
         variables = v;
         factory = new CommandFactory();
         myTurtle = turtle;
-        /*
-         * RENAME this pls vvvvvvv
-         */
-        myController = fuckshit;
+        myController = controller;
         myController.linkTurtles(myTurtle);
     }
     
@@ -38,6 +35,7 @@ public class TreeInterpreter {
                 }
             }
             update(node, paramList);
+            System.out.println(variables);
         }
 
     private boolean isLeaf (CommandTreeNode node){
@@ -73,21 +71,14 @@ public class TreeInterpreter {
                 executeCommand(node,paramList);
             case "VARIABLE":
                 if(!variables.contains(node.getName())){
-                	createVariable(node.getName()); //HOW TO GET VALUE?
+                    factory.createVariable(node.getName(), variables);
                 }
-                
-                
                 break;
             case "CONSTANT":
                 break; //Do nothing
             default: //referring to commands that are not TURTLE type
                 executeCommand(node,paramList);
         }
-    }
-    public void createVariable (String name) {
-//     
-//          variables.addVariable(new Variable(name));
-        
     }
     
     public CommandList getCommandList(){

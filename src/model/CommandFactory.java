@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import command.Command;
 
 
@@ -26,6 +27,13 @@ public class CommandFactory {
     public Command createBracket (String name) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+
+    public void createVariable (String name, List<Variable> variables) {
+        Variable var = new Variable(name, 0.0);
+        variables.add(var);
+        
     }
 	
 	
