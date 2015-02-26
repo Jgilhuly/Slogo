@@ -17,16 +17,12 @@ public class TreeInterpreter {
     private Turtle myTurtle;
     private Controller myController;
     
-    
-    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller fuckshit) {
+    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller controller) {
         commands = c;
         variables = v;
         factory = new CommandFactory();
         myTurtle = turtle;
-        /*
-         * RENAME this pls vvvvvvv
-         */
-        myController = fuckshit;
+        myController = controller;
         myController.linkTurtles(myTurtle);
     }
     
@@ -70,25 +66,19 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(this);
+                paramList.add(variables); //maybe should extract out for specific make/set variable commandg
                 executeCommand(node,paramList);
+                break;
             case "VARIABLE":
                 if(!variables.contains(node.getName())){
-                	createVariable(node.getName()); //HOW TO GET VALUE?
+                    node.setValue(factory.createVariable(node.getName(), variables));
                 }
-                
-                
                 break;
             case "CONSTANT":
                 break; //Do nothing
             default: //referring to commands that are not TURTLE type
                 executeCommand(node,paramList);
         }
-    }
-    public void createVariable (String name) {
-     
-          variables.addVariable(new Variable(name));
-        
     }
     
     public CommandList getCommandList(){

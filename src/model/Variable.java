@@ -19,22 +19,30 @@ public class Variable {
      }
      
      
-     private Double getValue(){
-         return value.getValue();
+     public Double getValue(){
+         return (Double) value.getValue();
      }
-     private String getName() {
+     public String getName() {
     	 return name.getValue();
+     }
+
+     
+     public void setValue(Double val){
+         value = new SimpleDoubleProperty(val);
      }
 
 
 	public DoubleProperty valueProperty() {
 		if (value == null)
-			value = new SimpleDoubleProperty(this, "value");
+			value = new SimpleDoubleProperty(0);
 		return value;
 	}
 	public StringProperty nameProperty() {
 		if (name == null)
 			name = new SimpleStringProperty(this, "name");
 		return name;
+	}
+	public String toString(){
+	    return this.getName();
 	}
 }

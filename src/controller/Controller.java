@@ -1,7 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import model.*;
 import javafx.animation.KeyFrame;
 import javafx.beans.property.SimpleListProperty;
@@ -21,15 +21,15 @@ public class Controller {
 	// private Timeline animation = new Timeline();
 	// private KeyFrame frame;
 	private CommandList commands = new CommandList();
-	private List<Variable> variables;
-
+//	private List<Variable> variables = new SimpleListProperty<Variable>(); //taken out of the method syncCommandListblah
+	private List<Variable> variables = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
 	private Turtle turtle = new Turtle();
 	private TreeInterpreter woot;
 
 	public void init(Stage s) {
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
-
+		
 		// get this from front end
 		// String input = "repeat + 20 10 [ fd 1 rt 2]";
 		
@@ -48,7 +48,6 @@ public class Controller {
 
 	public void syncCommandandVariableLists() {
 		variables = new SimpleListProperty<Variable>();
-
 	}
 
 	public void parseCommand(String input, String language) {
