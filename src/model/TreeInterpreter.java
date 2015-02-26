@@ -13,13 +13,13 @@ import parser.CommandTreeNode;
 public class TreeInterpreter {
     private CommandFactory factory;
     private CommandList commands;
-    private List<Variable> variables;
+    private VariableList variables;
     private Turtle myTurtle;
     private Controller myController;
     
-    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller controller) {
+    public TreeInterpreter (CommandList c, VariableList varList, Turtle turtle, Controller controller) {
         commands = c;
-        variables = v;
+        variables = varList;
         factory = new CommandFactory();
         myTurtle = turtle;
         myController = controller;
@@ -31,7 +31,7 @@ public class TreeInterpreter {
             if (!isLeaf(node)){
                 for (CommandTreeNode child : node.getChildren()) { // can be refactored
                     interpretTree(child);
-                    paramList.add(child.getValue());
+                    paramList.add(node.getType() == "COMMAND.CONTROL" ? child : child.getValue());
                 }
             }
             update(node, paramList);

@@ -22,7 +22,8 @@ public class Controller {
 	// private KeyFrame frame;
 	private CommandList commands = new CommandList();
 //	private List<Variable> variables = new SimpleListProperty<Variable>(); //taken out of the method syncCommandListblah
-	private List<Variable> variables = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
+//	private List<Variable> variables = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
+	private VariableList variables = new VariableList();
 	private Turtle turtle = new Turtle();
 	private TreeInterpreter woot;
 
@@ -46,9 +47,9 @@ public class Controller {
 		// animation.play();
 	}
 
-	public void syncCommandandVariableLists() {
-		variables = new SimpleListProperty<Variable>();
-	}
+//	public void syncCommandandVariableLists() {
+//		variables = new SimpleListProperty<Variable>();
+//	}
 
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
