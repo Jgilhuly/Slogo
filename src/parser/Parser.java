@@ -57,7 +57,6 @@ public class Parser {
 		}
 		if (ListStartCount != ListEndCount)
 			throw new UnmatchedBracketException();
-
 		return ret;
 	}
 
