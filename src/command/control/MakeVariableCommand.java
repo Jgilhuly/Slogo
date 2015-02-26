@@ -9,15 +9,16 @@ import command.Command;
 
 public class MakeVariableCommand extends Command {
     public double calculateValue(List<Object> param) {
-        TreeInterpreter yay = (TreeInterpreter) param.get(2);
-        VariableList variables = (VariableList) yay.getVariableList(); 
-        CommandTreeNode node = (CommandTreeNode) param.get(0);
-        CommandTreeNode node2 = (CommandTreeNode) param.get(1);
-        String name = node.getName();
+        VariableList variables = (VariableList) ((TreeInterpreter) param.get(2)).getVariableList(); 
+        
+        CommandTreeNode var = (CommandTreeNode) param.get(0);
+        CommandTreeNode value = (CommandTreeNode) param.get(1);
+        String name = var.getName();
+        
         if (!variables.contains(name)){
             variables.add(name);    
         }
-        variables.get(name).setValue(node2.getValue());
-        return variables.get(name).getValue();
+        variables.get(name).setValue(value.getValue());
+        return variables.get(name).getValue(); //Returns the value of the variable
     }
 }
