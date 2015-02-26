@@ -27,8 +27,6 @@ public class Variable {
      }
 
 
-
-
 	public DoubleProperty valueProperty() {
 		if (value == null)
 			value = new SimpleDoubleProperty(this, "value");

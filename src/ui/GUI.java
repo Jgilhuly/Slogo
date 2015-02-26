@@ -214,12 +214,9 @@ public class GUI {
 	 */
 	private Node makeMenuBar() {
 		Menu fileMenu = new Menu(myResources.getString("File"));
-
 		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
 		fileMenu.getItems().add(fileOp1);
-
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
-
 		MenuItem htmlHelp = new MenuItem(myResources.getString("Help"));
 		htmlHelp.setOnAction(e -> showHTMLHelp());
 		optionsMenu.getItems().add(htmlHelp);
@@ -259,15 +256,14 @@ public class GUI {
 	private void showHTMLHelp() {
 		WebView browser = new WebView();
 		WebEngine webEngine = browser.getEngine();
-		webEngine
-				.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
+		webEngine.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
 
 		VBox helpRoot = new VBox();
 		helpRoot.getChildren().add(browser);
 
 		Stage stage = new Stage();
 		stage.setTitle(myResources.getString("HelpPageTitle"));
-		stage.setScene(new Scene(helpRoot, 500, 500));
+		stage.setScene(new Scene(helpRoot, 800, 800));
 		stage.show();
 	}
 
