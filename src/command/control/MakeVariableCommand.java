@@ -4,11 +4,13 @@ import java.util.List;
 import parser.CommandTreeNode;
 import model.Variable;
 import model.VariableList;
+import model.TreeInterpreter;
 import command.Command;
 
 public class MakeVariableCommand extends Command {
     public double calculateValue(List<Object> param) {
-        VariableList variables = (VariableList) param.get(2); 
+        TreeInterpreter yay = (TreeInterpreter) param.get(2);
+        VariableList variables = (VariableList) yay.getVariableList(); 
         CommandTreeNode node = (CommandTreeNode) param.get(0);
         CommandTreeNode node2 = (CommandTreeNode) param.get(1);
         String name = node.getName();
