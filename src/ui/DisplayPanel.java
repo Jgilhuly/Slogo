@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 //will return one display panel
 public class DisplayPanel {
 
-	public Node makeTable(String title, List<String> columnNames ) {
+	public Node makeTable(String title) {
 		VBox labelAndTable = new VBox();
 		labelAndTable.setSpacing(5);
 		
@@ -28,19 +28,20 @@ public class DisplayPanel {
 		TableView table = new TableView();
 		ObservableList<Variable> variables = setBindList();
 		table.setItems(variables);
+	
+		TableColumn<Variable,String> nameCol = new TableColumn<Variable,String>("Name");
+		nameCol.setCellValueFactory(new PropertyValueFactory("name"));
 		TableColumn<Variable,String> valueCol = new TableColumn<Variable,String>("Value");
 		valueCol.setCellValueFactory(new PropertyValueFactory("value"));
-		TableColumn<Variable,String> nameCol = new TableColumn<Variable,String>("Name");
-		valueCol.setCellValueFactory(new PropertyValueFactory("name"));
-		table.getColumns().setAll(valueCol, nameCol);
+		table.getColumns().setAll( nameCol, valueCol);
 		
-		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-		
-		for (String s : columnNames) {
-			cols.add(new TableColumn(s));
-		}
-		
-		table.getColumns().addAll(cols);
+//		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+//		
+//		for (String s : columnNames) {
+//			cols.add(new TableColumn(s));
+//		}
+//		
+//		table.getColumns().addAll(cols);
 		
 		labelAndTable.getChildren().addAll(label, table);
 		return labelAndTable;

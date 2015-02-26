@@ -238,21 +238,15 @@ public class GUI {
 
 		DisplayPanel p = new DisplayPanel();
 
-		ArrayList<String> cols = new ArrayList<String>();
 
-		cols = new ArrayList<String>();
-		cols.add("Commands");
-		result.getChildren().add(p.makeTable("Previous Commands", cols));
+
+		result.getChildren().add(p.makeTable("Previous Commands"));
 		
-		cols.add("Names");
-		cols.add("Values");
-		result.getChildren().add(p.makeTable("Variables", cols));
+		result.getChildren().add(p.makeTable("Variables"));
 		
 
-		cols = new ArrayList<String>();
-		cols.add("Commands");
 
-		result.getChildren().add(p.makeTable("User Commands", cols));
+		result.getChildren().add(p.makeTable("User Commands"));
 
 		return result;
 	}
