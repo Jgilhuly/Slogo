@@ -13,6 +13,7 @@ public class Turtle extends Observable {
 	private double yLocation;
 	private boolean isDrawingLine; //true for pen down, false for pen up
 	private boolean isTurtleShowing;
+	private boolean isCleared;
 	private Color penColor;
 	private double heading; //degrees, 0 is the positive y direction
 	
@@ -48,7 +49,9 @@ public class Turtle extends Observable {
 		xLocation = x;
 		yLocation = y;
 	}
-	
+	public void setClear(boolean sc) {
+		isCleared = sc;
+	}
 	public double getX() {
 		return xLocation;
 	}
@@ -64,5 +67,8 @@ public class Turtle extends Observable {
 	}
 	public boolean getVisibility() {
 		return isTurtleShowing;
+	}
+	public boolean getCleared() {
+		return isCleared;
 	}
 }
