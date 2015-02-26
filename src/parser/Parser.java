@@ -13,17 +13,6 @@ import errors.CommandNotFoundException;
 import errors.UnmatchedBracketException;
 
 public class Parser {
-	private static final int COMMENT_INDEX = 1;
-	private static final int CONSTANT_INDEX = 2;
-	private static final int VARIABLE_INDEX = 3;
-	private static final int COMMAND_INDEX = 4;
-	private static final int LISTSTART_INDEX = 8;
-	private static final int LISTEND_INDEX = 9;
-	private static final int GROUPSTART_INDEX = 10;
-	private static final int GROUPEND_INDEX = 11;
-	private int[] indices = { COMMENT_INDEX, CONSTANT_INDEX, VARIABLE_INDEX,
-			COMMAND_INDEX, LISTSTART_INDEX, LISTEND_INDEX, GROUPSTART_INDEX,
-			GROUPEND_INDEX };
 	private List<Entry<String, Pattern>> languagePatternList;
 	private List<Entry<String, Pattern>> syntaxPatternList;
 	private int ListStartCount = 0;
@@ -68,7 +57,6 @@ public class Parser {
 		}
 		if (ListStartCount != ListEndCount)
 			throw new UnmatchedBracketException();
-
 		return ret;
 	}
 

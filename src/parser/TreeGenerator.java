@@ -48,7 +48,6 @@ public class TreeGenerator {
 	public CommandTreeNode createCommands(List<String> input) {
 		try {
 			myInput = input;
-
 			String value = myInput.get(index);
 			myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0,
 					null);
@@ -65,7 +64,8 @@ public class TreeGenerator {
 
 			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
 			return myRoot;
-		} catch (NullPointerException e) {
+		} catch (NullPointerException | IndexOutOfBoundsException e) {
+			e.printStackTrace();
 			throw new NoInputFoundException();
 		}
 	}

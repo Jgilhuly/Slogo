@@ -57,28 +57,24 @@ public class TurtleView implements Observer {
 		return myImageView;
 	}
 
-	// public void draw() {
-	// // myCanvas.getGraphicsContext2D().rotate(myHeading);
-	// myCanvas.getGraphicsContext2D().drawImage(myImageView.getImage(),
-	// getCenterX(), getCenterY(), myCanvas.getHeight() / 10,
-	// myCanvas.getWidth() / 10);
-	// }
-
-	private void draw(double x1, double y1, double x2, double y2) {
-		myCanvas.getGraphicsContext2D().setFill(myColor);
+	private void draw(double x1, double y1, double x2, double y2,
+			boolean hasLine, boolean hasTurtle) {
+		myCanvas.getGraphicsContext2D().setStroke(myColor);
 		myCanvas.getGraphicsContext2D().setLineWidth(3);
 		// minus y since it's flipped in the canvas
-		myCanvas.getGraphicsContext2D().strokeLine(x1, y1, canvasCenterX + x2,
-				canvasCenterY - y2);
+		if (hasLine)
+			myCanvas.getGraphicsContext2D().strokeLine(x1, y1,
+					canvasCenterX + x2, canvasCenterY - y2);
 		// move image
 		myImageView.setTranslateX(x2);
 		myImageView.setTranslateY(-y2);
-		//set values - different coordinates
-		myImageView.setX(canvasCenterX+x2);
-		myImageView.setY(canvasCenterY-y2);
-		
+		// set values - different coordinates
+		myImageView.setX(canvasCenterX + x2);
+		myImageView.setY(canvasCenterY - y2);
+
 		// rotate image
 		myImageView.setRotate(myHeading);
+		myImageView.setVisible(hasTurtle);
 	}
 
 	@Override
@@ -87,11 +83,16 @@ public class TurtleView implements Observer {
 		double newX = tModel.getX();
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
-
 		myHeading = newHeading;
 		if (newX != getCenterX() || newY != getCenterY()) {
-			draw(myImageView.getX(), myImageView.getY(), newX, newY);
+			draw(myImageView.getX(), myImageView.getY(), newX, newY,
+					tModel.getLine(), tModel.getVisibility());
 		}
+		if (tModel.getCleared()) {
+			myCanvas.getGraphicsContext2D().clearRect(0, 0,
+					myCanvas.getWidth(), myCanvas.getHeight());
+		}
+
 	}
 
 	private double getCenterX() {
