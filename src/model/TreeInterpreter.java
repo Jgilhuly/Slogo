@@ -12,13 +12,12 @@ import parser.CommandTreeNode;
 
 public class TreeInterpreter {
     private CommandFactory factory;
-    private CommandList commands;
     private VariableList variables;
     private Turtle myTurtle;
     private Controller myController;
     
-    public TreeInterpreter (CommandList c, VariableList varList, Turtle turtle, Controller controller) {
-        commands = c;
+    public TreeInterpreter (VariableList varList, Turtle turtle, Controller controller) {
+
         variables = varList;
         factory = new CommandFactory();
         myTurtle = turtle;
@@ -84,9 +83,7 @@ public class TreeInterpreter {
         }
     }
     
-    public CommandList getCommandList(){
-        return commands;
-    }
+    
 
     public VariableList getVariableList () {
         return variables;

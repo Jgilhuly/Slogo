@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 import javafx.beans.property.SimpleListProperty;
 
 /**
@@ -21,13 +22,6 @@ public class VariableList{
         list.add(new Variable(name, 0.0));
     }
     
-    public double indexOf(Variable var){
-        return (double) list.indexOf(var);
-    }
-    
-    public Variable get(Double index){
-        return list.get(index.intValue());
-    }
     
     public Variable get(String name){
         for(Variable var : list){
@@ -36,7 +30,7 @@ public class VariableList{
             }
         }
        add(name);
-        return new Variable(name, 0.0);
+       return new Variable(name, 0.0);
     }
     
     public boolean contains(String name){
@@ -54,5 +48,8 @@ public class VariableList{
         }
     }
 
-
+    public List<Variable> getList() {
+    	return list;
+    	
+    }
 }

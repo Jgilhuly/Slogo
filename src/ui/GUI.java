@@ -1,11 +1,9 @@
 package ui;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import javafx.beans.property.SimpleStringProperty;
+import model.Variable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -45,6 +43,14 @@ public class GUI {
 	private StackPane canvasHolder;
 
 	private Color backgroundColor;
+	private SVGPath svg;
+	private ColorPicker backgroundColorPicker;
+	private ColorPicker penColorPicker;
+
+	private TableView prevCommandsTable;
+	private TableView variablesTable;
+	private TableView userCommandsTable;
+
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -168,63 +174,60 @@ public class GUI {
 		return canvasHolder;
 	}
 
-	private Node makeBackgroundColorPicker(Color defaultColor) {
-		ColorPicker colorPicker = new ColorPicker(defaultColor);
-		final SVGPath svg = new SVGPath();
-		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
-				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
-				+ "L70,50");
-		svg.setStroke(Color.DARKGREY);
-		svg.setStrokeWidth(2);
-		svg.setEffect(new DropShadow());
-		svg.setFill(colorPicker.getValue());
-
-		colorPicker.setOnAction(e -> {
-			svg.setFill(colorPicker.getValue());
-			changeColor(colorPicker.getValue());
-		});
-		return colorPicker;
-	}
-
-	private Node makePenColorPicker(Color defaultColor) {
-		ColorPicker colorPicker = new ColorPicker(defaultColor);
-		final SVGPath svg = new SVGPath();
-		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
-				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
-				+ "L70,50");
-		svg.setStroke(Color.DARKGREY);
-		svg.setStrokeWidth(2);
-		svg.setEffect(new DropShadow());
-		svg.setFill(colorPicker.getValue());
-
-		colorPicker.setOnAction(e -> {
-			svg.setFill(colorPicker.getValue());
-			changePenColor(colorPicker.getValue());
-		});
-		return colorPicker;
-	}
-
-	private void changeColor(Color color) {
-		canvasHolder.setBackground(new Background(new BackgroundFill(color,
-				null, null)));
-	}
-
-	private void changePenColor(Color color) {
-		tView.setColor(color);
-	}
-
 	/**
 	 * Creates top bar
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
+		backgroundColorPicker = makeColorPicker(backgroundColor,
+				e -> changeBackgroundColor());
+		penColorPicker = makeColorPicker(tView.getColor(),
+				e -> changePenColor());
+
 		tb.getItems().addAll(makeMenuBar(),
 				new Label(myResources.getString("BackgroundColor")),
-				makeBackgroundColorPicker(backgroundColor),
-				new Label(myResources.getString("PenColor")),
-				makePenColorPicker(tView.getColor()));
+				backgroundColorPicker,
+				new Label(myResources.getString("PenColor")), penColorPicker);
 
 		return tb;
+	}
+
+	/**
+	 * Makes a color picker with the given default color and handler
+	 * 
+	 * @param defaultColor
+	 * @param handler
+	 * @return
+	 */
+	private ColorPicker makeColorPicker(Color defaultColor,
+			EventHandler<ActionEvent> handler) {
+		ColorPicker colorPicker = new ColorPicker(defaultColor);
+		svg = new SVGPath();
+		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
+				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
+				+ "L70,50");
+		svg.setStroke(Color.DARKGREY);
+		svg.setStrokeWidth(2);
+		svg.setEffect(new DropShadow());
+		svg.setFill(colorPicker.getValue());
+
+		colorPicker.setOnAction(handler);
+		return colorPicker;
+	}
+
+	/**
+	 * Handler for the background color picker
+	 */
+	private void changeBackgroundColor() {
+		canvasHolder.setBackground(new Background(new BackgroundFill(
+				backgroundColorPicker.getValue(), null, null)));
+	}
+
+	/**
+	 * Handler for the pen color picker
+	 */
+	private void changePenColor() {
+		tView.setColor(penColorPicker.getValue());
 	}
 
 	/**
@@ -234,13 +237,10 @@ public class GUI {
 	 */
 	private Node makeMenuBar() {
 		Menu fileMenu = new Menu(myResources.getString("File"));
-
 		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
 		fileOp1.setOnAction(e -> selectAndChangeTurtleImage());
 		fileMenu.getItems().add(fileOp1);
-
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
-
 		MenuItem htmlHelp = new MenuItem(myResources.getString("Help"));
 		htmlHelp.setOnAction(e -> showHTMLHelp());
 		optionsMenu.getItems().add(htmlHelp);
@@ -281,9 +281,9 @@ public class GUI {
 			menu.getItems().add(cmi);
 
 			cmi.selectedProperty()
-					.addListener(
-							e -> checkLanguageMenuItems(string,
-									cmi.isSelected(), menu));
+			.addListener(
+					e -> checkLanguageMenuItems(string,
+							cmi.isSelected(), menu));
 
 		}
 		return menu;
@@ -296,14 +296,14 @@ public class GUI {
 		WebView browser = new WebView();
 		WebEngine webEngine = browser.getEngine();
 		webEngine
-				.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
+		.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
 
 		VBox helpRoot = new VBox();
 		helpRoot.getChildren().add(browser);
 
 		Stage stage = new Stage();
 		stage.setTitle(myResources.getString("HelpPageTitle"));
-		stage.setScene(new Scene(helpRoot, 500, 500));
+		stage.setScene(new Scene(helpRoot, 800, 800));
 		stage.show();
 	}
 
@@ -363,18 +363,77 @@ public class GUI {
 
 		cols = new ArrayList<String>();
 		cols.add("Commands");
-		result.getChildren().add(p.makeTable("Previous Commands", cols));
+		prevCommandsTable = makeTable("Previous Commands", cols);
+		result.getChildren().add(prevCommandsTable);
 
+		cols = new ArrayList<String>();
 		cols.add("Names");
 		cols.add("Values");
-		result.getChildren().add(p.makeTable("Variables", cols));
+		variablesTable = makeTable("Variables", cols);
+		result.getChildren().add(variablesTable);
 
 		cols = new ArrayList<String>();
 		cols.add("Commands");
-
-		result.getChildren().add(p.makeTable("User Commands", cols));
-
+		userCommandsTable = makeTable("User Commands", cols);
+		result.getChildren().add(userCommandsTable);
 		return result;
+	}
+
+	private TableView makeTable(String title, List<String> columnNames) {
+		// VBox labelAndTable = new VBox();
+		// labelAndTable.setSpacing(5);
+		//
+		// Label label = new Label(title);
+		// label.setFont(new Font("Arial", 14));
+
+		TableView table = new TableView();
+		for (String s : columnNames) {
+			table.getColumns().add((new TableColumn(s)));
+		}
+
+		// labelAndTable.getChildren().addAll(label, table);
+		return table;
+	}
+
+	/**
+	 * Updates the right side info tables
+	 */
+
+	private void addHistory() {
+		// ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+		//
+		// TableColumn<String, String> tc = new
+		// TableColumn<>("Previous Commands");
+		// tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
+		// .getText()));
+		//
+		// cols.add(tc);
+		//
+		// // table.getColumns().addAll(cols);
+		//
+		// inputField.getText();
+		//
+		// TableColumn<Variable, String> tc = (TableColumn)
+		// variablesTable.getColumns().get(0);
+		// for (Variable s : mySceneUpdater.getVariableList()) {
+		// tc.setCellValueFactory(
+		// new PropertyValueFactory<Variable,String>(s.getName()));
+		// }
+		//
+		// TableColumn<Variable, Double> tc2 = (TableColumn)
+		// variablesTable.getColumns().get(1);
+		// for (Variable s : mySceneUpdater.getVariableList()) {
+		// tc2.setCellValueFactory(
+		// cellData -> cellData.getValue().valueProperty());
+		// }
+
+		for (String s : mySceneUpdater.getPrevCommandList()) {
+			System.out.println(s);
+		}
+		
+		for (Variable v : mySceneUpdater.getVariableList()) {
+			System.out.println(v.getName() + " - " + v.getValue());
+		}
 	}
 
 	/**
@@ -387,24 +446,6 @@ public class GUI {
 	}
 
 	/**
-	 * Updates the right side info tables
-	 */
-	@SuppressWarnings("rawtypes")
-	private void addHistory() {
-		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-
-		TableColumn<String, String> tc = new TableColumn<>("Previous Commands");
-		tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
-				.getText()));
-
-		cols.add(tc);
-
-		// table.getColumns().addAll(cols);
-
-		inputField.getText();
-	}
-
-	/**
 	 * Returns the TurtleView so that it can be linked to its model
 	 * 
 	 * @return
@@ -412,17 +453,4 @@ public class GUI {
 	public Observer getTurtleView() {
 		return tView;
 	}
-
-	// private Node makeTable(String title, List<String> columnNames) {
-	// VBox labelAndTable = new VBox();
-	// labelAndTable.setSpacing(5);
-	//
-	// Label label = new Label(title);
-	// label.setFont(new Font("Arial", 14));
-	//
-	// TableView table = new TableView();
-	//
-	// labelAndTable.getChildren().addAll(label, table);
-	// return labelAndTable;
-	// }
 }
