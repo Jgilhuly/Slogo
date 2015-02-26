@@ -2,13 +2,11 @@ package ui;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -20,7 +18,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -29,10 +26,11 @@ import javafx.stage.Stage;
 public class GUI {
 
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
+	private static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";
 	private static final boolean ACTIVE = true;
 	private static final boolean INACTIVE = false;
 
-	private ResourceBundle myResources; // for language support
+	private ResourceBundle myResources; // for node text/names
 
 	private Scene myScene;
 	private Stage myStage;
@@ -46,24 +44,12 @@ public class GUI {
 	private Canvas canvas;
 	private StackPane canvasHolder;
 
-	private List<String> variables;
-
 	private Color backgroundColor;
-
-	/**
-	 * TODO: MAKE INHERITANCE HIERACHY FOR GUI
-	 * 
-	 */
-
-	/*
-	 * Consider using enums vvvv
-	 */
-	/*****************************/
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
-
-	/*****************************/
 	private String selectedLanguage;
+
+	// private List<String> variables;
 
 	public GUI(Stage stageIn, SceneUpdater sceneUpIn) {
 		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
@@ -84,26 +70,31 @@ public class GUI {
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
 		myRoot.setCenter(makeCanvas(backgroundColor));
-		myRoot.setRight(makePrevCommandsPane());
-
-		Image turtleImage = new Image(
-				GUI.class
-						.getResourceAsStream("/resources/images/turtleImage.png"));
-		tView = new TurtleView(turtleImage, canvas, Color.BLUE,
-				canvas.getWidth() / 2, canvas.getHeight() / 2, canvasHolder);
-
+		myRoot.setRight(makeInfoPane());
+		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
 		myRoot.setTop(makeTopBar());
-
-		selectedLanguage = "English"; // default
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
 		setupKeyboardCommands();
-
 		myStage.setScene(myScene);
 	}
 
 	/**
-	 * Keyboard commands
+	 * Makes and returns a TurtleView object
+	 * 
+	 * @param imagePath
+	 *            : The path of the Turtle Image
+	 * @return
+	 */
+	private TurtleView makeTurtleView(String imagePath) {
+		Image turtleImage = new Image(GUI.class.getResourceAsStream(imagePath));
+
+		return new TurtleView(turtleImage, canvas, Color.BLUE,
+				canvas.getWidth() / 2, canvas.getHeight() / 2, canvasHolder);
+	}
+
+	/**
+	 * Set up keyboard commands
 	 */
 	private void setupKeyboardCommands() {
 		myScene.setOnKeyPressed(e -> {
@@ -129,7 +120,6 @@ public class GUI {
 
 		confirmInput = makeButton(myResources.getString("Enter"),
 				e -> parseCommand());
-		// confirmInput.setDisable(true);
 
 		result.getChildren().addAll(inputField, outputField, confirmInput);
 		return result;
@@ -137,12 +127,12 @@ public class GUI {
 
 	/**
 	 * Sends a string slogo command through the Scene Updater and Controller,
-	 * all the way to the backend
+	 * all the way to the back-end.
 	 */
 	private void parseCommand() {
 		if (inputField.getText() != null)
 			mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
-		addHistory();
+		addHistory(); // for previous commands tab
 		inputField.setText("");
 	}
 
@@ -195,7 +185,7 @@ public class GUI {
 		});
 		return colorPicker;
 	}
-	
+
 	private Node makePenColorPicker(Color defaultColor) {
 		ColorPicker colorPicker = new ColorPicker(defaultColor);
 		final SVGPath svg = new SVGPath();
@@ -216,9 +206,9 @@ public class GUI {
 
 	private void changeColor(Color color) {
 		canvasHolder.setBackground(new Background(new BackgroundFill(color,
-			null, null)));
+				null, null)));
 	}
-	
+
 	private void changePenColor(Color color) {
 		tView.setColor(color);
 	}
@@ -228,8 +218,10 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		tb.getItems().addAll(makeMenuBar(), new Label(myResources.getString("BackgroundColor")),
-				makeBackgroundColorPicker(backgroundColor), new Label(myResources.getString("PenColor")),
+		tb.getItems().addAll(makeMenuBar(),
+				new Label(myResources.getString("BackgroundColor")),
+				makeBackgroundColorPicker(backgroundColor),
+				new Label(myResources.getString("PenColor")),
 				makePenColorPicker(tView.getColor()));
 
 		return tb;
@@ -244,7 +236,7 @@ public class GUI {
 		Menu fileMenu = new Menu(myResources.getString("File"));
 
 		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
-		fileOp1.setOnAction(e -> showFileChooser());
+		fileOp1.setOnAction(e -> selectAndChangeTurtleImage());
 		fileMenu.getItems().add(fileOp1);
 
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
@@ -253,10 +245,7 @@ public class GUI {
 		htmlHelp.setOnAction(e -> showHTMLHelp());
 		optionsMenu.getItems().add(htmlHelp);
 
-		// ***************************************
-		// added languageMenu
 		Menu languageMenu = makeMenu("Languages", languages);
-		// ***************************************
 
 		MenuBar menuBar = new MenuBar();
 		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
@@ -264,7 +253,11 @@ public class GUI {
 		return menuBar;
 	}
 
-	private void showFileChooser() {
+	/**
+	 * Shows a filechooser to select a new turtle image, then changes to that
+	 * image
+	 */
+	private void selectAndChangeTurtleImage() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(myResources.getString("OpenResourceFile"));
 		fileChooser.getExtensionFilters().add(
@@ -315,10 +308,7 @@ public class GUI {
 	}
 
 	/**
-	 * Added the following two methods to have checkable language menu bar that
-	 * disables the rest when one is clicked. Feel free to change them if there
-	 * are other/better ways to choose a language, but I just need the language
-	 * chosen by the user to be passed in the method "parseCommand" - Kei
+	 * Checks a single menu item within a given menu
 	 * 
 	 * @param language
 	 * @param selected
@@ -341,6 +331,13 @@ public class GUI {
 		}
 	}
 
+	/**
+	 * Toggles a menuItem
+	 * 
+	 * @param menu
+	 * @param input
+	 * @param state
+	 */
 	private void toggleMenuItems(Menu menu, String input, boolean state) {
 		for (int i = 0; i < languages.length; i++) {
 			MenuItem temp = menu.getItems().get(i);
@@ -350,7 +347,13 @@ public class GUI {
 		}
 	}
 
-	private Node makePrevCommandsPane() {
+	/**
+	 * Makes the right side info panel, which contains the tables of previous
+	 * commands, user commands, and user variables
+	 * 
+	 * @return
+	 */
+	private Node makeInfoPane() {
 		VBox result = new VBox();
 		result.setSpacing(5);
 
@@ -374,10 +377,19 @@ public class GUI {
 		return result;
 	}
 
+	/**
+	 * Sets the output text field. Called from back-end (through controller)
+	 * 
+	 * @param outputText
+	 */
 	public void setOutputText(String outputText) {
 		outputField.setText(outputText);
 	}
 
+	/**
+	 * Updates the right side info tables
+	 */
+	@SuppressWarnings("rawtypes")
 	private void addHistory() {
 		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
 
@@ -392,20 +404,25 @@ public class GUI {
 		inputField.getText();
 	}
 
-	private Node makeTable(String title, List<String> columnNames) {
-		VBox labelAndTable = new VBox();
-		labelAndTable.setSpacing(5);
-
-		Label label = new Label(title);
-		label.setFont(new Font("Arial", 14));
-
-		TableView table = new TableView();
-
-		labelAndTable.getChildren().addAll(label, table);
-		return labelAndTable;
-	}
-
+	/**
+	 * Returns the TurtleView so that it can be linked to its model
+	 * 
+	 * @return
+	 */
 	public Observer getTurtleView() {
 		return tView;
 	}
+
+	// private Node makeTable(String title, List<String> columnNames) {
+	// VBox labelAndTable = new VBox();
+	// labelAndTable.setSpacing(5);
+	//
+	// Label label = new Label(title);
+	// label.setFont(new Font("Arial", 14));
+	//
+	// TableView table = new TableView();
+	//
+	// labelAndTable.getChildren().addAll(label, table);
+	// return labelAndTable;
+	// }
 }
