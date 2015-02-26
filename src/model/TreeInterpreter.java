@@ -66,7 +66,7 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(variables); //maybe should extract out for specific make/set variable command
+                paramList.add(variables); //maybe should extract out for specific make/set variable commandg
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
