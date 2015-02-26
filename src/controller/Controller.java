@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.TreeInterpreter;
 import model.Turtle;
-import model.Variable;
 import parser.CommandTreeNode;
 import parser.Parser;
 import parser.TreeGenerator;
