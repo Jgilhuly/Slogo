@@ -1,14 +1,12 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import command.Command;
-import model.*;
+
 
 public class CommandFactory {
-    private VariableList variableList;
-        
-	public CommandFactory(VariableList vList){
-	    variableList = vList;
-	}
+
 	public Command createCommand(String prefix, String commandName) {
 		Command object = null;
 		try {
@@ -26,15 +24,22 @@ public class CommandFactory {
 		
 	}
 
-    public void createVariable (String name, VariableList variables) {
-        if(!variables.contains(name)){
-            variables.addNewVariable(name);
-        }
-    }
 
     public Command createBracket (String name) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+/**
+ * 
+ * @param name  , the name of the Variable
+ * @param variables , the current list of existing variables
+ * @return index of the newly created Variable in the variables list
+ */
+    public Double createVariable (String name, List<Variable> variables) {
+        Variable var = new Variable(name, 0.0);
+        (variables).add(var);
+        return (double) variables.indexOf(var);
     }
 	
 	

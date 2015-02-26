@@ -5,8 +5,7 @@ import command.Command;
 
 public class QuotientCommand extends Command {
 
-        public double calculateValue(List<Object> param) {
-            return (double) Math.floorDiv((long) param.get(0), (long) param.get(1));
-        }
+	public double calculateValue(List<Object> param) {
+		return (double) param.get(0) / (double) param.get(1);
+	}
 }
-

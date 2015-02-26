@@ -6,12 +6,10 @@ import command.Command;
 
 import model.Turtle;
 
-public class PenDownCommand extends Command{
+public class YCoordinateCommand extends Command {
 	@Override
 	public double calculateValue(List<Object> param) {
 		Turtle t = (Turtle) param.get(0);
-		t.setLine(true);
-		t.updateTurtleViewers();
-		return 1;
+		return t.getY();
 	}
 }

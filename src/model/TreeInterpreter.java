@@ -13,17 +13,16 @@ import parser.CommandTreeNode;
 public class TreeInterpreter {
     private CommandFactory factory;
     private CommandList commands;
-    private VariableList variables;
+    private List<Variable> variables;
     private Turtle myTurtle;
     private Controller myController;
     
-    
-    public TreeInterpreter (CommandList c, VariableList v, Turtle turtle, Controller fuckshit) {
+    public TreeInterpreter (CommandList c, List<Variable> v, Turtle turtle, Controller controller) {
         commands = c;
         variables = v;
-        factory = new CommandFactory(variables);
+        factory = new CommandFactory();
         myTurtle = turtle;
-        myController = fuckshit;
+        myController = controller;
         myController.linkTurtles(myTurtle);
     }
     
@@ -51,7 +50,6 @@ public class TreeInterpreter {
             method = c.getClass().getDeclaredMethod("calculateValue", cArg);
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
-            System.out.println("CURRENT " + value);
             myController.setOutputText(Double.toString(value));
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
@@ -64,25 +62,23 @@ public class TreeInterpreter {
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
             case "COMMAND.TURTLE":
-                System.out.println("YOLOSWAG");
                 paramList.add(myTurtle);
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(this);
+                paramList.add(variables); //maybe should extract out for specific make/set variable commandg
                 executeCommand(node,paramList);
+                break;
             case "VARIABLE":
-                factory.createVariable(node.getName(), variables);
+                if(!variables.contains(node.getName())){
+                    node.setValue(factory.createVariable(node.getName(), variables));
+                }
                 break;
             case "CONSTANT":
                 break; //Do nothing
             default: //referring to commands that are not TURTLE type
                 executeCommand(node,paramList);
         }
-    }
-    
-    public VariableList getVariableList (){
-        return variables;
     }
     
     public CommandList getCommandList(){

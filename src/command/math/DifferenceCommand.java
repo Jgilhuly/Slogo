@@ -5,7 +5,7 @@ import command.Command;
 
 public class DifferenceCommand extends Command {
 
-        public double calculateValue(List<Object> param) {
-                return (double) param.get(0) - (double) param.get(1);
-        }
+	public double calculateValue(List<Object> param) {
+		return (double) param.get(0) - (double) param.get(1);
+	}
 }

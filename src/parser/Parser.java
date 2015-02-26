@@ -13,25 +13,16 @@ import errors.CommandNotFoundException;
 import errors.UnmatchedBracketException;
 
 public class Parser {
-	private static final int COMMENT_INDEX = 1;
-	private static final int CONSTANT_INDEX = 2;
-	private static final int VARIABLE_INDEX = 3;
-	private static final int COMMAND_INDEX = 4;
-	private static final int LISTSTART_INDEX = 8;
-	private static final int LISTEND_INDEX = 9;
-	private static final int GROUPSTART_INDEX = 10;
-	private static final int GROUPEND_INDEX = 11;
-	private int[] indices = { COMMENT_INDEX, CONSTANT_INDEX, VARIABLE_INDEX,
-			COMMAND_INDEX, LISTSTART_INDEX, LISTEND_INDEX, GROUPSTART_INDEX,
-			GROUPEND_INDEX };
-	private List<Entry<String, Pattern>> patternList;
+	private List<Entry<String, Pattern>> languagePatternList;
+	private List<Entry<String, Pattern>> syntaxPatternList;
 	private int ListStartCount = 0;
 	private int ListEndCount = 0;
 	private boolean makingUserInstruction = false;
 	private ArrayList<String> methodList = new ArrayList<>();
 
 	public Parser(String language) {
-		patternList = makePatterns(language);
+		languagePatternList = makePatterns(language);
+		syntaxPatternList = makePatterns("Syntax");
 	}
 
 	/**
@@ -44,23 +35,20 @@ public class Parser {
 	 */
 	private List<String> parseList(String input) {
 		List<String> ret = new ArrayList<>();
-		Pattern p = Pattern.compile("(#.*)|(-?[0-9]+\\.?[0-9]*)|"
-				+ "(:[a-zA-Z]+)|(([a-zA-Z_]+(\\?)?)|([*+-/%~]))"
-				+ "|(\\[)|(\\])|(\\()|(\\))");
-		Matcher m = p.matcher(input);
-		while (m.find()) {
-			for (int i = 0; i < indices.length; i++) {
-				if (m.group(indices[i]) != null) {
-					if (indices[i] == COMMAND_INDEX) {
-						String command = useResourceBundle(m.group(indices[i]));
+		String[] split = input.split(" ");
+		for (String sp : split) {
+			for (Entry<String, Pattern> p : syntaxPatternList) {
+				if (p.getValue().matcher(sp).matches()) {
+					if (p.getKey().equals("Command")) {
+						String command = useResourceBundle(sp);
 						if (command.equals("MakeUserInstruction"))
 							makingUserInstruction = true;
 						ret.add(command);
 					} else {
-						ret.add(m.group(indices[i]));
-						if (indices[i] == LISTSTART_INDEX) {
+						ret.add(sp);
+						if (p.getKey().equals("ListStart")) {
 							ListStartCount++;
-						} else if (indices[i] == LISTEND_INDEX) {
+						} else if (p.getKey().equals("ListEnd")) {
 							ListEndCount++;
 						}
 					}
@@ -72,9 +60,9 @@ public class Parser {
 		return ret;
 	}
 
-	private List<Entry<String, Pattern>> makePatterns(String language) {
+	private List<Entry<String, Pattern>> makePatterns(String fileName) {
 		ResourceBundle resources = ResourceBundle
-				.getBundle("resources.languages/" + language);
+				.getBundle("resources.languages/" + fileName);
 		List<Entry<String, Pattern>> patterns = new ArrayList<>();
 		Enumeration<String> iter = resources.getKeys();
 		while (iter.hasMoreElements()) {
@@ -87,7 +75,7 @@ public class Parser {
 	}
 
 	private String useResourceBundle(String input) {
-		for (Entry<String, Pattern> p : patternList) {
+		for (Entry<String, Pattern> p : languagePatternList) {
 			if (p.getValue().matcher(input).matches())
 				return p.getKey();
 		}
@@ -100,11 +88,11 @@ public class Parser {
 		// if none found
 		throw new CommandNotFoundException(input);
 	}
-	
-//	public String method() {
-//		return input;
-//	}
-	
+
+	// public String method() {
+	// return input;
+	// }
+
 	public CommandTreeNode makeTree(String input) {
 		List<String> translate = parseList(input);
 		TreeGenerator tg = new TreeGenerator();
