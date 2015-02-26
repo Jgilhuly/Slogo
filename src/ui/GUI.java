@@ -45,6 +45,10 @@ public class GUI {
 	private StackPane canvasHolder;
 
 	private Color backgroundColor;
+	private SVGPath svg;
+	private ColorPicker backgroundColorPicker;
+	private ColorPicker penColorPicker;
+	
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
 	private String selectedLanguage;
@@ -168,63 +172,57 @@ public class GUI {
 		return canvasHolder;
 	}
 
-	private Node makeBackgroundColorPicker(Color defaultColor) {
-		ColorPicker colorPicker = new ColorPicker(defaultColor);
-		final SVGPath svg = new SVGPath();
-		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
-				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
-				+ "L70,50");
-		svg.setStroke(Color.DARKGREY);
-		svg.setStrokeWidth(2);
-		svg.setEffect(new DropShadow());
-		svg.setFill(colorPicker.getValue());
-
-		colorPicker.setOnAction(e -> {
-			svg.setFill(colorPicker.getValue());
-			changeColor(colorPicker.getValue());
-		});
-		return colorPicker;
-	}
-
-	private Node makePenColorPicker(Color defaultColor) {
-		ColorPicker colorPicker = new ColorPicker(defaultColor);
-		final SVGPath svg = new SVGPath();
-		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
-				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
-				+ "L70,50");
-		svg.setStroke(Color.DARKGREY);
-		svg.setStrokeWidth(2);
-		svg.setEffect(new DropShadow());
-		svg.setFill(colorPicker.getValue());
-
-		colorPicker.setOnAction(e -> {
-			svg.setFill(colorPicker.getValue());
-			changePenColor(colorPicker.getValue());
-		});
-		return colorPicker;
-	}
-
-	private void changeColor(Color color) {
-		canvasHolder.setBackground(new Background(new BackgroundFill(color,
-				null, null)));
-	}
-
-	private void changePenColor(Color color) {
-		tView.setColor(color);
-	}
-
 	/**
 	 * Creates top bar
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
+		backgroundColorPicker = makeColorPicker(backgroundColor, e -> changeBackgroundColor());
+		penColorPicker = makeColorPicker(tView.getColor(), e -> changePenColor());
+		
 		tb.getItems().addAll(makeMenuBar(),
 				new Label(myResources.getString("BackgroundColor")),
-				makeBackgroundColorPicker(backgroundColor),
+				backgroundColorPicker,
 				new Label(myResources.getString("PenColor")),
-				makePenColorPicker(tView.getColor()));
-
+				penColorPicker);
+		
 		return tb;
+	}
+	
+	/**
+	 * Makes a color picker with the given default color and handler
+	 * @param defaultColor
+	 * @param handler
+	 * @return
+	 */
+	private ColorPicker makeColorPicker(Color defaultColor, EventHandler<ActionEvent> handler) {
+		ColorPicker colorPicker = new ColorPicker(defaultColor);
+		svg = new SVGPath();
+		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
+				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
+				+ "L70,50");
+		svg.setStroke(Color.DARKGREY);
+		svg.setStrokeWidth(2);
+		svg.setEffect(new DropShadow());
+		svg.setFill(colorPicker.getValue());
+
+		colorPicker.setOnAction(handler);
+		return colorPicker;
+	}
+
+	/**
+	 * Handler for the background color picker
+	 */
+	private void changeBackgroundColor() {
+		canvasHolder.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(),
+				null, null)));
+	}
+
+	/**
+	 * Handler for the pen color picker
+	 */
+	private void changePenColor() {
+		tView.setColor(penColorPicker.getValue());
 	}
 
 	/**
