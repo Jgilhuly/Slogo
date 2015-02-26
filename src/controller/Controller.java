@@ -49,8 +49,12 @@ public class Controller {
 		List<String> inputList = pp.parseList(input);
 		TreeGenerator tg = new TreeGenerator();
 		CommandTreeNode node = tg.createCommands(inputList);
-		interpreter = new TreeInterpreter(variables, turtle, this);
+		linkTurtles(turtle);
+		interpreter = new TreeInterpreter(variables, turtle);
+		linkTurtles(turtle);
+		
 		interpreter.interpretTree(node);
+		setOutputText(Double.toString(node.getValue()));
 	}
 
 	/**

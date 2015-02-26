@@ -14,15 +14,12 @@ public class TreeInterpreter {
     private CommandFactory factory;
     private VariableList variables;
     private Turtle myTurtle;
-    private Controller myController;
     
-    public TreeInterpreter (VariableList varList, Turtle turtle, Controller controller) {
+    public TreeInterpreter (VariableList varList, Turtle turtle) {
 
         variables = varList;
         factory = new CommandFactory();
         myTurtle = turtle;
-        myController = controller;
-        myController.linkTurtles(myTurtle);
     }
     
     public void interpretTree (CommandTreeNode node) {
@@ -52,7 +49,6 @@ public class TreeInterpreter {
             method = c.getClass().getDeclaredMethod("calculateValue", cArg);
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
-            myController.setOutputText(Double.toString(value));
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
@@ -60,6 +56,7 @@ public class TreeInterpreter {
             e.printStackTrace();
         }
     }
+//    public Double getDisplayValue()
 
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
