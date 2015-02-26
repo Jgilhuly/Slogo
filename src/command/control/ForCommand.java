@@ -30,9 +30,8 @@ public class ForCommand extends Command {
             for(int j = 0; j < subCommands.size(); j++){
                 yay.interpretTree(subCommands.get(j));
             }
-            shit.setValue(subCommands.get(subCommands.size() - 1).getValue()); //Is this a correct interpretation?
+            yay.getVariableList().get(shit.getName()).setValue(subCommands.get(subCommands.size() - 1).getValue());//Is this a correct interpretation?
         }
-//        yay.getVariableList().printThing(); FIX BUG LATER
         return shit.getValue();
     }
 }

@@ -20,6 +20,7 @@ public class TreeInterpreter {
     }
     
     public void interpretTree (CommandTreeNode node) {
+
 		List<Object> paramList = new ArrayList<>();
 		if (!isLeaf(node)) {
 			if (!(node.getType().equals("BRACKET"))) {
@@ -32,6 +33,7 @@ public class TreeInterpreter {
 		update(node, paramList);
 		// variables.printThing();
 	}
+
 
     private boolean isLeaf (CommandTreeNode node){
         return node.getChildren().isEmpty(); 
