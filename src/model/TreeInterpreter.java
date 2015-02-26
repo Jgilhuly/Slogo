@@ -4,8 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
-import controller.Controller;
 import command.Command;
 import parser.CommandTreeNode;
 
@@ -14,30 +12,28 @@ public class TreeInterpreter {
     private CommandFactory factory;
     private VariableList variables;
     private Turtle myTurtle;
-    private Controller myController;
     
-    public TreeInterpreter (VariableList varList, Turtle turtle, Controller controller) {
-
+    public TreeInterpreter (VariableList varList, Turtle turtle) {
         variables = varList;
         factory = new CommandFactory();
         myTurtle = turtle;
-        myController = controller;
-        myController.linkTurtles(myTurtle);
     }
     
     public void interpretTree (CommandTreeNode node) {
-            List<Object> paramList = new ArrayList<>();
-            if (!isLeaf(node)){
-                if(!(node.getType().equals("BRACKET"))){
-                    for (CommandTreeNode child : node.getChildren()) { // can be refactored
-                        interpretTree(child);
-                        paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
-                    }
-                }
-                }
-            update(node, paramList);
-//            variables.printThing();   
-        }
+
+		List<Object> paramList = new ArrayList<>();
+		if (!isLeaf(node)) {
+			if (!(node.getType().equals("BRACKET"))) {
+				for (CommandTreeNode child : node.getChildren()) { 
+					interpretTree(child);
+					paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
+				}
+			}
+		}
+		update(node, paramList);
+		// variables.printThing();
+	}
+
 
     private boolean isLeaf (CommandTreeNode node){
         return node.getChildren().isEmpty(); 
@@ -52,7 +48,6 @@ public class TreeInterpreter {
             method = c.getClass().getDeclaredMethod("calculateValue", cArg);
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
-            myController.setOutputText(Double.toString(value));
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
@@ -60,6 +55,7 @@ public class TreeInterpreter {
             e.printStackTrace();
         }
     }
+//    public Double getDisplayValue()
 
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
@@ -68,7 +64,8 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(this); //maybe should extract out for specific make/set variable commandg
+                paramList.add(this); //maybe should extract out for specific make/set variable commands
+                //the class is added to the last value
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
@@ -77,7 +74,7 @@ public class TreeInterpreter {
             case "CONSTANT":
                 break; //Do nothing
             case "BRACKET":
-                break;
+                break; 
             default: //referring to commands that are not TURTLE type
                 executeCommand(node,paramList);
         }
