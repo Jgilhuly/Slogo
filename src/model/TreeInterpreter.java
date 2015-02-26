@@ -31,10 +31,11 @@ public class TreeInterpreter {
             if (!isLeaf(node)){
                 for (CommandTreeNode child : node.getChildren()) { // can be refactored
                     interpretTree(child);
-                    paramList.add(node.getType() == "COMMAND.CONTROL" ? child : child.getValue());
+                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
                 }
             }
             update(node, paramList);
+//            variables.printThing();   
         }
 
     private boolean isLeaf (CommandTreeNode node){
@@ -70,9 +71,11 @@ public class TreeInterpreter {
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
-                if(!variables.contains(node.getName())){
-                    node.setValue(factory.createVariable(node.getName(), variables));
-                }
+//                try{
+                    node.setValue((variables.get(node.getName())).getValue()); 
+//                } catch (NullPointerException e){
+//                    System.err.println("Variable does not exist");
+//                }
                 break;
             case "CONSTANT":
                 break; //Do nothing

@@ -21,8 +21,6 @@ public class Controller {
 	// private Timeline animation = new Timeline();
 	// private KeyFrame frame;
 	private CommandList commands = new CommandList();
-//	private List<Variable> variables = new SimpleListProperty<Variable>(); //taken out of the method syncCommandListblah
-//	private List<Variable> variables = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
 	private VariableList variables = new VariableList();
 	private Turtle turtle = new Turtle();
 	private TreeInterpreter woot;

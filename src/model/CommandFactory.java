@@ -30,9 +30,4 @@ public class CommandFactory {
         return null;
     }
 	
-  public Double createVariable (String name, VariableList variables) {
-      Variable var = new Variable(name, 0.0);
-      (variables).add(var);
-      return (double) variables.indexOf(var);
-}
 }

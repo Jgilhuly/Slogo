@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javafx.beans.property.SimpleListProperty;
 
@@ -16,8 +17,8 @@ public class VariableList{
         list = new SimpleListProperty<Variable>(javafx.collections.FXCollections.observableList(new ArrayList<Variable>()));
     }
     
-    public void add(Variable var ){
-        list.add(var);
+    public void add(String name){
+        list.add(new Variable(name, 0.0));
     }
     
     public double indexOf(Variable var){
@@ -28,17 +29,24 @@ public class VariableList{
         return list.get(index.intValue());
     }
     
-    public boolean contains(String name){
+    public Variable get(String name){
         for(Variable var : list){
-            if(var.getName() == name){
-                return true;
+            if(var.getName().equals(name)){
+                return var;
             }
         }
-        return false;
+        return null;
     }
     
-    public VariableList getVariableList(){
-        return this;
+    public boolean contains(String name){
+        return (get(name) == null ? false : true);
     }
+    
+    public void printThing(){
+        for(Variable var : list){
+            System.out.println(var.getName() + var.getValue().toString());
+        }
+    }
+
 
 }
