@@ -108,4 +108,12 @@ public class TurtleView implements Observer {
 		return (myImageView.getY() - (myCanvas.getHeight() / 20)) - myHeightOffset;
 	}
 
+	public Color getColor() {
+		return myColor;
+	}
+
+	public void setColor(Color color) {
+		myColor = color;
+	}
+
 }

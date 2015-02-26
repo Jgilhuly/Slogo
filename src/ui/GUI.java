@@ -82,7 +82,6 @@ public class GUI {
 		myRoot = new BorderPane();
 		myRoot.setBottom(makeIOFields());
 		myRoot.setCenter(makeCanvas(backgroundColor));
-		myRoot.setTop(makeTopBar());
 		myRoot.setRight(makePrevCommandsPane());
 
 		Image turtleImage = new Image(
@@ -90,6 +89,8 @@ public class GUI {
 						.getResourceAsStream("/resources/images/turtleImage.png"));
 		tView = new TurtleView(turtleImage, canvas, Color.BLUE,
 				canvas.getWidth() / 2, canvas.getHeight() / 2, canvasHolder);
+
+		myRoot.setTop(makeTopBar());
 
 		selectedLanguage = "English"; // default
 
@@ -175,7 +176,7 @@ public class GUI {
 		return canvasHolder;
 	}
 
-	private Node makeColorPicker(Color defaultColor) {
+	private Node makeBackgroundColorPicker(Color defaultColor) {
 		ColorPicker colorPicker = new ColorPicker(defaultColor);
 		final SVGPath svg = new SVGPath();
 		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -192,10 +193,32 @@ public class GUI {
 		});
 		return colorPicker;
 	}
+	
+	private Node makePenColorPicker(Color defaultColor) {
+		ColorPicker colorPicker = new ColorPicker(defaultColor);
+		final SVGPath svg = new SVGPath();
+		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
+				+ "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
+				+ "L70,50");
+		svg.setStroke(Color.DARKGREY);
+		svg.setStrokeWidth(2);
+		svg.setEffect(new DropShadow());
+		svg.setFill(colorPicker.getValue());
+
+		colorPicker.setOnAction(e -> {
+			svg.setFill(colorPicker.getValue());
+			changePenColor(colorPicker.getValue());
+		});
+		return colorPicker;
+	}
 
 	private void changeColor(Color color) {
 		canvasHolder.setBackground(new Background(new BackgroundFill(color,
-				null, null)));
+			null, null)));
+	}
+	
+	private void changePenColor(Color color) {
+		tView.setColor(color);
 	}
 
 	/**
@@ -203,7 +226,9 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		tb.getItems().addAll(makeMenuBar(), makeColorPicker(backgroundColor));
+		tb.getItems().addAll(makeMenuBar(), new Label("BackgroundColor"),
+				makeBackgroundColorPicker(backgroundColor), new Label("Turtle Color"),
+				makePenColorPicker(tView.getColor()));
 
 		return tb;
 	}
