@@ -16,7 +16,6 @@ public class TreeInterpreter {
     private Turtle myTurtle;
     
     public TreeInterpreter (VariableList varList, Turtle turtle) {
-
         variables = varList;
         factory = new CommandFactory();
         myTurtle = turtle;
@@ -31,7 +30,7 @@ public class TreeInterpreter {
                         paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
                     }
                 }
-                }
+            }
             update(node, paramList);
 //            variables.printThing();   
         }
