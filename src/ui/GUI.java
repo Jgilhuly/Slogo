@@ -356,7 +356,7 @@ public class GUI {
 		DisplayPanel p = new DisplayPanel();
 
 
-
+		result.getChildren().add()
 
 		result.getChildren().add(p.makeTable("Previous Commands"));
 		
@@ -380,7 +380,7 @@ public class GUI {
 	/**
 	 * Updates the right side info tables
 	 */
-	@SuppressWarnings("rawtypes")
+	
 	private void addHistory() {
 		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
 

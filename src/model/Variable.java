@@ -34,7 +34,7 @@ public class Variable {
 
 	public DoubleProperty valueProperty() {
 		if (value == null)
-			value = new SimpleDoubleProperty(0);
+			value = new SimpleDoubleProperty(0, "value");
 		return value;
 	}
 	public StringProperty nameProperty() {

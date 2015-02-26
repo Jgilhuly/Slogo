@@ -2,9 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import model.*;
 import javafx.animation.KeyFrame;
 import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -18,15 +20,15 @@ import ui.SceneUpdater;
 public class Controller {
 	private SceneUpdater sceneUpdater;
 	private CommandList commands = new CommandList();
-	private List<Variable> variables = new SimpleListProperty<Variable>(
-			javafx.collections.FXCollections
-					.observableList(new ArrayList<Variable>()));
+	private List<Variable> variables; 
 	private Turtle turtle = new Turtle();
 	private TreeInterpreter woot;
 
 	public void init(Stage s) {
+
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
+		variables = new SimpleListProperty<Variable>(FXCollections.observableList(new ArrayList<Variable>()));
 	}
 
 	public void syncCommandandVariableLists() {
@@ -47,7 +49,7 @@ public class Controller {
 	}
 
 	/**
-	 * Sends text to be outputed to the front-end from the back-end
+	 * Sends text to be outputted to the front-end from the back-end
 	 * 
 	 * @param outputText
 	 */
