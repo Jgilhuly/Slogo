@@ -32,10 +32,10 @@ public class TreeGenerator {
 	 * @param name
 	 */
 	private void printTestStatements(String value, String type, String name) {
-//		System.out.println(value);
-//		System.out.println("Type is: " + type);
-//		System.out.println("Root value is: " + name);
-//		System.out.println();
+		System.out.println(value);
+		System.out.println("Type is: " + type);
+		System.out.println("Root value is: " + name);
+		System.out.println();
 	}
 
 	/**

@@ -35,6 +35,8 @@ public class TreeInterpreter {
                 }
             }
             update(node, paramList);
+            System.out.println(node.getValue());
+            variables.printThing();
 //            variables.printThing();   
         }
 
@@ -67,7 +69,7 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(variables); //maybe should extract out for specific make/set variable commandg
+                paramList.add(this); //maybe should extract out for specific make/set variable commandg
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
@@ -75,6 +77,8 @@ public class TreeInterpreter {
                 break;
             case "CONSTANT":
                 break; //Do nothing
+            case "BRACKET":
+                break;
             default: //referring to commands that are not TURTLE type
                 executeCommand(node,paramList);
         }
@@ -82,6 +86,10 @@ public class TreeInterpreter {
     
     public CommandList getCommandList(){
         return commands;
+    }
+
+    public VariableList getVariableList () {
+        return variables;
     }
 
 }
