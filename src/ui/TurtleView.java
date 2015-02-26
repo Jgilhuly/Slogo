@@ -24,7 +24,7 @@ public class TurtleView implements Observer {
 		myImageView.setY(yIn);
 		myColor = colorIn;
 
-		myHeading = 50;
+		myHeading = 0;
 		myImageView.setPreserveRatio(true);
 		myImageView.setSmooth(true);
 	}
@@ -34,6 +34,8 @@ public class TurtleView implements Observer {
 	}
 
 	public void draw() {
+	        System.out.println(myCanvas.getLayoutX());
+	        System.out.println(myCanvas.getLayoutY());
 //		myCanvas.getGraphicsContext2D().rotate(myHeading);
 		myCanvas.getGraphicsContext2D().drawImage(myImageView.getImage(),
 				getCenterX(), getCenterY(), myCanvas.getHeight() / 10,
@@ -61,6 +63,10 @@ public class TurtleView implements Observer {
 		 myHeading = newHeading;
 		
 		 if (newX != getCenterX() || newY != getCenterY()) {
+		 System.out.println(getCenterX());
+		 System.out.println(getCenterY());
+		 System.out.println(newX);
+		 System.out.println(newY);
 		 drawLine(getCenterX(), getCenterY(), newX, newY);
 
 		 myImageView.setX(newX);
