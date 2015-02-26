@@ -29,18 +29,5 @@ public class CommandFactory {
         // TODO Auto-generated method stub
         return null;
     }
-
-/**
- * 
- * @param name  , the name of the Variable
- * @param variables , the current list of existing variables
- * @return index of the newly created Variable in the variables list
- */
-    public Double createVariable (String name, List<Variable> variables) {
-        Variable var = new Variable(name, 0.0);
-        (variables).add(var);
-        return (double) variables.indexOf(var);
-    }
-	
 	
 }
