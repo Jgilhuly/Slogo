@@ -17,6 +17,8 @@ public class TurtleView implements Observer {
 	private double canvasCenterX;
 	private double canvasCenterY;
 	private double myHeading; // in degrees, 0 is north
+	private double myWidthOffset;
+	private double myHeightOffset;
 	private StackPane myCanvasHolder;
 
 	public TurtleView(Image imageIn, Canvas canvasIn, Color colorIn,
@@ -24,23 +26,26 @@ public class TurtleView implements Observer {
 		myImageView = new ImageView();
 		myCanvas = canvasIn;
 		myImageView.setImage(imageIn);
-		canvasCenterX = myCanvas.getWidth() / 2;
-		canvasCenterY = myCanvas.getHeight() / 2;
 		myImageView.setX(xIn);
 		myImageView.setY(yIn);
 		myColor = colorIn;
+
+		canvasCenterX = myCanvas.getWidth() / 2;
+		canvasCenterY = myCanvas.getHeight() / 2;
+		myWidthOffset = canvasCenterX;
+		myHeightOffset = canvasCenterY;
 		myCanvas.toBack();
 
-		// I added an ImageView of the turtle onto StackPane
-		myCanvasHolder = canvasHolder;
+		myCanvasHolder = canvasHolder; // used to hold the imageView within the
+										// canvas
 		addTurtle(myImageView);
 
-		myHeading = 50;
 		myImageView.setPreserveRatio(true);
 		myImageView.setSmooth(true);
 	}
 
 	/**
+	 * Adds the imageView to the CanvasHolder
 	 * 
 	 * @param ID
 	 *            : ID of turtle
@@ -53,14 +58,27 @@ public class TurtleView implements Observer {
 		myCanvasHolder.getChildren().add(turtle);
 	}
 
-	public ImageView getImageView() {
-		return myImageView;
-	}
-
+	/**
+	 * Draws the Turtle and Line
+	 * 
+	 * @param x1
+	 *            : Old X value
+	 * @param y1
+	 *            : Old Y value
+	 * @param x2
+	 *            : New X value
+	 * @param y2
+	 *            : New Y value
+	 * @param hasLine
+	 *            : Pen is down
+	 * @param hasTurtle
+	 *            : Turtle is visible
+	 */
 	private void draw(double x1, double y1, double x2, double y2,
 			boolean hasLine, boolean hasTurtle) {
 		myCanvas.getGraphicsContext2D().setStroke(myColor);
 		myCanvas.getGraphicsContext2D().setLineWidth(3);
+
 		// minus y since it's flipped in the canvas
 		if (hasLine)
 			myCanvas.getGraphicsContext2D().strokeLine(x1, y1,
@@ -68,6 +86,7 @@ public class TurtleView implements Observer {
 		// move image
 		myImageView.setTranslateX(x2);
 		myImageView.setTranslateY(-y2);
+
 		// set values - different coordinates
 		myImageView.setX(canvasCenterX + x2);
 		myImageView.setY(canvasCenterY - y2);
@@ -78,6 +97,9 @@ public class TurtleView implements Observer {
 	}
 
 	@Override
+	/**
+	 * Observer update method
+	 */
 	public void update(Observable o, Object arg) {
 		Turtle tModel = (Turtle) o;
 		double newX = tModel.getX();
@@ -95,12 +117,53 @@ public class TurtleView implements Observer {
 
 	}
 
+	/**
+	 * Gets the Center X of the imageView
+	 * 
+	 * @return
+	 */
 	private double getCenterX() {
-		return myImageView.getX() - (myCanvas.getWidth() / 20);
+		return (myImageView.getX() - (myCanvas.getWidth() / 20))
+				- myWidthOffset;
 	}
 
+	/**
+	 * Gets the Center Y of the imageView
+	 * 
+	 * @return
+	 */
 	private double getCenterY() {
-		return myImageView.getY() - (myCanvas.getHeight() / 20);
+		return (myImageView.getY() - (myCanvas.getHeight() / 20))
+				- myHeightOffset;
+	}
+
+	public Color getColor() {
+		return myColor;
+	}
+
+	public void setColor(Color color) {
+		myColor = color;
+	}
+
+	public ImageView getImageView() {
+		return myImageView;
+	}
+
+	/**
+	 * Re-sets up the imageView with a new Image, used when a new image is
+	 * selected
+	 * 
+	 * @param image
+	 */
+	public void setImage(Image image) {
+		myCanvasHolder.getChildren().remove(myImageView);
+
+		double oldX = myImageView.getX();
+		double oldY = myImageView.getY();
+		myImageView = new ImageView(image);
+		myImageView.setX(oldX);
+		myImageView.setY(oldY);
+		myCanvasHolder.getChildren().add(myImageView);
 	}
 
 }
