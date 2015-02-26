@@ -35,8 +35,6 @@ public class TreeInterpreter {
                 }
             }
             update(node, paramList);
-            System.out.println("Variable list:");
-            System.out.println(variables);
         }
 
     private boolean isLeaf (CommandTreeNode node){
@@ -68,11 +66,12 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(this);
+                paramList.add(variables); //maybe should extract out for specific make/set variable command
                 executeCommand(node,paramList);
+                break;
             case "VARIABLE":
                 if(!variables.contains(node.getName())){
-                    factory.createVariable(node.getName(), variables);
+                    node.setValue(factory.createVariable(node.getName(), variables));
                 }
                 break;
             case "CONSTANT":

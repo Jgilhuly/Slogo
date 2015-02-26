@@ -30,13 +30,16 @@ public class CommandFactory {
         return null;
     }
 
-
-    public void createVariable (String name, List<Variable> variables) {
+/**
+ * 
+ * @param name  , the name of the Variable
+ * @param variables , the current list of existing variables
+ * @return index of the newly created Variable in the variables list
+ */
+    public Double createVariable (String name, List<Variable> variables) {
         Variable var = new Variable(name, 0.0);
-        System.out.println(var);
-        System.out.println(variables.getClass().getName());
         (variables).add(var);
-        
+        return (double) variables.indexOf(var);
     }
 	
 	

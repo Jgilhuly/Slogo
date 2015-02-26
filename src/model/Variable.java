@@ -20,7 +20,7 @@ public class Variable {
      
      
      public Double getValue(){
-         return value.getValue();
+         return (Double) value.getValue();
      }
      public String getName() {
     	 return name.getValue();
