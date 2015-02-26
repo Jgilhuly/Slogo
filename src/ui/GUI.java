@@ -140,6 +140,7 @@ public class GUI {
 		if (inputField.getText() != null)
 			mySceneUpdater.sendCommands(inputField.getText(), selectedLanguage);
 		addHistory();
+		inputField.setText("");
 	}
 
 	/**
