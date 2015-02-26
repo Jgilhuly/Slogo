@@ -35,11 +35,17 @@ public class VariableList{
                 return var;
             }
         }
-        return null;
+       add(name);
+        return new Variable(name, 0.0);
     }
     
     public boolean contains(String name){
-        return (get(name) == null ? false : true);
+        for(Variable var : list){
+            if(var.getName().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
     
     public void printThing(){

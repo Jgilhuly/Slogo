@@ -71,11 +71,7 @@ public class TreeInterpreter {
                 executeCommand(node,paramList);
                 break;
             case "VARIABLE":
-//                try{
-                    node.setValue((variables.get(node.getName())).getValue()); 
-//                } catch (NullPointerException e){
-//                    System.err.println("Variable does not exist");
-//                }
+                node.setValue((variables.get(node.getName())).getValue()); 
                 break;
             case "CONSTANT":
                 break; //Do nothing
