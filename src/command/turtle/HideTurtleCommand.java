@@ -8,14 +8,11 @@ import command.Command;
 
 public class HideTurtleCommand extends Command {
 	
-	private void updateTurtle(Turtle t) {
-		t.setTurtleVisibility(false);
-		t.updateTurtleViewers();
-	}
-
 	@Override
 	public double calculateValue(List<Object> param) {
-		updateTurtle((Turtle) param.get(0));
+		Turtle t = (Turtle) param.get(0);
+		t.setTurtleVisibility(false);
+		t.updateTurtleViewers();
 		return 0;
 	}
 

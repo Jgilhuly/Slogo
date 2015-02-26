@@ -12,6 +12,9 @@ import model.Turtle;
  *
  */
 public class HomeCommand extends Command{
+	private static final int ORIGIN_X = 0;
+	private static final int ORIGIN_Y = 0;
+	
 	public double calculateValue(List<Object> param) {
 		Turtle t = (Turtle) param.get(0);
 		double distance = Math.sqrt(Math.pow(t.getX() - ORIGIN_X, 2)

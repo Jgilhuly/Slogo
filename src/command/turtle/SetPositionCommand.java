@@ -6,6 +6,10 @@ import model.Turtle;
 import command.Command;
 
 public class SetPositionCommand extends Command {
+	private static final int ORIGIN_X = 0;
+	private static final int ORIGIN_Y = 0;
+	//just in case the origin changes
+	
 	public double calculateValue(List<Object> param) {
 		Turtle t = (Turtle) param.get(2);
 		t.setXY((double) param.get(0), (double) param.get(1));

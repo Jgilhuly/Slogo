@@ -7,14 +7,12 @@ import command.Command;
 import model.Turtle;
 
 public class ShowTurtleCommand extends Command {
-	private void updateTurtle(Turtle t) {
-		t.setTurtleVisibility(true);
-		t.updateTurtleViewers();
-	}
 
 	@Override
 	public double calculateValue(List<Object> param) {
-		updateTurtle((Turtle) param.get(0));
+		Turtle t = (Turtle) param.get(0);
+		t.setTurtleVisibility(true);
+		t.updateTurtleViewers();
 		return 1;
 	}
 }
