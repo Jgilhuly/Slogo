@@ -63,6 +63,10 @@ public class Controller {
 
 	private void update(ActionEvent e) {
 	}
+	
+	public List<Variable> getVariableList() {
+		return variables.getVariableList();
+	}
 
 	// public void play() {
 	// frame = addKeyFrame(fps);
