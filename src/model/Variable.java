@@ -25,14 +25,16 @@ public class Variable {
      public String getName() {
     	 return name.getValue();
      }
+
      
      public void setValue(Double val){
          value = new SimpleDoubleProperty(val);
      }
 
+
 	public DoubleProperty valueProperty() {
 		if (value == null)
-			value = new SimpleDoubleProperty(0);
+			value = new SimpleDoubleProperty(0, "value");
 		return value;
 	}
 	public StringProperty nameProperty() {

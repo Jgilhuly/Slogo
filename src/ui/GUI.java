@@ -1,41 +1,21 @@
 package ui;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observer;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import model.Variable;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -199,25 +179,28 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		backgroundColorPicker = makeColorPicker(backgroundColor, e -> changeBackgroundColor());
-		penColorPicker = makeColorPicker(tView.getColor(), e -> changePenColor());
+		backgroundColorPicker = makeColorPicker(backgroundColor,
+				e -> changeBackgroundColor());
+		penColorPicker = makeColorPicker(tView.getColor(),
+				e -> changePenColor());
 
 		tb.getItems().addAll(makeMenuBar(),
 				new Label(myResources.getString("BackgroundColor")),
 				backgroundColorPicker,
-				new Label(myResources.getString("PenColor")),
-				penColorPicker);
+				new Label(myResources.getString("PenColor")), penColorPicker);
 
 		return tb;
 	}
 
 	/**
 	 * Makes a color picker with the given default color and handler
+	 * 
 	 * @param defaultColor
 	 * @param handler
 	 * @return
 	 */
-	private ColorPicker makeColorPicker(Color defaultColor, EventHandler<ActionEvent> handler) {
+	private ColorPicker makeColorPicker(Color defaultColor,
+			EventHandler<ActionEvent> handler) {
 		ColorPicker colorPicker = new ColorPicker(defaultColor);
 		svg = new SVGPath();
 		svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -236,8 +219,8 @@ public class GUI {
 	 * Handler for the background color picker
 	 */
 	private void changeBackgroundColor() {
-		canvasHolder.setBackground(new Background(new BackgroundFill(backgroundColorPicker.getValue(),
-				null, null)));
+		canvasHolder.setBackground(new Background(new BackgroundFill(
+				backgroundColorPicker.getValue(), null, null)));
 	}
 
 	/**
@@ -254,13 +237,10 @@ public class GUI {
 	 */
 	private Node makeMenuBar() {
 		Menu fileMenu = new Menu(myResources.getString("File"));
-
 		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
 		fileOp1.setOnAction(e -> selectAndChangeTurtleImage());
 		fileMenu.getItems().add(fileOp1);
-
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
-
 		MenuItem htmlHelp = new MenuItem(myResources.getString("Help"));
 		htmlHelp.setOnAction(e -> showHTMLHelp());
 		optionsMenu.getItems().add(htmlHelp);
@@ -323,7 +303,7 @@ public class GUI {
 
 		Stage stage = new Stage();
 		stage.setTitle(myResources.getString("HelpPageTitle"));
-		stage.setScene(new Scene(helpRoot, 500, 500));
+		stage.setScene(new Scene(helpRoot, 800, 800));
 		stage.show();
 	}
 
@@ -396,64 +376,65 @@ public class GUI {
 		cols.add("Commands");
 		userCommandsTable = makeTable("User Commands", cols);
 		result.getChildren().add(userCommandsTable);
-
 		return result;
 	}
 
 	private TableView makeTable(String title, List<String> columnNames) {
-		//		VBox labelAndTable = new VBox();
-		//		labelAndTable.setSpacing(5);
+		// VBox labelAndTable = new VBox();
+		// labelAndTable.setSpacing(5);
 		//
-		//		Label label = new Label(title);
-		//		label.setFont(new Font("Arial", 14));
+		// Label label = new Label(title);
+		// label.setFont(new Font("Arial", 14));
 
 		TableView table = new TableView();
 		for (String s : columnNames) {
 			table.getColumns().add((new TableColumn(s)));
 		}
 
-		//		labelAndTable.getChildren().addAll(label, table);
+		// labelAndTable.getChildren().addAll(label, table);
 		return table;
 	}
-
 
 	/**
 	 * Updates the right side info tables
 	 */
-	@SuppressWarnings("rawtypes")
-	private void addHistory() {
-		//		ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-		//
-		//		TableColumn<String, String> tc = new TableColumn<>("Previous Commands");
-		//		tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
-		//				.getText()));
-		//
-		//		cols.add(tc);
-		//
-		//		// table.getColumns().addAll(cols);
-		//
-		//		inputField.getText();
 
-		TableColumn tc = (TableColumn) variablesTable.getColumns().get(0);
-		for (Variable s : mySceneUpdater.getVariableList()) {
-			tc.setCellValueFactory(
-					new PropertyValueFactory<Variable, String>(s.getName()));
+	private void addHistory() {
+		// ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
+		//
+		// TableColumn<String, String> tc = new
+		// TableColumn<>("Previous Commands");
+		// tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
+		// .getText()));
+		//
+		// cols.add(tc);
+		//
+		// // table.getColumns().addAll(cols);
+		//
+		// inputField.getText();
+		//
+		// TableColumn<Variable, String> tc = (TableColumn)
+		// variablesTable.getColumns().get(0);
+		// for (Variable s : mySceneUpdater.getVariableList()) {
+		// tc.setCellValueFactory(
+		// new PropertyValueFactory<Variable,String>(s.getName()));
+		// }
+		//
+		// TableColumn<Variable, Double> tc2 = (TableColumn)
+		// variablesTable.getColumns().get(1);
+		// for (Variable s : mySceneUpdater.getVariableList()) {
+		// tc2.setCellValueFactory(
+		// cellData -> cellData.getValue().valueProperty());
+		// }
+
+		for (String s : mySceneUpdater.getPrevCommandList()) {
+			System.out.println(s);
 		}
 		
-		tc = (TableColumn) variablesTable.getColumns().get(1);
-		for (Variable s : mySceneUpdater.getVariableList()) {
-			tc.setCellValueFactory(
-					new PropertyValueFactory<Variable, Double>(s.getValue().toString()));
+		for (Variable v : mySceneUpdater.getVariableList()) {
+			System.out.println(v.getName() + " - " + v.getValue());
 		}
 	}
-	
-//	private void addData(TableView tableView, List<Object> dataList) {
-//		for (int i = 0; i < tableView.getColumns().size(); i ++) {
-//			for (Object o : dataList) {
-//				
-//			}
-//		}
-//	}
 
 	/**
 	 * Sets the output text field. Called from back-end (through controller)
