@@ -29,14 +29,14 @@ public class TreeInterpreter {
     public void interpretTree (CommandTreeNode node) {
             List<Object> paramList = new ArrayList<>();
             if (!isLeaf(node)){
-                for (CommandTreeNode child : node.getChildren()) { // can be refactored
-                    interpretTree(child);
-                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
+                if(!(node.getType().equals("BRACKET"))){
+                    for (CommandTreeNode child : node.getChildren()) { // can be refactored
+                        interpretTree(child);
+                        paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
+                    }
                 }
-            }
+                }
             update(node, paramList);
-            System.out.println(node.getValue());
-            variables.printThing();
 //            variables.printThing();   
         }
 

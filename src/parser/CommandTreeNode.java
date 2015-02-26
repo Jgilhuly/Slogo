@@ -24,6 +24,10 @@ public class CommandTreeNode {
 	public void add(CommandTreeNode newNode) {
 		myChildren.add(newNode);
 	}
+	
+	public void clearChildren(){
+	        myChildren = new ArrayList<>();
+	}
 
 	public void remove(CommandTreeNode newNode) {
 		Iterator<CommandTreeNode> iter = myChildren.iterator();
