@@ -15,6 +15,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
@@ -93,7 +94,19 @@ public class GUI {
 		selectedLanguage = "English"; // default
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
+		setupKeyboardCommands();
+
 		myStage.setScene(myScene);
+	}
+
+	/**
+	 * Keyboard commands
+	 */
+	private void setupKeyboardCommands() {
+		myScene.setOnKeyPressed(e -> {
+			if (e.getCode() == KeyCode.ENTER)
+				parseCommand();
+		});
 	}
 
 	/**

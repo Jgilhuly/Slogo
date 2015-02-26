@@ -65,7 +65,7 @@ public class TreeGenerator {
 
 			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
 			return myRoot;
-		} catch (NullPointerException e) {
+		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			throw new NoInputFoundException();
 		}
 	}

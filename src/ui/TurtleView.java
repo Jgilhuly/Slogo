@@ -82,11 +82,14 @@ public class TurtleView implements Observer {
 		double newX = tModel.getX();
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
-
 		myHeading = newHeading;
 		if (newX != getCenterX() || newY != getCenterY()) {
 			draw(myImageView.getX(), myImageView.getY(), newX, newY,
 					tModel.getLine());
+		}
+		if (tModel.getCleared()) {
+			myCanvas.getGraphicsContext2D().clearRect(0, 0,
+					myCanvas.getWidth(), myCanvas.getHeight());
 		}
 	}
 
