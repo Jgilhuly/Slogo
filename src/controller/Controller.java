@@ -18,20 +18,18 @@ import ui.SceneUpdater;
 public class Controller {
 	private SceneUpdater sceneUpdater;
 	private CommandList commands = new CommandList();
-	private List<Variable> variables = new SimpleListProperty<Variable>(
-			javafx.collections.FXCollections
-					.observableList(new ArrayList<Variable>()));
+	private VariableList variables = new VariableList();
 	private Turtle turtle = new Turtle();
-	private TreeInterpreter woot;
+	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
 	}
 
-	public void syncCommandandVariableLists() {
-		variables = new SimpleListProperty<Variable>();
-	}
+//	public void syncCommandandVariableLists() {
+//		variables = new SimpleListProperty<Variable>();
+//	}
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -42,8 +40,8 @@ public class Controller {
 	public void parseCommand(String input, String language) {
 		Parser pp = new Parser(language);
 		CommandTreeNode node = pp.makeTree(input);
-		woot = new TreeInterpreter(commands, variables, turtle, this);
-		woot.interpretTree(node);
+		interpreter = new TreeInterpreter(commands, variables, turtle, this);
+		interpreter.interpretTree(node);
 	}
 
 	/**
