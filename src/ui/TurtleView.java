@@ -58,10 +58,6 @@ public class TurtleView implements Observer {
 		myCanvasHolder.getChildren().add(turtle);
 	}
 
-	public ImageView getImageView() {
-		return myImageView;
-	}
-
 	private void draw(double x1, double y1, double x2, double y2,
 			boolean hasLine, boolean hasTurtle) {
 		myCanvas.getGraphicsContext2D().setStroke(myColor);
@@ -114,6 +110,21 @@ public class TurtleView implements Observer {
 
 	public void setColor(Color color) {
 		myColor = color;
+	}
+	
+	public ImageView getImageView() {
+		return myImageView;
+	}
+	
+	public void setImage(Image image) {
+		myCanvasHolder.getChildren().remove(myImageView);
+		
+		double oldX = myImageView.getX();
+		double oldY = myImageView.getY();
+		myImageView = new ImageView(image);
+		myImageView.setX(oldX);
+		myImageView.setY(oldY);
+		myCanvasHolder.getChildren().add(myImageView);
 	}
 
 }

@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
@@ -22,6 +23,7 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GUI {
@@ -226,8 +228,8 @@ public class GUI {
 	 */
 	private Node makeTopBar() {
 		ToolBar tb = new ToolBar();
-		tb.getItems().addAll(makeMenuBar(), new Label("BackgroundColor"),
-				makeBackgroundColorPicker(backgroundColor), new Label("Turtle Color"),
+		tb.getItems().addAll(makeMenuBar(), new Label(myResources.getString("BackgroundColor")),
+				makeBackgroundColorPicker(backgroundColor), new Label(myResources.getString("PenColor")),
 				makePenColorPicker(tView.getColor()));
 
 		return tb;
@@ -242,6 +244,7 @@ public class GUI {
 		Menu fileMenu = new Menu(myResources.getString("File"));
 
 		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
+		fileOp1.setOnAction(e -> showFileChooser());
 		fileMenu.getItems().add(fileOp1);
 
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
@@ -259,6 +262,20 @@ public class GUI {
 		menuBar.getMenus().addAll(fileMenu, optionsMenu, languageMenu);
 
 		return menuBar;
+	}
+
+	private void showFileChooser() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(myResources.getString("OpenResourceFile"));
+		fileChooser.getExtensionFilters().add(
+				new FileChooser.ExtensionFilter("PNG File", "*.png"));
+
+		File file = fileChooser.showOpenDialog(myStage);
+		if (file != null) {
+			tView.setImage(new Image(file.toURI().toString()));
+		} else {
+			System.err.println("Error Loading Image File");
+		}
 	}
 
 	/**
