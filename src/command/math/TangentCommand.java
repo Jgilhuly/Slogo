@@ -6,6 +6,6 @@ import command.Command;
 
 public class TangentCommand extends Command {
 	public double calculateValue(List<Object> param) {
-		return ((double) Math.tan((double) param.get(0) * Math.PI / 180));
+		return ((double) Math.tan(Math.toRadians((double) param.get(0))));
 	}
 }

@@ -7,7 +7,7 @@ public class CosineCommand extends Command {
 
 	@Override
 	public double calculateValue(List<Object> param) {
-		return Math.cos((double) param.get(0));
+		return Math.cos(Math.toRadians((double) param.get(0)));
 	}
 
 }
