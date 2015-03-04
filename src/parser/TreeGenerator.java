@@ -62,7 +62,7 @@ public class TreeGenerator {
 				helper(myRoot);
 			}
 
-			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
+			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getValue());
 			return myRoot;
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
