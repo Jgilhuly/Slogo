@@ -5,6 +5,6 @@ import command.Command;
 
 public class SineCommand extends Command {
 	public double calculateValue(List<Object> param) {
-		return (double) Math.sin((double) param.get(0)*Math.PI/180);
+		return (double) Math.sin(Math.toRadians((double)param.get(0)));
 	}
 }

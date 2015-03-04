@@ -24,6 +24,7 @@ public class DisplayPanel {
 		
 		TableView table = new TableView();
 		ObservableList<Variable> variables = setBindList();
+		
 		table.setItems(variables);
 	
 		TableColumn<Variable,String> nameCol = new TableColumn<Variable,String>("Name");

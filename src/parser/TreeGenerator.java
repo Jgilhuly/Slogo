@@ -13,7 +13,7 @@ public class TreeGenerator {
 	private static final int PARAM_INDEX = 0;
 	private static final int TYPE_INDEX = 1;
 	private Map<String, String[]> parametersMap; // toDo: implement the correct
-													// parametersMap
+	// parametersMap
 	private int index = 0;
 	private int bracketCount = 0;
 	private CommandTreeNode myRoot;
@@ -40,7 +40,7 @@ public class TreeGenerator {
 
 	/**
 	 * Create a CommandTreeNode that includes all the commands
-	 * 
+	 *
 	 * @param input
 	 *            : List of strings taken from the parser
 	 * @return: CommandTreeNode with commands
@@ -76,7 +76,7 @@ public class TreeGenerator {
 	 */
 	/**
 	 * Recursive helper method that creates the tree
-	 * 
+	 *
 	 * @param count
 	 * @param root
 	 */
@@ -88,9 +88,10 @@ public class TreeGenerator {
 			commandCase(root);
 		} else if (myInput.get(index).equals("[")) {
 			bracketCase(root);
-		} else if (Pattern.matches(":[a-zA-Z]+", myInput.get(index))) { // Variable
+		} else if (Pattern.matches(":[a-zA-Z]+", myInput.get(index))) { //Variable
 			variableCase(root);
-		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", myInput.get(index))) { // CONSTANT
+		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", myInput.get(index))) {
+			// CONSTANT
 			constantCase(root);
 		} else if (isMethod) {
 			System.out.println("Method name is: " + myInput.get(index));
@@ -102,7 +103,7 @@ public class TreeGenerator {
 
 	/**
 	 * helper method to handle the case when the node is a command
-	 * 
+	 *
 	 * @param root
 	 */
 	private void commandCase(CommandTreeNode root) {
@@ -131,7 +132,7 @@ public class TreeGenerator {
 
 	/**
 	 * helper method to handle the case when the node is a forward bracket
-	 * 
+	 *
 	 * @param root
 	 */
 	private void bracketCase(CommandTreeNode root) {
@@ -145,19 +146,15 @@ public class TreeGenerator {
 				root.getName());
 
 		index++;
-
 		while (!myInput.get(index).equals("]")) {
 			helper(temp);
 		}
-		if (myInput.get(index).equals("]")) {
-			index++;
-			helper(temp);
-		}
+		index++;
 	}
 
 	/**
 	 * helper method to handle the case when the node is a variable
-	 * 
+	 *
 	 * @param root
 	 */
 	private void variableCase(CommandTreeNode root) {
@@ -171,7 +168,7 @@ public class TreeGenerator {
 
 	/**
 	 * helper method to handle the case when the node is a constant
-	 * 
+	 *
 	 * @param root
 	 */
 	private void constantCase(CommandTreeNode root) {
@@ -202,16 +199,20 @@ public class TreeGenerator {
 		}
 		return newMap;
 	}
-	/** 
+
+	/**
 	 * Obtains the number of parameters given the key
+	 * 
 	 * @param key
 	 * @return
 	 */
 	private int obtainNumParams(String key) {
 		return Integer.parseInt(parametersMap.get(key)[PARAM_INDEX]);
 	}
+
 	/**
 	 * Obtains the subcommand type given the key
+	 * 
 	 * @param key
 	 * @return
 	 */

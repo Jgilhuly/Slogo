@@ -6,6 +6,7 @@ import java.util.Observer;
 import java.util.Set;
 
 import model.Variable;
+import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import controller.Controller;
 
@@ -48,10 +49,12 @@ public class SceneUpdater implements Observer {
 		myGUI.setOutputText(outputText);
 	}
 	
-	public List<Variable> getVariableList() {
+	public ObservableList<Variable> getVariableList() {
 		return myController.getVariableList();
 	}
-	
+	public void setListBind(String type, ObservableList<Variable> l) {
+		myGUI.bindTable(type, l);
+	}
 	public Set<String> getPrevCommandList() {
 		return myController.getPrevCommandList();
 	}
