@@ -65,17 +65,22 @@ public class GUI {
 	 * Returns scene for this view so it can be added to stage.
 	 */
 	public void initialize() {		
-		ioPane = new IOElement(myResources, this);
-		canvasPane = new CanvasElement(DEFAULT_BACKGROUND, myStage.getWidth(), myStage.getHeight());
-//		infoPane = new IOElement(myResources, this);
-		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView, DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage);
 
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
+		
+		ioPane = new IOElement(myResources, this);
 		myRoot.setBottom(ioPane.getBaseNode());
+		
+		canvasPane = new CanvasElement(DEFAULT_BACKGROUND, myStage.getWidth(), myStage.getHeight());
 		myRoot.setCenter(canvasPane.getBaseNode());
+		
+//		infoPane = new IOElement(myResources, this);
 		myRoot.setRight(makeInfoPane());
+		
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
+		
+		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView, DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage);
 		myRoot.setTop(menuPane.getBaseNode());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());

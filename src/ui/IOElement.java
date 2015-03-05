@@ -19,6 +19,8 @@ public class IOElement {
 	private ResourceBundle myResources;
 	
 	public IOElement(ResourceBundle resourceBundleIn, GUI myGui) {
+		myResources = resourceBundleIn;
+		
 		myNode = new VBox();
 
 		outputField = new Text();

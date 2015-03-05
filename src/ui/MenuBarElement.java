@@ -27,6 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MenuBarElement {
+	private final String helpPageURL = "http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php";
 	private ToolBar tb;
 	private ResourceBundle myResources;
 	private CanvasElement canvasPane;
@@ -122,7 +123,6 @@ public class MenuBarElement {
 	 */
 	private void changePenColor() {
 		tView.setColor(penColorPicker.getValue());
-
 	}
 
 	/**
@@ -138,7 +138,6 @@ public class MenuBarElement {
 					.addListener(
 							e -> checkLanguageMenuItems(string,
 									cmi.isSelected(), menu));
-
 		}
 		return menu;
 	}
@@ -166,6 +165,22 @@ public class MenuBarElement {
 			ioPane.getInputField().setEditable(true);
 		}
 	}
+	
+	/**
+	 * Toggles a menuItem
+	 * 
+	 * @param menu
+	 * @param input
+	 * @param state
+	 */
+	private void toggleMenuItems(Menu menu, String input, boolean state) {
+		for (int i = 0; i < languages.length; i++) {
+			MenuItem temp = menu.getItems().get(i);
+			if (!temp.getText().equals(input)) {
+				temp.setDisable(state);
+			}
+		}
+	}
 
 	/**
 	 * Shows a filechooser to select a new turtle image, then changes to that
@@ -187,37 +202,11 @@ public class MenuBarElement {
 	}
 
 	/**
-	 * Toggles a menuItem
-	 * 
-	 * @param menu
-	 * @param input
-	 * @param state
-	 */
-	private void toggleMenuItems(Menu menu, String input, boolean state) {
-		for (int i = 0; i < languages.length; i++) {
-			MenuItem temp = menu.getItems().get(i);
-			if (!temp.getText().equals(input)) {
-				temp.setDisable(state);
-			}
-		}
-	}
-
-	/**
 	 * Shows the HTML Help window
 	 */
 	private void showHTMLHelp() {
-		WebView browser = new WebView();
-		WebEngine webEngine = browser.getEngine();
-		webEngine
-				.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
-
-		VBox helpRoot = new VBox();
-		helpRoot.getChildren().add(browser);
-
-		Stage stage = new Stage();
-		stage.setTitle(myResources.getString("HelpPageTitle"));
-		stage.setScene(new Scene(helpRoot, 800, 800));
-		stage.show();
+		HTMLHelpPage helpPage = new HTMLHelpPage(myResources, helpPageURL);
+		helpPage.show();
 	}
 
 	public String getSelectedLanguage() {
