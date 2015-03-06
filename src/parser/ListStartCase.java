@@ -1,26 +1,34 @@
 package parser;
 
-public class ListStartCase extends TreeGenerator {
+import java.util.List;
+
+public class ListStartCase implements Cases {
 	private int bracketCount = 0;
-	
-	@Override
-	protected void helper(CommandTreeNode root) {
-		String value = myInput.get(index);
-		ListStartCount++;
+	private TreeWrapper wrapper;
+	private List<String> myInput;
+
+	public ListStartCase(TreeWrapper wrapper, List<String> input) {
+		this.wrapper = wrapper;
+		myInput = input;
+	}
+
+	public void recurse(CommandTreeNode root) {
+		String value = myInput.get(wrapper.getIndex());
+		wrapper.incrementListStartIndex();
 		CommandTreeNode temp = new CommandTreeNode("BRACKET", value + "-"
 				+ bracketCount++, 0, null);
 
 		root.add(temp);
 
-		printTestStatements(value + "-" + (bracketCount - 1), temp.getType(),
-				root.getName());
+		wrapper.printTestStatements(value + "-" + (bracketCount - 1),
+				temp.getType(), root.getName());
 
-		index++;
-		while (!myInput.get(index).equals("]")) {
-			super.helper(temp);
+		wrapper.incrementIndex();
+		while (!myInput.get(wrapper.getIndex()).equals("]")) {
+			wrapper.recurse(temp);
 		}
-		ListEndCount++;
-		index++;
+		wrapper.incrementListEndIndex();
+		wrapper.incrementIndex();
 	}
 
 }

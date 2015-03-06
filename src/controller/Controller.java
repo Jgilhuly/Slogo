@@ -52,7 +52,7 @@ public class Controller {
 
 		// get method list if needed - up to back-end on how to deal with this
 		// case
-		generator.getMethodsList();
+//		generator.getMethodsList();
 
 		interpreter = new TreeInterpreter(variables, turtle);
 		interpreter.interpretTree(node);
