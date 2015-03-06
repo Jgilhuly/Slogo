@@ -1,6 +1,5 @@
 package ui;
 
-
 import java.util.*;
 
 import javafx.collections.ObservableList;
@@ -25,13 +24,13 @@ public class GUI {
 	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
 	private Pen myPen;
-	
+
 	private IOElement ioPane;
 	private CanvasElement canvasPane;
 	private InfoElement infoPane;
 	private MenuBarElement menuPane;
 	private TPropertiesElement propertiesPane;
-	
+
 	private String DEFAULT_LANG = "English";
 	private String[] languages = { "Chinese", "English", "French", "German",
 			"Italian", "Japanese", "Korean", "Portuguese", "Russian", "Spanish" };
@@ -48,27 +47,29 @@ public class GUI {
 	/**
 	 * Returns scene for this view so it can be added to stage.
 	 */
-	public void initialize() {		
+	public void initialize() {
 
 		myStage.setTitle(myResources.getString("Title"));
 		myRoot = new BorderPane();
-		
+
 		ioPane = new IOElement(myResources, this);
 		myRoot.setBottom(ioPane.getBaseNode());
-		
-		canvasPane = new CanvasElement(DEFAULT_BACKGROUND, myStage.getWidth(), myStage.getHeight());
+
+		canvasPane = new CanvasElement(DEFAULT_BACKGROUND, myStage.getWidth(),
+				myStage.getHeight());
 		myRoot.setCenter(canvasPane.getBaseNode());
-		
+
 		infoPane = new InfoElement();
 		myRoot.setRight(infoPane.getBaseNode());
-		
+
 		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
-		
+
 		propertiesPane = new TPropertiesElement(myResources, tView, myPen);
 		myRoot.setLeft(propertiesPane.getMyBaseNode());
-		
-		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView, DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage, myPen);
+
+		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView,
+				DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage, myPen, this);
 		myRoot.setTop(menuPane.getBaseNode());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
@@ -86,8 +87,10 @@ public class GUI {
 	private TurtleView makeTurtleView(String imagePath) {
 		Image turtleImage = new Image(GUI.class.getResourceAsStream(imagePath));
 
-		return new TurtleView(turtleImage, canvasPane.getCanvas(),
-				canvasPane.getCanvas().getWidth() / 2, canvasPane.getCanvas().getHeight() / 2, canvasPane.getBaseNode(), myPen);
+		return new TurtleView(turtleImage, canvasPane.getCanvas(), canvasPane
+				.getCanvas().getWidth() / 2,
+				canvasPane.getCanvas().getHeight() / 2,
+				canvasPane.getBaseNode(), myPen);
 	}
 
 	/**
@@ -99,7 +102,7 @@ public class GUI {
 				parseCommand();
 		});
 	}
-	
+
 	/**
 	 * Sends a string slogo command through the Scene Updater and Controller,
 	 * all the way to the back-end.
@@ -107,7 +110,8 @@ public class GUI {
 	public void parseCommand() {
 		IOElement ioPaneCasted = (IOElement) ioPane;
 		if (ioPaneCasted.getInputField().getText() != null)
-		mySceneUpdater.sendCommands(ioPaneCasted.getInputField().getText(), menuPane.getSelectedLanguage());
+			mySceneUpdater.sendCommands(ioPaneCasted.getInputField().getText(),
+					menuPane.getSelectedLanguage());
 		addHistory(); // for previous commands tab
 		ioPaneCasted.getInputField().setText("");
 	}
@@ -128,20 +132,21 @@ public class GUI {
 	 */
 	public Observer getTurtleView() {
 		return tView;
-	}	
-	
+	}
 
 	public void bindTable(String type, ObservableList<String> l) {
 		List<TableView<String>> tables = infoPane.getTables();
 		if (type.equals("Commands")) {
 			tables.get(1).setItems(l);
-		}  
-		else if (type.equals("User Commands")) {
+		} else if (type.equals("User Commands")) {
 			tables.get(2).setItems(l);
 		}
 	}
 
-	
+	public void createNewWorkspace() {
+		mySceneUpdater.createNewWorkspace();
+	}
+
 	/**
 	 * Updates the right side info tables
 	 */

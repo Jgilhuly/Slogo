@@ -36,11 +36,12 @@ public class MenuBarElement {
 	private String languages[];
 	private Stage myStage;
 	private String selectedLanguage;
+	private GUI myGui;
 
 	public MenuBarElement(ResourceBundle resourcesIn,
 			CanvasElement canvasPaneIn, IOElement ioPaneIn, TurtleView tViewIn,
 			Color backgroundColor, String[] languagesIn,
-			String defaultLanguageIn, Stage myStageIn, Pen penIn) {
+			String defaultLanguageIn, Stage myStageIn, Pen penIn, GUI myGuiIn) {
 		myResources = resourcesIn;
 		canvasPane = canvasPaneIn;
 		tView = tViewIn;
@@ -49,6 +50,7 @@ public class MenuBarElement {
 		ioPane = ioPaneIn;
 		myStage = myStageIn;
 		selectedLanguage = defaultLanguageIn;
+		myGui = myGuiIn;
 
 		init(backgroundColor);
 	}
@@ -75,7 +77,11 @@ public class MenuBarElement {
 		Menu fileMenu = new Menu(myResources.getString("File"));
 		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
 		fileOp1.setOnAction(e -> selectAndChangeTurtleImage());
-		fileMenu.getItems().add(fileOp1);
+		
+		MenuItem fileOp2 = new MenuItem(myResources.getString("MakeNewWorkspace"));
+		fileOp2.setOnAction(e -> myGui.createNewWorkspace());
+		fileMenu.getItems().addAll(fileOp1, fileOp2);
+		
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
 		MenuItem htmlHelp = new MenuItem(myResources.getString("Help"));
 		htmlHelp.setOnAction(e -> showHTMLHelp());
