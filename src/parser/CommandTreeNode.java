@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-//http://penguin.ewu.edu/class/class/cscd300/Topic/ExpressionTree/ExpressionTree.java
 
 // important : http://math.hws.edu/javanotes/c9/s4.html
 public class CommandTreeNode {
 	private String myType;
 	private String myName;
-	private double myValue;
+	private Object myValue;
 	private List<CommandTreeNode> myChildren;
 
-	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> Children) {
-		this.myType = type;
-		this.myName = name;
-		this.myValue = value;
-		this.myChildren = Children;
+	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> children) {
+		myType = type;
+		myName = name;
+		myValue = value;
+		myChildren = children;
 		myChildren = new ArrayList<>();
 	}
 
@@ -38,11 +37,11 @@ public class CommandTreeNode {
 		}
 	}
 
-	public void setValue(double value) {
+	public void setValue(Object value) {
 		myValue = value;
 	}
 
-	public double getValue() {
+	public Object getValue() {
 		return myValue;
 	}
 
@@ -68,5 +67,7 @@ public class CommandTreeNode {
 
 		return true;
 	}
-
+	public String toString() {
+		return myValue.toString();
+	}
 }

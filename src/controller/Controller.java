@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import model.*;
+import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import model.TreeInterpreter;
@@ -19,24 +20,20 @@ import ui.SceneUpdater;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
-	private Map<String, CommandTreeNode> commands;
-	private Turtle turtle;
-	private VariableList variables;
+	private Map<String, CommandTreeNode> previousCommands;
 
 	private TreeInterpreter interpreter;
-
+	
 	public void init(Stage s) {
-		turtle = new Turtle();
+//		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
-		variables = new VariableList();
-		commands = new HashMap<String, CommandTreeNode>();
-		linkTurtles(turtle);
+		previousCommands = new HashMap<String, CommandTreeNode>();
+		interpreter = new TreeInterpreter();
+		
 	}
 
-//	public void syncCommandandVariableLists() {
-//		variables = new SimpleListProperty<Variable>();
-//	}
+
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -48,42 +45,38 @@ public class Controller {
 		Parser pp = new Parser(language);
 		List<String> inputList = pp.parseList(input);
 		TreeGenerator tg = new TreeGenerator();
-		CommandTreeNode node = tg.createCommands(inputList);
-		interpreter = new TreeInterpreter(variables, turtle);		
+		CommandTreeNode node = tg.createCommands(inputList);	
 		interpreter.interpretTree(node);
-		if (variables != null) {
-			sceneUpdater.setListBind("Variable", variables.getList());
+//		if (interpreter.getVariableList() != null) {
+//			sceneUpdater.setListBind("Variable", variables.getList());
+//		}
+		sceneUpdater.setOutputText(node.getValue().toString());
+	}
+	
+	private void addCommandHistory(String name, CommandTreeNode prev) {
+		if (!previousCommands.containsKey(name)) {
+			previousCommands.put(name, prev);
 		}
-		setOutputText(Double.toString(node.getValue()));
 	}
+//	/**
+//	 * Sends text to be outputted to the front-end from the back-end
+//	 * 
+//	 * @param outputText
+//	 */
+//	public void setOutputText(String outputText) {
+//		sceneUpdater.setOutputText(outputText);
+//	}
 
-	/**
-	 * Sends text to be outputted to the front-end from the back-end
-	 * 
-	 * @param outputText
-	 */
-	public void setOutputText(String outputText) {
-		sceneUpdater.setOutputText(outputText);
-	}
 
-	public void linkTurtles(Turtle turtleModel) {
-		turtleModel.addObserver(sceneUpdater.getTurtleView());
-	}
 	
-	
-
-	public ObservableList<Variable> getVariableList() {
-		return variables.getList();
-	}
+//
+//	public ObservableList<Variable> getVariableList() {
+//		return variables.getList();
+//	}
 
 	public Set<String> getPrevCommandList() {
-		return commands.keySet();
+		return previousCommands.keySet();
 	}
 	
 
-	// public void play() {
-	// frame = addKeyFrame(fps);
-	// animation.getKeyFrames().add(frame);
-	// animation.setCycleCount(Animation.INDEFINITE);
-	// }
 }

@@ -1,7 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
+
 import command.Command;
 
 
@@ -13,6 +14,7 @@ public class CommandFactory {
 
 			Class<?> command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
 
+
 			object = (Command) command.newInstance();
 			
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -23,11 +25,7 @@ public class CommandFactory {
 		return object;
 		
 	}
-
-
-    public Command createBracket (String name) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	
+	
 	
 }

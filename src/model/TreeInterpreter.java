@@ -3,7 +3,9 @@ package model;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
 import command.Command;
 import parser.CommandTreeNode;
 
@@ -11,16 +13,16 @@ import parser.CommandTreeNode;
 public class TreeInterpreter {
     private CommandFactory factory;
     private VariableList variables;
-    private Turtle myTurtle;
+    private int activeTurtleIndex = 1;
+    private List<Turtle> listTurtles;
     
-    public TreeInterpreter (VariableList varList, Turtle turtle) {
-        variables = varList;
+    public TreeInterpreter () {
         factory = new CommandFactory();
-        myTurtle = turtle;
+		variables = new VariableList();
+		listTurtles = new ArrayList<Turtle>();
     }
     
     public void interpretTree (CommandTreeNode node) {
-
 		List<Object> paramList = new ArrayList<>();
 		if (!isLeaf(node)) {
 			if (!(node.getType().equals("BRACKET"))) {
@@ -33,21 +35,32 @@ public class TreeInterpreter {
 		update(node, paramList);
 		// variables.printThing();
 	}
+    public void setActiveTurtle(int num) {
+    	activeTurtleIndex = num;
+    }
 
-
-    private boolean isLeaf (CommandTreeNode node){
+    private boolean isLeaf(CommandTreeNode node){
         return node.getChildren().isEmpty(); 
     }
 
     public void executeCommand (CommandTreeNode node, List<Object> paramList) {
         Command c = factory.createCommand(node.getType(), node.getName());
-        Class[] cArg = new Class[1];
-        cArg[0] = List.class;
+//        Class[] cArg = new Class[1];
+//        cArg[0] = List.class;
+        Class<?>[] params;
         Method method;
         try {
-            method = c.getClass().getDeclaredMethod("calculateValue", cArg);
-            Double value = (Double) method.invoke(c, paramList);
-            node.setValue(value);
+			for (Method m: c.getClass().getDeclaredMethods()) {
+				if (m.getName().equals("calculateValue")) {
+					params = m.getParameterTypes();
+					method = c.getClass().getDeclaredMethod("calculateValue", params);
+					Object value = method.invoke(c, paramList.toArray());
+					node.setValue(value);
+				}
+			}
+			
+            
+            
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
@@ -55,12 +68,12 @@ public class TreeInterpreter {
             e.printStackTrace();
         }
     }
-//    public Double getDisplayValue()
+
 
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
             case "COMMAND.TURTLE":
-                paramList.add(myTurtle);
+                paramList.add(listTurtles);
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
@@ -82,7 +95,7 @@ public class TreeInterpreter {
     
     
 
-    public VariableList getVariableList () {
+    public VariableList getVariableList() {
         return variables;
     }
 

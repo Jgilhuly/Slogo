@@ -2,7 +2,10 @@ package ui;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.*;
+
+import javax.swing.JFileChooser;
 
 import model.Variable;
 import javafx.collections.ObservableList;
@@ -258,16 +261,14 @@ public class GUI {
 	private void selectAndChangeTurtleImage() {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle(myResources.getString("OpenResourceFile"));
-		fileChooser.getExtensionFilters().add(
-				new FileChooser.ExtensionFilter("PNG File", "*.png"));
-
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG File", "*.png"));
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.dir"))); //set default folder to be project folder
 		File file = fileChooser.showOpenDialog(myStage);
+		
 		if (file != null) {
 			tView.setImage(new Image(file.toURI().toString()));
-		} else {
-			System.err.println("Error Loading Image File"); 
-			//TODO: MAKE SLOGO EXCEPTION POPUP
-		}
+		} 
+
 	}
 
 	/**
@@ -294,15 +295,11 @@ public class GUI {
 	private void showHTMLHelp() {
 		WebView browser = new WebView();
 		WebEngine webEngine = browser.getEngine();
-		webEngine
-		.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
-
-		VBox helpRoot = new VBox();
-		helpRoot.getChildren().add(browser);
+		webEngine.load("http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php");
 
 		Stage stage = new Stage();
 		stage.setTitle(myResources.getString("HelpPageTitle"));
-		stage.setScene(new Scene(helpRoot, 800, 800));
+		stage.setScene(new Scene(browser, 500, 500));
 		stage.show();
 	}
 
@@ -355,7 +352,6 @@ public class GUI {
 		VBox result = new VBox();
 		result.setSpacing(5);
 
-		DisplayPanel p = new DisplayPanel();
 
 		ArrayList<String> cols = new ArrayList<String>();
 
@@ -383,9 +379,9 @@ public class GUI {
 	}
 
 	private TableView makeTable(String title, List<String> columnNames) {
-		// VBox labelAndTable = new VBox();
-		// labelAndTable.setSpacing(5);
-		//
+		 VBox labelAndTable = new VBox();
+		 labelAndTable.setSpacing(5);
+		
 		Label label = new Label(title);
 		label.setFont(new Font("Arial", 14));
 
@@ -395,7 +391,7 @@ public class GUI {
 			table.getColumns().add((new TableColumn(s)));
 		}
 
-		// labelAndTable.getChildren().addAll(label, table);
+		labelAndTable.getChildren().addAll(label, table);
 		return table;
 	}
 	

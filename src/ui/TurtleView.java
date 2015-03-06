@@ -163,6 +163,8 @@ public class TurtleView implements Observer {
 		myImageView = new ImageView(image);
 		myImageView.setX(oldX);
 		myImageView.setY(oldY);
+		myImageView.setFitHeight(35);
+		myImageView.setFitWidth(25);
 		myCanvasHolder.getChildren().add(myImageView);
 	}
 
