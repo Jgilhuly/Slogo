@@ -1,42 +1,27 @@
 package parser;
 
-import java.util.Enumeration;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import util.PatternMapper;
 import errors.NoInputFoundException;
+import errors.UnmatchedBracketException;
 
 public class TreeGenerator {
-	private static final int PARAM_INDEX = 0;
-	private static final int TYPE_INDEX = 1;
-	private Map<String, String[]> parametersMap; // toDo: implement the correct
-	// parametersMap
-	private int index = 0;
-	private int bracketCount = 0;
-	private CommandTreeNode myRoot;
-	private List<String> myInput;
-	private boolean isMethod = false;
-
-	public TreeGenerator() {
-		parametersMap = createParametersMap();
-	}
-
-	/**
-	 * Just to print out the tree and its parent node for testing
-	 * 
-	 * @param value
-	 * @param type
-	 * @param name
-	 */
-	private void printTestStatements(String value, String type, String name) {
-		System.out.println(value);
-		System.out.println("Type is: " + type);
-		System.out.println("Root value is: " + name);
-		System.out.println();
-	}
+	private static final int START_INDEX = 0;
+	private static Map<Pattern, TreeGenerator> handlerMap;
+	protected static List<Entry<String, Pattern>> languagePatternList;
+	protected static List<String> myInput;
+	protected static int index;
+	protected static CommandTreeNode myRoot;
+	private static String language;
+	protected static int ListStartCount = 0;
+	protected static int ListEndCount = 0;
+	private static CommandCase CommandCase;
 
 	/**
 	 * Create a CommandTreeNode that includes all the commands
@@ -45,178 +30,84 @@ public class TreeGenerator {
 	 *            : List of strings taken from the parser
 	 * @return: CommandTreeNode with commands
 	 */
-	public CommandTreeNode createCommands(List<String> input) {
+	public CommandTreeNode createCommands(String input, String language) {
 		try {
-			myInput = input;
-			String value = myInput.get(index);
-			myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0,
-					null);
-			int numParams = obtainNumParams(value);
-			printTestStatements(value, obtainSubCommand(value), null);
-			index++;
-			boolean to = value.equals("MakeUserInstruction");
-			if (to) {
-				isMethod = true;
-			}
-			for (int i = 0; i < numParams; i++) {
-				helper(myRoot);
-			}
+			handlerMap = createHandlerMap();
+			languagePatternList = PatternMapper.makePatterns(language);
+			myInput = Arrays.asList(input.split("\\s+"));
+			index = 0;
+
+			helper(myRoot);
 
 			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
+
 			return myRoot;
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
+			if (ListStartCount != ListEndCount)
+				throw new UnmatchedBracketException();
 			throw new NoInputFoundException();
 		}
 	}
 
-	/*
-	 * THIS METHOD REQUIRES FIXING - Prof Duvall suggests inheritance hierachy
-	 * (?)
-	 */
-	/**
-	 * Recursive helper method that creates the tree
-	 *
-	 * @param count
-	 * @param root
-	 */
-	private void helper(CommandTreeNode root) {
+	protected void helper(CommandTreeNode root) {
 		if (index >= myInput.size()) {
 			return;
 		}
-		if (parametersMap.containsKey(myInput.get(index))) { // command
-			commandCase(root);
-		} else if (myInput.get(index).equals("[")) {
-			bracketCase(root);
-		} else if (Pattern.matches(":[a-zA-Z]+", myInput.get(index))) { //Variable
-			variableCase(root);
-		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", myInput.get(index))) {
-			// CONSTANT
-			constantCase(root);
-		} else if (isMethod) {
-			System.out.println("Method name is: " + myInput.get(index));
-			System.out.println();
-			isMethod = false;
-			index++;
+		if (index == START_INDEX) {
+			CommandCase.initiate(root, language);
+			return;
 		}
-	}
-
-	/**
-	 * helper method to handle the case when the node is a command
-	 *
-	 * @param root
-	 */
-	private void commandCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		int numParams = obtainNumParams(value);
-		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
-				value, 0, null);
-		root.add(temp);
-
-		printTestStatements(value, temp.getType(), root.getName());
-
-		boolean repeat = value.equals("Repeat");
-
-		index++;
-
-		if (repeat) {
-			while (!myInput.get(index).equals("]")) {
-				helper(temp);
-			}
-		} else {
-			for (int i = 0; i < numParams; i++) {
-				helper(temp);
+		for (Pattern pt : handlerMap.keySet()) {
+			if (pt.matcher(myInput.get(index)).matches()) {
+				TreeGenerator sc = handlerMap.get(pt);
+				sc.helper(root);
+				break;
 			}
 		}
 	}
 
-	/**
-	 * helper method to handle the case when the node is a forward bracket
-	 *
-	 * @param root
-	 */
-	private void bracketCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		CommandTreeNode temp = new CommandTreeNode("BRACKET", value + "-"
-				+ bracketCount++, 0, null);
-
-		root.add(temp);
-
-		printTestStatements(value + "-" + (bracketCount - 1), temp.getType(),
-				root.getName());
-
-		index++;
-		while (!myInput.get(index).equals("]")) {
-			helper(temp);
+	protected void printTestStatements(String value, String type, String name) {
+		System.out.println(value);
+		System.out.println("Type is: " + type);
+		System.out.println("Root value is: " + name);
+		System.out.println();
+	}
+	
+	private Map<Pattern, TreeGenerator> createHandlerMap() {
+		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper
+				.makePatterns("Syntax");
+		Map<Pattern, TreeGenerator> ret = new HashMap<>();
+		for (Entry<String, Pattern> p : syntaxPatternList) {
+			String category = p.getKey();
+			switch (category) {
+			case "ListStart":
+				ret.put(p.getValue(), new ListStartCase());
+				break;
+			case "Command":
+				CommandCase = new CommandCase();
+				ret.put(p.getValue(), CommandCase);
+				break;
+			case "Variable":
+				ret.put(p.getValue(), new VariableCase());
+				break;
+			case "Constant":
+				ret.put(p.getValue(), new ConstantCase());
+				break;
+			case "GroupStart":
+				ret.put(p.getValue(), new GroupStartCase());
+				break;
+			case "GroupEnd":
+				ret.put(p.getValue(), new GroupEndCase());
+				break;
+			default:
+				break;
+			}
 		}
-		index++;
+		return ret;
 	}
-
-	/**
-	 * helper method to handle the case when the node is a variable
-	 *
-	 * @param root
-	 */
-	private void variableCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		CommandTreeNode temp = new CommandTreeNode("VARIABLE", value, 0, null);
-		root.add(temp);
-
-		printTestStatements(value, temp.getType(), root.getName());
-		index++;
-	}
-
-	/**
-	 * helper method to handle the case when the node is a constant
-	 *
-	 * @param root
-	 */
-	private void constantCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT",
-				Double.parseDouble(myInput.get(index)), null);
-		root.add(temp);
-
-		printTestStatements(value, temp.getType(), root.getName());
-		index++;
-	}
-
-	/**
-	 * Creates a map that maps the Key to the number of parameters and its
-	 * subcommand type
-	 * 
-	 * @return
-	 */
-	private HashMap<String, String[]> createParametersMap() {
-		ResourceBundle resources = ResourceBundle
-				.getBundle("parser/parameters");
-		Enumeration<String> paramKeys = resources.getKeys();
-		HashMap<String, String[]> newMap = new HashMap<>();
-
-		while (paramKeys.hasMoreElements()) {
-			String Key = paramKeys.nextElement();
-			newMap.put(Key, resources.getString(Key).split(","));
-		}
-		return newMap;
-	}
-
-	/**
-	 * Obtains the number of parameters given the key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	private int obtainNumParams(String key) {
-		return Integer.parseInt(parametersMap.get(key)[PARAM_INDEX]);
-	}
-
-	/**
-	 * Obtains the subcommand type given the key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	private String obtainSubCommand(String key) {
-		return "COMMAND." + parametersMap.get(key)[TYPE_INDEX];
+	
+	public List<String> getMethodsList() {
+		return CommandCase.getMethodsList();
 	}
 }

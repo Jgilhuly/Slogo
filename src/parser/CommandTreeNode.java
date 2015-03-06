@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-// important : http://math.hws.edu/javanotes/c9/s4.html
 public class CommandTreeNode {
 	private String myType;
 	private String myName;
@@ -19,7 +17,7 @@ public class CommandTreeNode {
 		myChildren = children;
 		myChildren = new ArrayList<>();
 	}
-
+	
 	public void add(CommandTreeNode newNode) {
 		myChildren.add(newNode);
 	}

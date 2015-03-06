@@ -1,8 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,14 +12,14 @@ import model.TreeInterpreter;
 import model.Turtle;
 import model.Variable;
 import parser.CommandTreeNode;
-import parser.Parser;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
-	private Map<String, CommandTreeNode> previousCommands;
 
+	private Map<String, CommandTreeNode> previousCommands;
+	private TreeGenerator generator;
 	private TreeInterpreter interpreter;
 	
 	public void init(Stage s) {
@@ -33,8 +31,6 @@ public class Controller {
 		
 	}
 
-
-
 	/**
 	 * Parses command from front-end and sends the result to back-end
 	 * 
@@ -42,10 +38,10 @@ public class Controller {
 	 * @param language
 	 */
 	public void parseCommand(String input, String language) {
-		Parser pp = new Parser(language);
-		List<String> inputList = pp.parseList(input);
-		TreeGenerator tg = new TreeGenerator();
-		CommandTreeNode node = tg.createCommands(inputList);	
+		CommandTreeNode node = generator.createCommands(input, language);
+
+		// get method list if needed - up to back-end on how to deal with this case
+		generator.getMethodsList();
 		interpreter.interpretTree(node);
 //		if (interpreter.getVariableList() != null) {
 //			sceneUpdater.setListBind("Variable", variables.getList());
@@ -58,6 +54,7 @@ public class Controller {
 			previousCommands.put(name, prev);
 		}
 	}
+	
 //	/**
 //	 * Sends text to be outputted to the front-end from the back-end
 //	 * 
@@ -68,15 +65,10 @@ public class Controller {
 //	}
 
 
-	
-//
-//	public ObservableList<Variable> getVariableList() {
-//		return variables.getList();
-//	}
+
 
 	public Set<String> getPrevCommandList() {
 		return previousCommands.keySet();
 	}
-	
 
 }
