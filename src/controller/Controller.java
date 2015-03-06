@@ -1,8 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,7 +11,6 @@ import model.TreeInterpreter;
 import model.Turtle;
 import model.Variable;
 import parser.CommandTreeNode;
-import parser.Parser;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
 
@@ -22,7 +19,7 @@ public class Controller {
 	private Map<String, CommandTreeNode> commands;
 	private Turtle turtle;
 	private VariableList variables;
-
+	private TreeGenerator generator;
 	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
@@ -45,11 +42,8 @@ public class Controller {
 	 * @param language
 	 */
 	public void parseCommand(String input, String language) {
-		Parser pp = new Parser(language);
-		List<String> inputList = pp.parseList(input);
-		TreeGenerator tg = new TreeGenerator();
-		CommandTreeNode node = tg.createCommands(inputList);
-		interpreter = new TreeInterpreter(variables, turtle);		
+		CommandTreeNode node = generator.createCommands(input);
+		interpreter = new TreeInterpreter(variables, turtle);
 		interpreter.interpretTree(node);
 		if (variables != null) {
 			sceneUpdater.setListBind("Variable", variables.getList());

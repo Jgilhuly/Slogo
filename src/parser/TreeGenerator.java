@@ -1,30 +1,34 @@
 package parser;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import util.PatternMapper;
 import errors.NoInputFoundException;
+import errors.UnmatchedBracketException;
 
 public class TreeGenerator {
+	private static final int START_INDEX = 0;
 	protected static Map<Pattern, TreeGenerator> handlerMap;
 	protected static Map<String, String[]> parametersMap;
 	protected static List<String> myInput;
 	protected static int index;
+	protected static CommandTreeNode myRoot;
+	private static String language = "English";
+	protected static int ListStartCount = 0;
+	protected static int ListEndCount = 0;
+	
+	private static boolean makingUserInstruction = false;
+	private static ArrayList<String> methodList = new ArrayList<>();
 
-	private static final int PARAM_INDEX = 0;
-	private static final int TYPE_INDEX = 1;
-	private CommandTreeNode myRoot;
+
 	private boolean isMethod;
 
-	public TreeGenerator() {
-		parametersMap = createParametersMap();
-	}
 
 	/**
 	 * Create a CommandTreeNode that includes all the commands
@@ -33,35 +37,37 @@ public class TreeGenerator {
 	 *            : List of strings taken from the parser
 	 * @return: CommandTreeNode with commands
 	 */
-	public CommandTreeNode createCommands(List<String> input) {
+	public CommandTreeNode createCommands(String input) {
 		try {
 			handlerMap = createHandlerMap();
-			myInput = input;
+			myInput = Arrays.asList(input.split("\\s+"));
 			index = 0;
+			
 			String value = myInput.get(index);
-			myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0,
-					null);
-			int numParams = obtainNumParams(value);
-			printTestStatements(value, obtainSubCommand(value), null);
-			index++;
 			boolean to = value.equals("MakeUserInstruction");
 			if (to) {
 				isMethod = true;
 			}
-			for (int i = 0; i < numParams; i++) {
-				helper(myRoot);
-			}
-
+			helper(myRoot);
+			
 			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
+			
 			return myRoot;
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
+			if (ListStartCount != ListEndCount)
+				throw new UnmatchedBracketException();
 			throw new NoInputFoundException();
 		}
 	}
 
 	protected void helper(CommandTreeNode root) {
 		if (index >= myInput.size()) {
+			return;
+		}
+		if (index==START_INDEX) {
+			CommandCase startCase = new CommandCase("English");
+			startCase.initiate(root);
 			return;
 		}
 		for (Pattern pt : handlerMap.keySet()) {
@@ -98,7 +104,7 @@ public class TreeGenerator {
 				ret.put(p.getValue(), new ListStartCase());
 				break;
 			case "Command":
-				ret.put(p.getValue(), new CommandCase());
+				ret.put(p.getValue(), new CommandCase(language));
 				break;
 			case "Variable":
 				ret.put(p.getValue(), new VariableCase());
@@ -106,48 +112,16 @@ public class TreeGenerator {
 			case "Constant":
 				ret.put(p.getValue(), new ConstantCase());
 				break;
+			case "GroupStart":
+				ret.put(p.getValue(), new GroupStartCase());
+				break;
+			case "GroupEnd":
+				ret.put(p.getValue(), new GroupEndCase());
+				break;
+			default:
+				break;
 			}
 		}
 		return ret;
 	}
-
-	/**
-	 * Creates a map that maps the Key to the number of parameters and its
-	 * subcommand type
-	 * 
-	 * @return
-	 */
-	private HashMap<String, String[]> createParametersMap() {
-		ResourceBundle resources = ResourceBundle
-				.getBundle("parser/parameters");
-		Enumeration<String> paramKeys = resources.getKeys();
-		HashMap<String, String[]> newMap = new HashMap<>();
-
-		while (paramKeys.hasMoreElements()) {
-			String Key = paramKeys.nextElement();
-			newMap.put(Key, resources.getString(Key).split(","));
-		}
-		return newMap;
-	}
-
-	/**
-	 * Obtains the number of parameters given the key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	protected int obtainNumParams(String key) {
-		return Integer.parseInt(parametersMap.get(key)[PARAM_INDEX]);
-	}
-
-	/**
-	 * Obtains the subcommand type given the key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	protected String obtainSubCommand(String key) {
-		return "COMMAND." + parametersMap.get(key)[TYPE_INDEX];
-	}
-
 }
