@@ -32,6 +32,7 @@ public class MenuBarElement {
 	private ColorPicker backgroundColorPicker;
 	private ColorPicker penColorPicker;
 	private TurtleView tView;
+	private Pen myPen;
 	private String languages[];
 	private Stage myStage;
 	private String selectedLanguage;
@@ -39,10 +40,11 @@ public class MenuBarElement {
 	public MenuBarElement(ResourceBundle resourcesIn,
 			CanvasElement canvasPaneIn, IOElement ioPaneIn, TurtleView tViewIn,
 			Color backgroundColor, String[] languagesIn,
-			String defaultLanguageIn, Stage myStageIn) {
+			String defaultLanguageIn, Stage myStageIn, Pen penIn) {
 		myResources = resourcesIn;
 		canvasPane = canvasPaneIn;
 		tView = tViewIn;
+		myPen = penIn;
 		languages = languagesIn;
 		ioPane = ioPaneIn;
 		myStage = myStageIn;
@@ -55,7 +57,7 @@ public class MenuBarElement {
 		tb = new ToolBar();
 		backgroundColorPicker = makeColorPicker(backgroundColor,
 				e -> changeBackgroundColor());
-		penColorPicker = makeColorPicker(tView.getColor(),
+		penColorPicker = makeColorPicker(myPen.getColor(),
 				e -> changePenColor());
 
 		tb.getItems().addAll(makeMenuBar(),
@@ -122,7 +124,7 @@ public class MenuBarElement {
 	 * Handler for the pen color picker
 	 */
 	private void changePenColor() {
-		tView.setColor(penColorPicker.getValue());
+		myPen.setColor(penColorPicker.getValue());
 	}
 
 	/**

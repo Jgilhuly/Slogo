@@ -15,11 +15,13 @@ public class TPropertiesElement {
 	private VBox myBaseNode;
 	private ResourceBundle myResources;
 	private TurtleView tView;
+	private Pen myPen;
 
-	public TPropertiesElement(ResourceBundle resourcesIn, TurtleView tViewIn) {
+	public TPropertiesElement(ResourceBundle resourcesIn, TurtleView tViewIn, Pen penIn) {
 		tView = tViewIn;
 		myResources = resourcesIn;
-
+		myPen = penIn;
+		
 		init();
 	}
 
@@ -28,10 +30,10 @@ public class TPropertiesElement {
 		myBaseNode.setSpacing(5);
 
 		ToggleButton penUpDown = new ToggleButton(myResources.getString("PenDownToggle"));
-		penUpDown.setOnAction(e -> tView.setPen(penUpDown));
+		penUpDown.setOnAction(e -> myPen.setPenIsDown(!penUpDown.isSelected()));
 
 		ToggleButton turtleVisible = new ToggleButton(myResources.getString("TurtleHideToggle"));
-		turtleVisible.setOnAction(e -> tView.setTurtleVisible(turtleVisible));
+		turtleVisible.setOnAction(e -> tView.setTurtleVisible(turtleVisible.isSelected()));
 
 		myBaseNode.getChildren().addAll(penUpDown, turtleVisible, makeTurtleHeadingBox());
 	}

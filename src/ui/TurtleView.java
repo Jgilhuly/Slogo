@@ -7,15 +7,12 @@ import model.Turtle;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 
 public class TurtleView implements Observer {
 	private ImageView myImageView;
-	private Color myColor;
 	private Canvas myCanvas;
 	private double canvasCenterX;
 	private double canvasCenterY;
@@ -23,21 +20,20 @@ public class TurtleView implements Observer {
 	private double myWidthOffset;
 	private double myHeightOffset;
 	private StackPane myCanvasHolder;
-	private boolean penIsDown;
 	private boolean turtleIsVisible;
+	private Pen myPen;
 
-	public TurtleView(Image imageIn, Canvas canvasIn, Color colorIn,
-			double xIn, double yIn, StackPane canvasHolder) {
+	public TurtleView(Image imageIn, Canvas canvasIn,
+			double xIn, double yIn, StackPane canvasHolder, Pen penIn) {
 		myImageView = new ImageView();
 		myCanvas = canvasIn;
 		myImageView.setImage(imageIn);
 		myImageView.setX(xIn);
 		myImageView.setY(yIn);
-		myColor = colorIn;
-		penIsDown = true;
+		myPen = penIn;
 		turtleIsVisible = true;
 		myHeading = new SimpleDoubleProperty();
-		
+
 		canvasCenterX = myCanvas.getWidth() / 2;
 		canvasCenterY = myCanvas.getHeight() / 2;
 		myWidthOffset = canvasCenterX;
@@ -83,14 +79,8 @@ public class TurtleView implements Observer {
 	 *            : Turtle is visible
 	 */
 	private void draw(double x1, double y1, double x2, double y2,
-			boolean hasLine, boolean hasTurtle) {
-		myCanvas.getGraphicsContext2D().setStroke(myColor);
-		myCanvas.getGraphicsContext2D().setLineWidth(3);
-
-		// minus y since it's flipped in the canvas
-		if (hasLine && penIsDown)
-			myCanvas.getGraphicsContext2D().strokeLine(x1, y1,
-					canvasCenterX + x2, canvasCenterY - y2);
+			boolean hasTurtle) {
+		myPen.draw(x1, y1, x2, y2, hasTurtle);
 		// move image
 		myImageView.setTranslateX(x2);
 		myImageView.setTranslateY(-y2);
@@ -110,13 +100,15 @@ public class TurtleView implements Observer {
 	 */
 	public void update(Observable o, Object arg) {
 		Turtle tModel = (Turtle) o;
+//		myPen.setPenIsDown(tModel.getLine());
+		
 		double newX = tModel.getX();
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
 		myHeading.set(newHeading);
 		if (newX != getCenterX() || newY != getCenterY()) {
 			draw(myImageView.getX(), myImageView.getY(), newX, newY,
-					tModel.getLine(), tModel.getVisibility());
+					tModel.getVisibility());
 		}
 		if (tModel.getCleared()) {
 			myCanvas.getGraphicsContext2D().clearRect(0, 0,
@@ -145,14 +137,6 @@ public class TurtleView implements Observer {
 				- myHeightOffset;
 	}
 
-	public Color getColor() {
-		return myColor;
-	}
-
-	public void setColor(Color color) {
-		myColor = color;
-	}
-
 	public ImageView getImageView() {
 		return myImageView;
 	}
@@ -174,12 +158,8 @@ public class TurtleView implements Observer {
 		myCanvasHolder.getChildren().add(myImageView);
 	}
 
-	public void setPen(ToggleButton penUpDown) {
-		penIsDown = !penUpDown.isSelected();
-	}
-
-	public void setTurtleVisible(ToggleButton turtleVisible) {
-		turtleIsVisible = !turtleVisible.isSelected();
+	public void setTurtleVisible(boolean invisible) {
+		turtleIsVisible = !invisible;
 	}
 
 	public DoubleProperty getHeading() {

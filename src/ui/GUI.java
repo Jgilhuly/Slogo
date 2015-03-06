@@ -24,6 +24,7 @@ public class GUI {
 	private BorderPane myRoot;
 	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
+	private Pen myPen;
 	
 	private IOElement ioPane;
 	private CanvasElement canvasPane;
@@ -61,12 +62,13 @@ public class GUI {
 		infoPane = new InfoElement();
 		myRoot.setRight(infoPane.getBaseNode());
 		
+		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
 		
-		propertiesPane = new TPropertiesElement(myResources, tView);
+		propertiesPane = new TPropertiesElement(myResources, tView, myPen);
 		myRoot.setLeft(propertiesPane.getMyBaseNode());
 		
-		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView, DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage);
+		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView, DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage, myPen);
 		myRoot.setTop(menuPane.getBaseNode());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
@@ -84,8 +86,8 @@ public class GUI {
 	private TurtleView makeTurtleView(String imagePath) {
 		Image turtleImage = new Image(GUI.class.getResourceAsStream(imagePath));
 
-		return new TurtleView(turtleImage, canvasPane.getCanvas(), Color.BLUE,
-				canvasPane.getCanvas().getWidth() / 2, canvasPane.getCanvas().getHeight() / 2, canvasPane.getBaseNode());
+		return new TurtleView(turtleImage, canvasPane.getCanvas(),
+				canvasPane.getCanvas().getWidth() / 2, canvasPane.getCanvas().getHeight() / 2, canvasPane.getBaseNode(), myPen);
 	}
 
 	/**
