@@ -1,13 +1,13 @@
 package command.math;
 
-import java.util.List;
 import command.Command;
 
 public class SumCommand extends Command {
-    public SumCommand(double hi, double bye){
-        super(hi, bye);
+    public SumCommand(double op1, double op2){
+        super(op1, op2);
     }
-	public double calculateValue(List<Object> param) {
-		return double1 + double2;
-	}
+
+    public double calculateValue () {
+        return double1 + double2;
+    }
 }
