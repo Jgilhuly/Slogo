@@ -26,6 +26,8 @@ public class Controller {
 	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
+		s.setWidth(1000);
+		s.setHeight(1000);
 		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
@@ -52,7 +54,7 @@ public class Controller {
 		interpreter = new TreeInterpreter(variables, turtle);		
 		interpreter.interpretTree(node);
 		if (variables != null) {
-			sceneUpdater.setListBind("Variable", variables.getList());
+//			sceneUpdater.setListBind("Variable", variables.getList());
 		}
 		setOutputText(Double.toString(node.getValue()));
 	}

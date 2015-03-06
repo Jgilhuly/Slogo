@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import model.Turtle;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -12,14 +13,16 @@ import javafx.scene.paint.Color;
 
 public class TurtleView implements Observer {
 	private ImageView myImageView;
-	private Canvas myCanvas;
 	private Color myColor;
+	private Canvas myCanvas;
 	private double canvasCenterX;
 	private double canvasCenterY;
 	private double myHeading; // in degrees, 0 is north
 	private double myWidthOffset;
 	private double myHeightOffset;
 	private StackPane myCanvasHolder;
+	private boolean penIsDown;
+	private boolean turtleIsVisible;
 
 	public TurtleView(Image imageIn, Canvas canvasIn, Color colorIn,
 			double xIn, double yIn, StackPane canvasHolder) {
@@ -29,7 +32,9 @@ public class TurtleView implements Observer {
 		myImageView.setX(xIn);
 		myImageView.setY(yIn);
 		myColor = colorIn;
-
+		penIsDown = true;
+		turtleIsVisible = true;
+		
 		canvasCenterX = myCanvas.getWidth() / 2;
 		canvasCenterY = myCanvas.getHeight() / 2;
 		myWidthOffset = canvasCenterX;
@@ -80,7 +85,7 @@ public class TurtleView implements Observer {
 		myCanvas.getGraphicsContext2D().setLineWidth(3);
 
 		// minus y since it's flipped in the canvas
-		if (hasLine)
+		if (hasLine && penIsDown)
 			myCanvas.getGraphicsContext2D().strokeLine(x1, y1,
 					canvasCenterX + x2, canvasCenterY - y2);
 		// move image
@@ -93,7 +98,7 @@ public class TurtleView implements Observer {
 
 		// rotate image
 		myImageView.setRotate(myHeading);
-		myImageView.setVisible(hasTurtle);
+		myImageView.setVisible(hasTurtle && turtleIsVisible);
 	}
 
 	@Override
@@ -164,6 +169,14 @@ public class TurtleView implements Observer {
 		myImageView.setX(oldX);
 		myImageView.setY(oldY);
 		myCanvasHolder.getChildren().add(myImageView);
+	}
+
+	public void setPen(ToggleButton penUpDown) {
+		penIsDown = !penUpDown.isSelected();
+	}
+
+	public void setTurtleVisible(ToggleButton turtleVisible) {
+		turtleIsVisible = !turtleVisible.isSelected();
 	}
 
 }

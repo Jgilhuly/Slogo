@@ -1,29 +1,15 @@
 package ui;
 
 
-import java.io.File;
 import java.util.*;
 
-import model.Variable;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GUI {
@@ -39,14 +25,11 @@ public class GUI {
 	private SceneUpdater mySceneUpdater;
 	private TurtleView tView;
 	
-	IOElement ioPane;
-	CanvasElement canvasPane;
-	InfoElement infoPane;
-	MenuBarElement menuPane;
-
-	private TableView prevCommandsTable;
-	private TableView variablesTable;
-	private TableView userCommandsTable;
+	private IOElement ioPane;
+	private CanvasElement canvasPane;
+	private InfoElement infoPane;
+	private MenuBarElement menuPane;
+	private TPropertiesElement propertiesPane;
 	
 	private String DEFAULT_LANG = "English";
 	private String[] languages = { "Chinese", "English", "French", "German",
@@ -79,6 +62,9 @@ public class GUI {
 		myRoot.setRight(infoPane.getBaseNode());
 		
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
+		
+		propertiesPane = new TPropertiesElement(myResources, tView);
+		myRoot.setLeft(propertiesPane.getMyBaseNode());
 		
 		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView, DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage);
 		myRoot.setTop(menuPane.getBaseNode());
