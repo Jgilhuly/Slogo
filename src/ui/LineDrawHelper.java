@@ -1,7 +1,8 @@
 package ui;
 
 import javafx.scene.canvas.Canvas;
+import javafx.util.Pair;
 
 public interface LineDrawHelper {
-	public void drawLine(Canvas canvas, double x1, double y1, double x2, double y2);
+	public Pair<Double, Double> drawLine(Canvas canvas, double x1, double y1, double x2, double y2);
 }

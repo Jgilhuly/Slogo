@@ -10,6 +10,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.util.Pair;
 
 public class TurtleView implements Observer {
 	private ImageView myImageView;
@@ -80,14 +81,19 @@ public class TurtleView implements Observer {
 	 */
 	private void draw(double x1, double y1, double x2, double y2,
 			boolean hasTurtle) {
-		myPen.draw(x1, y1, x2, y2, hasTurtle);
+		Pair<Double, Double> newCoordinates = myPen.draw(x1, y1, x2, y2, hasTurtle);
 		// move image
-		myImageView.setTranslateX(x2);
-		myImageView.setTranslateY(-y2);
+//		myImageView.setTranslateX(x2);
+//		myImageView.setTranslateY(-y2);
+		myImageView.setTranslateX(newCoordinates.getKey());
+		myImageView.setTranslateY(newCoordinates.getValue());
 
 		// set values - different coordinates
-		myImageView.setX(canvasCenterX + x2);
-		myImageView.setY(canvasCenterY - y2);
+		myImageView.setX(newCoordinates.getKey());
+		myImageView.setY(newCoordinates.getValue());
+		
+		System.out.println(myImageView.getX());
+		System.out.println(myImageView.getY());
 
 		// rotate image
 		myImageView.setRotate(myHeading.doubleValue());
