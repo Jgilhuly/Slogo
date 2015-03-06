@@ -1,6 +1,6 @@
+package main;
 
 
-import controller.WorkspaceManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

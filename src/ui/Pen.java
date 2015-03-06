@@ -11,14 +11,16 @@ public class Pen {
 	private double canvasCenterY;
 	private LineDrawHelper artists[] = {new NormalLineDrawHelper(), new DashedLineDrawHelper(), new DottedLineDrawHelper()};
 	private LineDrawHelper myArtist;
+	private GUI myGui;
 
-	public Pen(Canvas canvasIn, Color startingColor, boolean penIsDownIn) {
+	public Pen(Canvas canvasIn, Color startingColor, boolean penIsDownIn, GUI myGuiIn) {
 		myCanvas = canvasIn;
 		myColor = startingColor;
 		penIsDown = penIsDownIn;
 		canvasCenterX = myCanvas.getWidth() / 2;
 		canvasCenterY = myCanvas.getHeight() / 2;
 		myArtist = artists[0];
+		myGui = myGuiIn;
 	}
 
 	public void draw(double x1, double y1, double x2, double y2,
@@ -52,7 +54,5 @@ public class Pen {
 			myArtist = artists[1];
 		if (ls.equals("dotted"))
 			myArtist = artists[2];
-		
-		System.out.println(ls);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import main.WorkspaceManager;
 import model.TreeInterpreter;
 import model.Turtle;
 import model.Variable;

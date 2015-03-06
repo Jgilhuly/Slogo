@@ -20,7 +20,7 @@ public class TPropertiesElement {
 	private TurtleView tView;
 	private Pen myPen;
 
-	public TPropertiesElement(ResourceBundle resourcesIn, TurtleView tViewIn,
+	public TPropertiesElement(final ResourceBundle resourcesIn, TurtleView tViewIn,
 			Pen penIn) {
 		tView = tViewIn;
 		myResources = resourcesIn;

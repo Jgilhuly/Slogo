@@ -1,6 +1,8 @@
-package controller;
+package main;
+
 
 import javafx.stage.Stage;
+import controller.Controller;
 
 
 public class WorkspaceManager {

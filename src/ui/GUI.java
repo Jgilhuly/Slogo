@@ -62,7 +62,7 @@ public class GUI {
 		infoPane = new InfoElement();
 		myRoot.setRight(infoPane.getBaseNode());
 
-		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
+		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true, this);
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
 
 		propertiesPane = new TPropertiesElement(myResources, tView, myPen);

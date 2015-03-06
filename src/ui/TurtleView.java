@@ -100,7 +100,6 @@ public class TurtleView implements Observer {
 	 */
 	public void update(Observable o, Object arg) {
 		Turtle tModel = (Turtle) o;
-//		myPen.setPenIsDown(tModel.getLine());
 		
 		double newX = tModel.getX();
 		double newY = tModel.getY();
