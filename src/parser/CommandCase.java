@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 import errors.CommandNotFoundException;
 
-public class CommandCase extends TreeGenerator {
+public class CommandCase extends TreeGenerator implements Cases {
 	private Map<String, String[]> parametersMap;
 	private static final int PARAM_INDEX = 0;
 	private static final int TYPE_INDEX = 1;
@@ -40,7 +40,7 @@ public class CommandCase extends TreeGenerator {
 	 *
 	 * @param root
 	 */
-	protected void helper(CommandTreeNode root) {
+	public void helper(CommandTreeNode root) {
 		String value = useResourceBundle(myInput.get(index));
 		index++;
 		if (makingUserInstruction) {

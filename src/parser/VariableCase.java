@@ -1,9 +1,9 @@
 package parser;
 
-public class VariableCase extends TreeGenerator{
+public class VariableCase extends TreeGenerator implements Cases{
 
 	@Override
-	protected void helper(CommandTreeNode root) {
+	public void helper(CommandTreeNode root) {
 		// TODO Auto-generated method stub
 		String value = myInput.get(index);
 		CommandTreeNode temp = new CommandTreeNode("VARIABLE", value, 0, null);

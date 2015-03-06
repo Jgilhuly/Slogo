@@ -1,8 +1,8 @@
 package parser;
 
-public class ConstantCase extends TreeGenerator{
+public class ConstantCase extends TreeGenerator implements Cases{
 	@Override
-	protected void helper(CommandTreeNode root) {
+	public void helper(CommandTreeNode root) {
 		// TODO Auto-generated method stub
 		String value = myInput.get(index);
 		CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT",

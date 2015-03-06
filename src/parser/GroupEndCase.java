@@ -1,5 +1,7 @@
 package parser;
 
-public class GroupEndCase extends TreeGenerator{
+public class GroupEndCase extends TreeGenerator implements Cases{
+	public void helper(CommandTreeNode root) {
 
+	}
 }

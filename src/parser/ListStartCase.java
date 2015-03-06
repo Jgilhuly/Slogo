@@ -1,10 +1,10 @@
 package parser;
 
-public class ListStartCase extends TreeGenerator {
+public class ListStartCase extends TreeGenerator implements Cases{
 	private int bracketCount = 0;
 	
 	@Override
-	protected void helper(CommandTreeNode root) {
+	public void helper(CommandTreeNode root) {
 		String value = myInput.get(index);
 		ListStartCount++;
 		CommandTreeNode temp = new CommandTreeNode("BRACKET", value + "-"
