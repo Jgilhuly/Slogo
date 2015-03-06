@@ -13,6 +13,10 @@ public class InfoElement {
 	private List<TableView<String>> myTables;
 
 	public InfoElement() {
+		init();
+	}
+
+	private void init() {
 		myBaseNode = new VBox();
 		myBaseNode.setSpacing(5);
 

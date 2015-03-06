@@ -20,7 +20,10 @@ public class IOElement {
 	
 	public IOElement(ResourceBundle resourceBundleIn, GUI myGui) {
 		myResources = resourceBundleIn;
-		
+		init(myGui);
+	}
+
+	private void init(GUI myGui) {
 		myNode = new VBox();
 
 		outputField = new Text();

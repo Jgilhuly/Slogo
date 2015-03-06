@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import model.Turtle;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -17,7 +19,7 @@ public class TurtleView implements Observer {
 	private Canvas myCanvas;
 	private double canvasCenterX;
 	private double canvasCenterY;
-	private double myHeading; // in degrees, 0 is north
+	private DoubleProperty myHeading; // in degrees, 0 is north
 	private double myWidthOffset;
 	private double myHeightOffset;
 	private StackPane myCanvasHolder;
@@ -34,6 +36,7 @@ public class TurtleView implements Observer {
 		myColor = colorIn;
 		penIsDown = true;
 		turtleIsVisible = true;
+		myHeading = new SimpleDoubleProperty();
 		
 		canvasCenterX = myCanvas.getWidth() / 2;
 		canvasCenterY = myCanvas.getHeight() / 2;
@@ -97,7 +100,7 @@ public class TurtleView implements Observer {
 		myImageView.setY(canvasCenterY - y2);
 
 		// rotate image
-		myImageView.setRotate(myHeading);
+		myImageView.setRotate(myHeading.doubleValue());
 		myImageView.setVisible(hasTurtle && turtleIsVisible);
 	}
 
@@ -110,7 +113,7 @@ public class TurtleView implements Observer {
 		double newX = tModel.getX();
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
-		myHeading = newHeading;
+		myHeading.set(newHeading);
 		if (newX != getCenterX() || newY != getCenterY()) {
 			draw(myImageView.getX(), myImageView.getY(), newX, newY,
 					tModel.getLine(), tModel.getVisibility());
@@ -177,6 +180,10 @@ public class TurtleView implements Observer {
 
 	public void setTurtleVisible(ToggleButton turtleVisible) {
 		turtleIsVisible = !turtleVisible.isSelected();
+	}
+
+	public DoubleProperty getHeading() {
+		return myHeading;
 	}
 
 }

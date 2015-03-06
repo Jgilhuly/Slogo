@@ -26,8 +26,6 @@ public class Controller {
 	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
-		s.setWidth(1000);
-		s.setHeight(1000);
 		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();

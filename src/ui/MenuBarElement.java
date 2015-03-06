@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -18,11 +17,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -52,6 +48,10 @@ public class MenuBarElement {
 		myStage = myStageIn;
 		selectedLanguage = defaultLanguageIn;
 
+		init(backgroundColor);
+	}
+
+	private void init(Color backgroundColor) {
 		tb = new ToolBar();
 		backgroundColorPicker = makeColorPicker(backgroundColor,
 				e -> changeBackgroundColor());
