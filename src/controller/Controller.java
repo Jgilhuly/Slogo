@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import model.*;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import main.WorkspaceManager;
 import model.TreeInterpreter;
 import model.Turtle;
 import model.Variable;
+import model.VariableList;
 import parser.CommandTreeNode;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
@@ -21,7 +22,12 @@ public class Controller {
 	private VariableList variables;
 	private TreeGenerator generator = new TreeGenerator();
 	private TreeInterpreter interpreter;
+	private WorkspaceManager myManager;
 
+	public Controller (WorkspaceManager wm) {
+		myManager = wm;
+	}
+	
 	public void init(Stage s) {
 		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
@@ -51,7 +57,7 @@ public class Controller {
 		interpreter = new TreeInterpreter(variables, turtle);
 		interpreter.interpretTree(node);
 		if (variables != null) {
-			sceneUpdater.setListBind("Variable", variables.getList());
+//			sceneUpdater.setListBind("Variable", variables.getList());
 		}
 		setOutputText(Double.toString(node.getValue()));
 	}
@@ -75,6 +81,10 @@ public class Controller {
 
 	public Set<String> getPrevCommandList() {
 		return commands.keySet();
+	}
+	
+	public void createNewWorkspace() {
+		myManager.createWorkspace(null);
 	}
 
 	// public void play() {
