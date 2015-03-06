@@ -75,8 +75,8 @@ public class GUI {
 		canvasPane = new CanvasElement(DEFAULT_BACKGROUND, myStage.getWidth(), myStage.getHeight());
 		myRoot.setCenter(canvasPane.getBaseNode());
 		
-//		infoPane = new IOElement(myResources, this);
-		myRoot.setRight(makeInfoPane());
+		infoPane = new InfoElement();
+		myRoot.setRight(infoPane.getBaseNode());
 		
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
 		
@@ -142,96 +142,21 @@ public class GUI {
 		return tView;
 	}	
 	
-	/**
-	 * Makes the right side info panel, which contains the tables of previous
-	 * commands, user commands, and user variables
-	 * 
-	 * @return
-	 */
-	private Node makeInfoPane() {
-		VBox result = new VBox();
-		result.setSpacing(5);
 
-		DisplayPanel p = new DisplayPanel();
-
-		ArrayList<String> cols = new ArrayList<String>();
-
-		cols = new ArrayList<String>();
-		cols.add("Commands");
-		prevCommandsTable = makeTable("Previous Commands", cols);
-		result.getChildren().add(prevCommandsTable);
-
-		cols = new ArrayList<String>();
-		cols.add("Names");
-		cols.add("Values");
-		variablesTable = makeTable("Variables", cols);
-		result.getChildren().add(variablesTable);
-
-		cols = new ArrayList<String>();
-		cols.add("Commands");
-		userCommandsTable = makeTable("User Commands", cols);
-		result.getChildren().add(userCommandsTable);
-		return result;
-	}
-	public void bindTable(String type, ObservableList<Variable> l) {
-		if (type.equals("Variable")) {
-			variablesTable.setItems(l);
+	public void bindTable(String type, ObservableList<String> l) {
+		List<TableView<String>> tables = infoPane.getTables();
+		if (type.equals("Commands")) {
+			tables.get(1).setItems(l);
 		}  
-	}
-
-	private TableView makeTable(String title, List<String> columnNames) {
-		// VBox labelAndTable = new VBox();
-		// labelAndTable.setSpacing(5);
-		//
-		Label label = new Label(title);
-		label.setFont(new Font("Arial", 14));
-
-		TableView table = new TableView();
-
-		for (String s : columnNames) {
-			table.getColumns().add((new TableColumn(s)));
+		else if (type.equals("User Commands")) {
+			tables.get(2).setItems(l);
 		}
-
-		// labelAndTable.getChildren().addAll(label, table);
-		return table;
 	}
+
 	
 	/**
 	 * Updates the right side info tables
 	 */
-
 	private void addHistory() {
-		// ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-		//
-		// TableColumn<String, String> tc = new
-		// TableColumn<>("Previous Commands");
-		// tc.setCellValueFactory(e -> new SimpleStringProperty(inputField
-		// .getText()));
-		//
-		// cols.add(tc);
-		//
-		// // table.getColumns().addAll(cols);
-		//
-		// inputField.getText();
-		//
-		TableColumn<Variable, String> tc = (TableColumn) variablesTable.getColumns().get(0);
-		
-		for (Variable s : mySceneUpdater.getVariableList()) {
-			tc.setCellValueFactory(new PropertyValueFactory("name"));
-			
-		}
-		
-		TableColumn<Variable, Double> tc2 = (TableColumn) variablesTable.getColumns().get(1);
-		for (Variable s : mySceneUpdater.getVariableList()) {
-			tc2.setCellValueFactory(new PropertyValueFactory("value"));
-		}
-//
-//		for (String s : mySceneUpdater.getPrevCommandList()) {
-//			System.out.println(s);
-//		}
-//		
-//		for (Variable v : mySceneUpdater.getVariableList()) {
-//			System.out.println(v.getName() + " - " + v.getValue());
-//		}
 	}
 }

@@ -52,7 +52,7 @@ public class SceneUpdater implements Observer {
 	public ObservableList<Variable> getVariableList() {
 		return myController.getVariableList();
 	}
-	public void setListBind(String type, ObservableList<Variable> l) {
+	public void setListBind(String type, ObservableList<String> l) {
 		myGUI.bindTable(type, l);
 	}
 	public Set<String> getPrevCommandList() {
