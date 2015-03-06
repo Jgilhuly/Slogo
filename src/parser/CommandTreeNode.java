@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-//http://penguin.ewu.edu/class/class/cscd300/Topic/ExpressionTree/ExpressionTree.java
-
-// important : http://math.hws.edu/javanotes/c9/s4.html
 public class CommandTreeNode {
 	private String myType;
 	private String myName;
@@ -20,7 +17,7 @@ public class CommandTreeNode {
 		this.myChildren = Children;
 		myChildren = new ArrayList<>();
 	}
-
+	
 	public void add(CommandTreeNode newNode) {
 		myChildren.add(newNode);
 	}
