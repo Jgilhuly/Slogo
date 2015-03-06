@@ -1,14 +1,11 @@
 package parser;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.ResourceBundle;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.AbstractMap.SimpleEntry;
 
+import util.PatternMapper;
 import errors.CommandNotFoundException;
 import errors.UnmatchedBracketException;
 
@@ -21,8 +18,9 @@ public class Parser {
 	private ArrayList<String> methodList = new ArrayList<>();
 
 	public Parser(String language) {
-		languagePatternList = makePatterns(language);
-		syntaxPatternList = makePatterns("Syntax");
+		languagePatternList = PatternMapper.makePatterns(language);
+		syntaxPatternList = PatternMapper.makePatterns("Syntax");
+		System.out.println(syntaxPatternList);
 	}
 
 	/**
@@ -58,20 +56,6 @@ public class Parser {
 		if (ListStartCount != ListEndCount)
 			throw new UnmatchedBracketException();
 		return ret;
-	}
-
-	private List<Entry<String, Pattern>> makePatterns(String fileName) {
-		ResourceBundle resources = ResourceBundle
-				.getBundle("resources.languages/" + fileName);
-		List<Entry<String, Pattern>> patterns = new ArrayList<>();
-		Enumeration<String> iter = resources.getKeys();
-		while (iter.hasMoreElements()) {
-			String key = iter.nextElement();
-			String regex = resources.getString(key);
-			patterns.add(new SimpleEntry<String, Pattern>(key, Pattern.compile(
-					regex, Pattern.CASE_INSENSITIVE)));
-		}
-		return patterns;
 	}
 
 	private String useResourceBundle(String input) {
