@@ -2,6 +2,7 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.AbstractMap.SimpleEntry;
@@ -21,5 +22,23 @@ public class PatternMapper {
 					regex, Pattern.CASE_INSENSITIVE)));
 		}
 		return patterns;
+	}
+	/**
+	 * Creates a map that maps the Key to the number of parameters and its
+	 * subcommand type
+	 * 
+	 * @return
+	 */
+	public static HashMap<String, String[]> createParametersMap() {
+		ResourceBundle resources = ResourceBundle
+				.getBundle("parser/parameters");
+		Enumeration<String> paramKeys = resources.getKeys();
+		HashMap<String, String[]> newMap = new HashMap<>();
+
+		while (paramKeys.hasMoreElements()) {
+			String Key = paramKeys.nextElement();
+			newMap.put(Key, resources.getString(Key).split(","));
+		}
+		return newMap;
 	}
 }
