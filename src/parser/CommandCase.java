@@ -1,5 +1,6 @@
 package parser;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -8,22 +9,23 @@ import java.util.ResourceBundle;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import util.PatternMapper;
 import errors.CommandNotFoundException;
 
 public class CommandCase extends TreeGenerator {
-	private List<Entry<String, Pattern>> languagePatternList;
-	private static Map<String, String[]> parametersMap;
+	private Map<String, String[]> parametersMap;
 	private static final int PARAM_INDEX = 0;
 	private static final int TYPE_INDEX = 1;
+	private boolean makingUserInstruction;
+	private List<String> methodList = new ArrayList<>();
 
-	public CommandCase(String language) {
-		languagePatternList = PatternMapper.makePatterns(language);
+	public CommandCase() {
 		parametersMap = createParametersMap();
 	}
 
-	public void initiate(CommandTreeNode root) {
+	public void initiate(CommandTreeNode root, String language) {
 		String value = useResourceBundle(myInput.get(index));
+		makingUserInstruction = value.equals("MakeUserInstruction");
+
 		myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0, null);
 		int numParams = obtainNumParams(value);
 		printTestStatements(value, obtainSubCommand(value), null);
@@ -40,6 +42,12 @@ public class CommandCase extends TreeGenerator {
 	 */
 	protected void helper(CommandTreeNode root) {
 		String value = useResourceBundle(myInput.get(index));
+		index++;
+		if (makingUserInstruction) {
+			makingUserInstruction = false;
+			makingInstructionsCase(root, value);
+			return;
+		}
 		int numParams = obtainNumParams(value);
 
 		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
@@ -48,11 +56,7 @@ public class CommandCase extends TreeGenerator {
 
 		printTestStatements(value, temp.getType(), root.getName());
 
-		boolean repeat = value.equals("Repeat");
-
-		index++;
-
-		if (repeat) {
+		if (value.equals("Repeat")) {
 			while (!myInput.get(index).equals("]")) {
 				super.helper(temp);
 			}
@@ -63,17 +67,24 @@ public class CommandCase extends TreeGenerator {
 		}
 	}
 
+	private void makingInstructionsCase(CommandTreeNode root, String value) {
+		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
+				value, 0, null);
+		root.add(temp);
+		printTestStatements(value, temp.getType(), root.getName());
+		super.helper(root);
+	}
+
 	private String useResourceBundle(String input) {
 		for (Entry<String, Pattern> p : languagePatternList) {
 			if (p.getValue().matcher(input).matches())
 				return p.getKey();
 		}
 		// if making procedure, return method call
-		// if (makingUserInstruction) {
-		// makingUserInstruction = false;
-		// methodList.add(input);
-		// return input;
-		// }
+		if (makingUserInstruction) {
+			methodList.add(input);
+			return input;
+		}
 		// if none found
 		throw new CommandNotFoundException(input);
 	}
@@ -114,6 +125,15 @@ public class CommandCase extends TreeGenerator {
 	 * @return
 	 */
 	protected String obtainSubCommand(String key) {
-		return "COMMAND." + parametersMap.get(key)[TYPE_INDEX];
+		try {
+			return "COMMAND." + parametersMap.get(key)[TYPE_INDEX];
+		} catch (NullPointerException e) {
+			return "COMMAND.USER";
+		}
+
+	}
+	
+	public List<String> getMethodsList() {
+		return methodList;
 	}
 }

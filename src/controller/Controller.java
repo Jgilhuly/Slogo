@@ -19,7 +19,7 @@ public class Controller {
 	private Map<String, CommandTreeNode> commands;
 	private Turtle turtle;
 	private VariableList variables;
-	private TreeGenerator generator;
+	private TreeGenerator generator = new TreeGenerator();
 	private TreeInterpreter interpreter;
 
 	public void init(Stage s) {
@@ -31,9 +31,9 @@ public class Controller {
 		linkTurtles(turtle);
 	}
 
-//	public void syncCommandandVariableLists() {
-//		variables = new SimpleListProperty<Variable>();
-//	}
+	// public void syncCommandandVariableLists() {
+	// variables = new SimpleListProperty<Variable>();
+	// }
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -42,7 +42,12 @@ public class Controller {
 	 * @param language
 	 */
 	public void parseCommand(String input, String language) {
-		CommandTreeNode node = generator.createCommands(input);
+		CommandTreeNode node = generator.createCommands(input, language);
+
+		// get method list if needed - up to back-end on how to deal with this
+		// case
+		generator.getMethodsList();
+
 		interpreter = new TreeInterpreter(variables, turtle);
 		interpreter.interpretTree(node);
 		if (variables != null) {
@@ -63,8 +68,6 @@ public class Controller {
 	public void linkTurtles(Turtle turtleModel) {
 		turtleModel.addObserver(sceneUpdater.getTurtleView());
 	}
-	
-	
 
 	public ObservableList<Variable> getVariableList() {
 		return variables.getList();
@@ -73,7 +76,6 @@ public class Controller {
 	public Set<String> getPrevCommandList() {
 		return commands.keySet();
 	}
-	
 
 	// public void play() {
 	// frame = addKeyFrame(fps);

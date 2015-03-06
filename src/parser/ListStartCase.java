@@ -2,9 +2,7 @@ package parser;
 
 public class ListStartCase extends TreeGenerator {
 	private int bracketCount = 0;
-	public ListStartCase() {
-		super();
-	}
+	
 	@Override
 	protected void helper(CommandTreeNode root) {
 		String value = myInput.get(index);

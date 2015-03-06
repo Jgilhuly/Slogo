@@ -1,6 +1,5 @@
 package parser;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,21 +13,15 @@ import errors.UnmatchedBracketException;
 
 public class TreeGenerator {
 	private static final int START_INDEX = 0;
-	protected static Map<Pattern, TreeGenerator> handlerMap;
-	protected static Map<String, String[]> parametersMap;
+	private static Map<Pattern, TreeGenerator> handlerMap;
+	protected static List<Entry<String, Pattern>> languagePatternList;
 	protected static List<String> myInput;
 	protected static int index;
 	protected static CommandTreeNode myRoot;
-	private static String language = "English";
+	private static String language;
 	protected static int ListStartCount = 0;
 	protected static int ListEndCount = 0;
-	
-	private static boolean makingUserInstruction = false;
-	private static ArrayList<String> methodList = new ArrayList<>();
-
-
-	private boolean isMethod;
-
+	private static CommandCase CommandCase;
 
 	/**
 	 * Create a CommandTreeNode that includes all the commands
@@ -37,21 +30,17 @@ public class TreeGenerator {
 	 *            : List of strings taken from the parser
 	 * @return: CommandTreeNode with commands
 	 */
-	public CommandTreeNode createCommands(String input) {
+	public CommandTreeNode createCommands(String input, String language) {
 		try {
 			handlerMap = createHandlerMap();
+			languagePatternList = PatternMapper.makePatterns(language);
 			myInput = Arrays.asList(input.split("\\s+"));
 			index = 0;
-			
-			String value = myInput.get(index);
-			boolean to = value.equals("MakeUserInstruction");
-			if (to) {
-				isMethod = true;
-			}
+
 			helper(myRoot);
-			
+
 			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
-			
+
 			return myRoot;
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
@@ -65,9 +54,8 @@ public class TreeGenerator {
 		if (index >= myInput.size()) {
 			return;
 		}
-		if (index==START_INDEX) {
-			CommandCase startCase = new CommandCase("English");
-			startCase.initiate(root);
+		if (index == START_INDEX) {
+			CommandCase.initiate(root, language);
 			return;
 		}
 		for (Pattern pt : handlerMap.keySet()) {
@@ -79,20 +67,13 @@ public class TreeGenerator {
 		}
 	}
 
-	/**
-	 * Just to print out the tree and its parent node for testing
-	 * 
-	 * @param value
-	 * @param type
-	 * @param name
-	 */
 	protected void printTestStatements(String value, String type, String name) {
 		System.out.println(value);
 		System.out.println("Type is: " + type);
 		System.out.println("Root value is: " + name);
 		System.out.println();
 	}
-
+	
 	private Map<Pattern, TreeGenerator> createHandlerMap() {
 		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper
 				.makePatterns("Syntax");
@@ -104,7 +85,8 @@ public class TreeGenerator {
 				ret.put(p.getValue(), new ListStartCase());
 				break;
 			case "Command":
-				ret.put(p.getValue(), new CommandCase(language));
+				CommandCase = new CommandCase();
+				ret.put(p.getValue(), CommandCase);
 				break;
 			case "Variable":
 				ret.put(p.getValue(), new VariableCase());
@@ -123,5 +105,9 @@ public class TreeGenerator {
 			}
 		}
 		return ret;
+	}
+	
+	public List<String> getMethodsList() {
+		return CommandCase.getMethodsList();
 	}
 }
