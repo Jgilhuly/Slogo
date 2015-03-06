@@ -35,6 +35,7 @@ public class TreeGenerator implements TreeWrapper {
 			myInput = Arrays.asList(input.split("\\s+"));
 			this.language = language;
 			handlerMap = createHandlerMap();
+			index = 0;
 			CommandCase.initiate(language);
 			
 			System.out.println("FINAL ROOT VALUE IS: "
