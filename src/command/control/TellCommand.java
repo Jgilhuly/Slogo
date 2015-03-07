@@ -23,9 +23,10 @@ public class TellCommand extends Command{
     
     public double calculateValue () {
         for (int i = 0 ; i < turtles.size() ; i++){
-            if(turtles.get(i).getValue() > (double) tree.getTurtleList().size() - 1){
-                tree.getTurtleList().add(new Turtle());
-            }
+//            if(turtles.get(i).getValue() > (double) tree.getTurtleList().size() - 1){
+//                tree.getTurtleList().add(new Turtle());
+//            }
+            //this part wouldn't work unless access to front-end is granted, will fix?
             tree.setActiveTurtleIndex((int) turtles.get(i).getValue());
         }
         return (double) tree.getTurtleList().size();

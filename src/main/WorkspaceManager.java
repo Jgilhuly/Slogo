@@ -3,7 +3,11 @@ package main;
 import javafx.stage.Stage;
 import controller.Controller;
 
-
+/**
+ * A class used to represent one workspace, a sub-program with unique configurations, variables, and commands
+ * @author OWNER
+ *
+ */
 public class WorkspaceManager {
 
     public WorkspaceManager () {

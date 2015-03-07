@@ -17,7 +17,7 @@ public class IDCommand extends Command {
     }
     
     public double calculateValue () {
-        return (double) tree.getTurtleList().size();
+        return tree.getActiveTurtleIndex();
     }
 
 }
