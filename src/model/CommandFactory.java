@@ -7,17 +7,18 @@ import command.Command;
 
 public class CommandFactory {
 
-	public Command createCommand(String prefix, String commandName) {
-		Command object = null;
+	public Class<?> createCommand(String prefix, String commandName) {
+//		Command object = null;
+	        Class<?> command = null;
 		try {
-			Class<?> command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
-			object = (Command) command.newInstance();	
+			command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
+//			object = (Command) command.newInstance();	
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 		        System.err.println("Error creating Command");
 			e.printStackTrace();
 		}
-		return object;
+		return command;
 		
 	}
 
