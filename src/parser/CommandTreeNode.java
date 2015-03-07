@@ -4,68 +4,67 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 public class CommandTreeNode {
-	private String myType;
-	private String myName;
-	private Double myValue;
-	private List<CommandTreeNode> myChildren;
+    private String myType;
+    private String myName;
+    private Double myValue;
+    private List<CommandTreeNode> myChildren;
 
-	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> children) {
-		myType = type;
-		myName = name;
-		myValue = value;
-		myChildren = children;
-		myChildren = new ArrayList<>();
-	}
-	
-	public void add(CommandTreeNode newNode) {
-		myChildren.add(newNode);
-	}
-	
-	public void clearChildren(){
-	        myChildren = new ArrayList<>();
-	}
+    public CommandTreeNode (String type, String name, double value, List<CommandTreeNode> children) {
+        myType = type;
+        myName = name;
+        myValue = value;
+        myChildren = children;
+        myChildren = new ArrayList<>();
+    }
 
-	public void remove(CommandTreeNode newNode) {
-		Iterator<CommandTreeNode> iter = myChildren.iterator();
-		while (iter.hasNext()) {
-			if (iter.next().equals(newNode)) {
-				iter.remove();
-			}
-		}
-	}
+    public void add (CommandTreeNode newNode) {
+        myChildren.add(newNode);
+    }
 
-	public void setValue(double value) {
-		myValue = value;
-	}
+    public void clearChildren () {
+        myChildren = new ArrayList<>();
+    }
 
-	public double getValue() {
-		return myValue;
-	}
+    public void remove (CommandTreeNode newNode) {
+        Iterator<CommandTreeNode> iter = myChildren.iterator();
+        while (iter.hasNext()) {
+            if (iter.next().equals(newNode)) {
+                iter.remove();
+            }
+        }
+    }
 
-	public String getType() {
-		return myType;
-	}
+    public void setValue (double value) {
+        myValue = value;
+    }
 
-	public String getName() {
-	        return myName;
-	}
-	public List<CommandTreeNode> getChildren() {
-		return myChildren;
-	}
+    public double getValue () {
+        return myValue;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
+    public String getType () {
+        return myType;
+    }
 
-		return true;
-	}
-	public String toString() {
-		return myValue.toString();
-	}
+    public String getName () {
+        return myName;
+    }
+
+    public List<CommandTreeNode> getChildren () {
+        return myChildren;
+    }
+
+    @Override
+    public boolean equals (Object obj) {
+        if (obj == null) { return false; }
+        if (getClass() != obj.getClass()) { return false; }
+
+        return true;
+    }
+
+    public String toString () {
+        return myValue.toString();
+    }
 }

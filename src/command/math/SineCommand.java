@@ -2,8 +2,10 @@ package command.math;
 
 import command.Command;
 
+
 /**
  * Returns the sine of a number, given in radians
+ * 
  * @author OWNER
  *
  */

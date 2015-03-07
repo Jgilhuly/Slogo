@@ -2,8 +2,10 @@ package command.bool;
 
 import command.Command;
 
+
 /**
- *  returns 1 if the value of expr1 is strictly greater than expr2, otherwise 0
+ * returns 1 if the value of expr1 is strictly greater than expr2, otherwise 0
+ * 
  * @author GA, CZ
  *
  */

@@ -5,9 +5,11 @@ import parser.CommandTreeNode;
 import model.TreeInterpreter;
 import command.Command;
 
+
 /**
  * runs command(s) given in the list the value of expr number of times
  * returns the value of the final command executed
+ * 
  * @author CZ
  *
  */
@@ -30,8 +32,8 @@ public class RepeatCommand extends Command {
         for (int i = 0; i < numTimes; i++) {
             for (int j = 0; j < subCommands.size(); j++) {
                 tree.interpretTree(subCommands.get(j));
-                if (i == (numTimes - 1) && j == (subCommands.size() - 1)) { 
-                    return subCommands.get(j).getValue(); }
+                if (i == (numTimes - 1) && j == (subCommands.size() - 1)) { return subCommands
+                        .get(j).getValue(); }
             }
         }
         return 69.0;

@@ -2,8 +2,10 @@ package command.math;
 
 import command.Command;
 
+
 /**
  * Returns the product of two numbers
+ * 
  * @author OWNER
  *
  */

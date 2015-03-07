@@ -16,15 +16,13 @@ public class TreeInterpreter {
     private VariableList variables;
     private int activeTurtleIndex;
     private List<Turtle> listTurtles;
-    
-    
+
     public TreeInterpreter () {
         factory = new CommandFactory();
-		variables = new VariableList();
-		activeTurtleIndex = 1;
-		listTurtles =new ArrayList<Turtle>();
+        variables = new VariableList();
+        activeTurtleIndex = 1;
+        listTurtles = new ArrayList<Turtle>();
     }
-
 
     public void interpretTree (CommandTreeNode node) {
         // Method method;
@@ -37,7 +35,8 @@ public class TreeInterpreter {
             if (!(node.getType().equals("BRACKET"))) {
                 for (CommandTreeNode child : node.getChildren()) {
                     interpretTree(child);
-                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
+                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child
+                            .getValue());
                 }
             }
         }
@@ -64,9 +63,9 @@ public class TreeInterpreter {
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-        	e.printStackTrace();
-        	System.err.print("Error processing Command" + c.getClass().getName());
-        	throw new IllegalParameterNumberException();
+            e.printStackTrace();
+            System.err.print("Error processing Command" + c.getClass().getName());
+            throw new IllegalParameterNumberException();
         }
         Method method = null;
         try {
@@ -88,7 +87,7 @@ public class TreeInterpreter {
     public void update (CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()) {
             case "COMMAND.TURTLE":
-                paramList.add(listTurtles.get(activeTurtleIndex-1));
+                paramList.add(listTurtles.get(activeTurtleIndex - 1));
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
@@ -101,7 +100,7 @@ public class TreeInterpreter {
                 node.setValue((variables.get(node.getName())).getValue());
                 break;
             case "CONSTANT":
-                break; 
+                break;
             case "BRACKET":
                 break;
             default: // referring to commands that are not TURTLE type
@@ -109,11 +108,11 @@ public class TreeInterpreter {
         }
     }
 
-    public List<Turtle> getTurtleList() {
+    public List<Turtle> getTurtleList () {
         return listTurtles;
     }
-    
-    public VariableList getVariableList(){
+
+    public VariableList getVariableList () {
         return variables;
     }
 

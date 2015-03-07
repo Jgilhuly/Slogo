@@ -6,9 +6,12 @@ import model.Variable;
 import parser.CommandTreeNode;
 import command.Command;
 
+
 /**
- * runs command(s) for each value specified in the range, i.e., from (start - end), going by increment
- * returns the value of the final command executed 
+ * runs command(s) for each value specified in the range, i.e., from (start - end), going by
+ * increment
+ * returns the value of the final command executed
+ * 
  * @author OWNER
  *
  */
