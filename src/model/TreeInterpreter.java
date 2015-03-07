@@ -47,31 +47,32 @@ public class TreeInterpreter {
     public void executeCommand(CommandTreeNode node, List<Object> paramList){
       Class<?> c = factory.createCommand(node.getType(), node.getName());
       Constructor<?>[] constructors = getConstructors(c);
+      Command command = null;
 //      for(Constructor<?> d : constructors){
 //          Parameter[] returntype = d.getParameters();
 //          for(Parameter p : returntype){
 //              System.out.println(p.toString());
 //          }
 //      }
-      try {
-        Command command = (Command) constructors[0].newInstance(20, 30); //testing sum 20 30; haven't type cast paramList yet
-    }
-    catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        e.printStackTrace();
-    }
-      Method method = null;
-      try {
-          method = c.getDeclaredMethod("calculateValue", null);
           try {
-            Double value = (Double) method.invoke(null);
-            node.setValue(value);
-          }catch (IllegalAccessException | InvocationTargetException e) { 
+            command = (Command) constructors[0].newInstance(20, 30); //testing sum 20 30; haven't type cast paramList yet
+        }
+        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
+        }
+          Method method = null;
+          try {
+              method = c.getDeclaredMethod("calculateValue", null);
+              try {
+                Double value = (Double) method.invoke(command, null);
+                node.setValue(value);
+              }catch (IllegalAccessException | InvocationTargetException e) { 
+                e.printStackTrace();
+              }
+          } catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
+              System.err.print("Error processing Command" + c.getClass().getName());
+              e.printStackTrace();
           }
-      } catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
-          System.err.print("Error processing Command" + c.getClass().getName());
-          e.printStackTrace();
-      }
     }
 
     private boolean isLeaf (CommandTreeNode node){
