@@ -2,13 +2,12 @@ package ui;
 
 import java.util.*;
 
-
-import ui_table.TableElements;
 import ui.elements.CanvasElement;
 import ui.elements.IOElement;
 import ui.elements.InfoElement;
 import ui.elements.MenuBarElement;
 import ui.elements.TPropertiesElement;
+import ui_table.TableElements;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -135,27 +134,12 @@ public class GUI {
 	public void setOutputText(String outputText) {
 		ioPane.getOutputField().setText(outputText);
 	}
-	
-	public void setInputText(String inputText) {
-		ioPane.getInputField().setText(inputText);
-	}
-	/**
-	 * Returns the TurtleView so that it can be linked to its model
-	 * 
-	 * @return
-	 */
-//	public Observer getTurtleView() {
-//		return tView;
-//	}
 
 	public void bindTable(String type, ObservableList<TableElements> l) {
 		List<TableView<TableElements>> tables = infoPane.getTables();
 		if (type.equals("Commands")) {
 			tables.get(1).setItems(l);
-		} else if (type.equals("Variables")) {
-			
-		}
-		else if (type.equals("User Commands")) {
+		} else if (type.equals("User Commands")) {
 			tables.get(2).setItems(l);
 		}
 	}
@@ -170,7 +154,8 @@ public class GUI {
 	private void addHistory() {
 	}
 
-	public void addCommandHistory(String input) {
-		infoPane.setBindCommandList(input);
+	public void setInputText(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 }

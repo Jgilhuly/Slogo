@@ -30,6 +30,8 @@ public class DashedLineDrawHelper extends LineDrawHelper{
 			x -= dx;
 			y -= dy;
 					
+			checkEdges(canvas, gContext, y, y);
+			
 			on = !on;
 		}
 		
