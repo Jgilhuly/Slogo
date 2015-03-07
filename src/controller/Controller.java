@@ -52,11 +52,7 @@ public class Controller {
 		CommandTreeNode node = generator.createCommands(input, language);
 		generator.getMethodsList();
 		interpreter.interpretTree(node);
-		sceneUpdater.setOutputText(node.getValue().toString());
-
-		
-		interpreter.interpretTree(node);
-		setOutputText(node.getValue().toString());
+		sceneUpdater.setOutputText(Double.toString(node.getValue()));
 		addCommandHistory(input);
 
 	}

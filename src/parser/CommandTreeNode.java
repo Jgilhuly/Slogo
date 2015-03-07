@@ -7,7 +7,7 @@ import java.util.List;
 public class CommandTreeNode {
 	private String myType;
 	private String myName;
-	private Object myValue;
+	private Double myValue;
 	private List<CommandTreeNode> myChildren;
 
 	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> children) {

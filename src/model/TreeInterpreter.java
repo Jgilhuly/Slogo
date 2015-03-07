@@ -37,8 +37,7 @@ public class TreeInterpreter {
             if (!(node.getType().equals("BRACKET"))) {
                 for (CommandTreeNode child : node.getChildren()) {
                     interpretTree(child);
-                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child
-                            .getValue());
+                    paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
                 }
             }
         }
