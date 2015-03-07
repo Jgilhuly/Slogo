@@ -29,7 +29,7 @@ public class TreeInterpreter {
         //
         // }
         List<Object> paramList = new ArrayList<>();
-        if (!isLeaf(node)) {
+        if (!node.getChildren().isEmpty()) {
             if (!(node.getType().equals("BRACKET"))) {
                 for (CommandTreeNode child : node.getChildren()) {
                     interpretTree(child);
@@ -81,28 +81,6 @@ public class TreeInterpreter {
         }
     }
 
-    private boolean isLeaf (CommandTreeNode node) {
-        return node.getChildren().isEmpty();
-    }
-
-    // public void executeCommand (CommandTreeNode node, List<Object> paramList) {
-    // Command c = factory.createCommand(node.getType(), node.getName());
-    // Class[] cArg = new Class[1];
-    // cArg[0] = List.class;
-    // Method method;
-    // try {
-    // method = c.getClass().getDeclaredMethod("calculateValue", null);
-    // System.out.println(c.getClass().toString());
-    // Double value = (Double) method.invoke(c, paramList);
-    // node.setValue(value);
-    // }
-    // catch (NoSuchMethodException | SecurityException | IllegalAccessException
-    // | IllegalArgumentException | InvocationTargetException e) {
-    // System.err.print("Error processing Command" + c.getClass().getName());
-    // e.printStackTrace();
-    // }
-    // }
-
     public void update (CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()) {
             case "COMMAND.TURTLE":
@@ -119,7 +97,7 @@ public class TreeInterpreter {
                 node.setValue((variables.get(node.getName())).getValue());
                 break;
             case "CONSTANT":
-                break; // Do nothing
+                break; 
             case "BRACKET":
                 break;
             default: // referring to commands that are not TURTLE type
