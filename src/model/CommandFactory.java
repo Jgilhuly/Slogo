@@ -13,13 +13,11 @@ public class CommandFactory {
 		try {
 			command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
 //			object = (Command) command.newInstance();	
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-		        System.err.println("Error creating Command");
+		} catch (ClassNotFoundException e) {
+		        System.err.println("Error creating Command; Command not found!");
 			e.printStackTrace();
 		}
 		return command;
-		
 	}
 
 
