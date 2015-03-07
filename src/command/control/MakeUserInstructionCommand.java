@@ -1,43 +1,39 @@
 package command.control;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import model.TreeInterpreter;
-import model.Variable;
 import parser.CommandTreeNode;
-import command.Command;
 
-
+/**
+ * STILL A WORKING PROGRESS
+ * @author OWNER
+ *
+ */
 public class MakeUserInstructionCommand {
-    private List<CommandTreeNode> parameters;
-    private List<CommandTreeNode> subCommands;
+    private String commandName;
+    private CommandTreeNode parameters;
+    private CommandTreeNode subCommands;
     private TreeInterpreter tree;
 
     public MakeUserInstructionCommand (CommandTreeNode node1,
                                        CommandTreeNode node2,
+                                       CommandTreeNode node3,
                                        TreeInterpreter t) {
-        parameters = node1.getChildren();
-        subCommands = node2.getChildren();
+        commandName = node1.getName();
+        parameters = node2;
+        subCommands = node3;
         tree = t;
     }
 
-    public double calculateValue (List<Object> param) {
-        Variable var = tree.getVariableList().get(parameters.get(0).getName());
-
-        for (int j = 1; j < parameters.size(); j++) {
-            tree.interpretTree(parameters.get(j));
-        }
-        int start = (int) parameters.get(1).getValue();
-        int end = (int) parameters.get(2).getValue();
-        int increment = (int) parameters.get(3).getValue();
-
-        for (int i = start; i < end; i += increment) {
-            for (int j = 0; j < subCommands.size(); j++) {
-                yay.interpretTree(subCommands.get(j));
-            }
-            shit.setValue(subCommands.get(subCommands.size() - 1).getValue()); // Is this a correct
-                                                                               // interpretation?
-        }
-        // yay.getVariableList().printThing(); FIX BUG LATER
-        return shit.getValue();
+    public double calculateValue () {
+        Map<String, List<CommandTreeNode>> currentMap = tree.getUserCommands();
+        List<CommandTreeNode> toAdd = new ArrayList<CommandTreeNode>();
+        toAdd.add(parameters);
+        toAdd.add(subCommands);
+        currentMap.put(commandName, toAdd);
+        tree.setUserCommands(currentMap);
+        return 1;
     }
 }

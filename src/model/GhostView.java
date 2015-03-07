@@ -6,7 +6,11 @@ import javafx.beans.property.Property;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 
-
+/**
+ * A class that contains all the display properties, to be fetched by the front-end
+ * @author OWNER
+ *
+ */
 public class GhostView {
 
     private ObservableList<Color> penColors;
