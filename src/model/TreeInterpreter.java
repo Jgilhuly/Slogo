@@ -10,7 +10,12 @@ import command.Command;
 import errors.IllegalParameterNumberException;
 import parser.CommandTreeNode;
 
-
+/**
+ * Main "MODEL" Class that traverses through one command tree, interprets each subcommand, and 
+ * updates back-end elements (turtles, variableList, etc.) accordingly
+ * @author OWNER
+ *
+ */
 public class TreeInterpreter {
     private CommandFactory factory;
     private VariableList variables;
@@ -25,6 +30,10 @@ public class TreeInterpreter {
         listTurtles = new ArrayList<Turtle>();
     }
 
+    /**
+     * Recursive method that traverses through the command tree starting from parent node
+     * @param node
+     */
     public void interpretTree (CommandTreeNode node) {
         List<Object> paramList = new ArrayList<>();
         if (!node.getChildren().isEmpty()) {
@@ -45,6 +54,11 @@ public class TreeInterpreter {
         return className.getDeclaredConstructors();
     }
 
+    /**
+     * Creates a command using reflection, invokes calculateValue method in command class with the parameter values
+     * @param node, contains information as to which command is created
+     * @param paramList, list of parameter values needed for one command
+     */
     public void executeCommand (CommandTreeNode node, List<Object> paramList) {
         Class<?> c = factory.createCommand(node.getType(), node.getName());
         Constructor<?> constructor = getConstructors(c)[0];
@@ -74,6 +88,11 @@ public class TreeInterpreter {
         }
     }
 
+    /**
+     * Calls executeCommand if the node represents Command, adding appropriate elements to paramList accordingly
+     * @param current node
+     * @param paramList, list of parameters values needed for one command
+     */
     public void update (CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()) {
             case "COMMAND.TURTLE":

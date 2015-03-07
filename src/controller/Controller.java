@@ -70,10 +70,6 @@ public class Controller {
         sceneUpdater.addCommandHistory(input);
     }
 
-    // public void linkTurtles(Turtle turtleModel) {
-    // turtleModel.addObserver(sceneUpdater.getTurtleView());
-    // }
-
     public Set<String> getPrevCommandList () {
         return previousCommands.keySet();
     }

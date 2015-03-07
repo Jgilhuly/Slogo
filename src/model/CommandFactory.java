@@ -2,7 +2,11 @@ package model;
 
 import command.Command;
 
-
+/**
+ * Class that contains factory method to create a Command using reflection
+ * @author OWNER
+ *
+ */
 public class CommandFactory {
 
     public Class<?> createCommand (String prefix, String commandName) {

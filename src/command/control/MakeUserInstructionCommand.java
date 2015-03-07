@@ -6,7 +6,11 @@ import model.Variable;
 import parser.CommandTreeNode;
 import command.Command;
 
-
+/**
+ * STILL A WORKING PROGRESS
+ * @author OWNER
+ *
+ */
 public class MakeUserInstructionCommand {
     private String commandName;
     private List<CommandTreeNode> parameters;
