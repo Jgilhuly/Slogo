@@ -1,19 +1,24 @@
 package ui.elements;
 
+import java.io.File;
 import java.util.ResourceBundle;
 
-import ui.Pen;
-import ui.TurtleView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import ui.GUI;
+import ui.Pen;
+import ui.TurtleView;
+import util.ButtonMaker;
 
 public class TPropertiesElement {
 
@@ -21,45 +26,41 @@ public class TPropertiesElement {
 	private ResourceBundle myResources;
 	private TurtleView tView;
 	private Pen myPen;
+	private Stage myStage;
+	private GUI myGui;
 
 	public TPropertiesElement(final ResourceBundle resourcesIn, TurtleView tViewIn,
-			Pen penIn) {
+			Pen penIn, Stage stageIn, GUI guiIn) {
 		tView = tViewIn;
 		myResources = resourcesIn;
 		myPen = penIn;
-
+		myStage = stageIn;
+		myGui = guiIn;
 		init();
 	}
 
 	private void init() {
+		ButtonMaker bm = new ButtonMaker();
 		myBaseNode = new VBox();
 		myBaseNode.setSpacing(5);
 
-		ToggleButton penUpDown = makeToggleButton(myResources.getString("PenDownToggle"), null, null);
+		ToggleButton penUpDown = bm.makeToggleButton(myResources.getString("PenDownToggle"), null, null);
 		penUpDown.setOnAction(e -> myPen.setPenIsDown(!penUpDown.isSelected()));
 
-		ToggleButton turtleVisible = makeToggleButton(myResources.getString("TurtleHideToggle"), null, null);
-		turtleVisible.setOnAction(e -> tView.setTurtleVisible(turtleVisible.isSelected()));
+		VBox turtleButtons = new VBox();
+		ToggleButton turtleVisibleButton = bm.makeToggleButton(myResources.getString("TurtleHideToggle"), null, null);
+		turtleVisibleButton.setOnAction(e -> tView.setTurtleVisible(turtleVisibleButton.isSelected()));
+		Button chooseNewTurtleImageButton = bm.makeButton(myResources.getString("ChooseTurtleImage"), e -> selectAndChangeTurtleImage());
+		Button createNewTurtleButton = bm.makeButton(myResources.getString("CreateNewTurtle"), e -> myGui.makeTurtleView(GUI.DEFAULT_TURTLE_IMAGE_PATH));
+		turtleButtons.getChildren().addAll(turtleVisibleButton, chooseNewTurtleImageButton, createNewTurtleButton);
 
 		ToggleGroup lineStyleGroup = new ToggleGroup();
-		ToggleButton normal = makeToggleButton(myResources.getString("NormalLine"), e -> myPen.setLineStyle("normal"), lineStyleGroup);
-		ToggleButton dashed = makeToggleButton(myResources.getString("DashedLine"), e -> myPen.setLineStyle("dashed"), lineStyleGroup);
-		ToggleButton dotted = makeToggleButton(myResources.getString("DottedLine"), e -> myPen.setLineStyle("dotted"), lineStyleGroup);
+		ToggleButton normal = bm.makeToggleButton(myResources.getString("NormalLine"), e -> myPen.setLineStyle("normal"), lineStyleGroup);
+		ToggleButton dashed = bm.makeToggleButton(myResources.getString("DashedLine"), e -> myPen.setLineStyle("dashed"), lineStyleGroup);
+		ToggleButton dotted = bm.makeToggleButton(myResources.getString("DottedLine"), e -> myPen.setLineStyle("dotted"), lineStyleGroup);
+		
 
-		myBaseNode.getChildren().addAll(penUpDown, turtleVisible, makeTurtleHeadingBox(), normal, dashed, dotted);
-	}
-
-	private ToggleButton makeToggleButton(String property,
-			EventHandler<ActionEvent> handler, ToggleGroup myGroup) {
-		ToggleButton result = new ToggleButton();
-		result.setText(property);
-		if (handler != null) {			
-			result.setOnAction(handler);
-		}
-		if (myGroup != null) {
-			result.setToggleGroup(myGroup);			
-		}
-		return result;
+		myBaseNode.getChildren().addAll(penUpDown, turtleButtons, makeTurtleHeadingBox(), normal, dashed, dotted);
 	}
 
 	private HBox makeTurtleHeadingBox() {
@@ -79,6 +80,25 @@ public class TPropertiesElement {
 		turtleHeadingBox.getChildren().addAll(turtleHeadingLabel,
 				turtleHeadingValue);
 		return turtleHeadingBox;
+	}
+	
+	/**
+	 * Shows a filechooser to select a new turtle image, then changes to that
+	 * image
+	 */
+	private void selectAndChangeTurtleImage() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(myResources.getString("OpenResourceFile"));
+		fileChooser.getExtensionFilters().add(
+				new FileChooser.ExtensionFilter("PNG File", "*.png"));
+
+		File file = fileChooser.showOpenDialog(myStage);
+		if (file != null) {
+			tView.setImage(new Image(file.toURI().toString()));
+		} else {
+			System.err.println("Error Loading Image File");
+			// TODO: MAKE SLOGO EXCEPTION POPUP
+		}
 	}
 
 	public Node getMyBaseNode() {

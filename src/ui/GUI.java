@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class GUI {
 
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
-	private static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";
+	public static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";
 
 	private ResourceBundle myResources; // for node text/names
 	private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
@@ -27,7 +27,7 @@ public class GUI {
 	private Stage myStage;
 	private BorderPane myRoot;
 	private SceneUpdater mySceneUpdater;
-	private TurtleView tView;
+	private List<TurtleView> turtleViews;
 	private Pen myPen;
 
 	private IOElement ioPane;
@@ -68,13 +68,14 @@ public class GUI {
 		myRoot.setRight(infoPane.getBaseNode());
 
 		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
-		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
+		turtleViews = new ArrayList<TurtleView>();
+		turtleViews.add(makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH));
 
-		propertiesPane = new TPropertiesElement(myResources, tView, myPen);
+		propertiesPane = new TPropertiesElement(myResources, turtleViews.get(0), myPen, myStage, this);
 		myRoot.setLeft(propertiesPane.getMyBaseNode());
 
-		menuPane = new MenuBarElement(myResources, canvasPane, ioPane, tView,
-				DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myStage, myPen, this);
+		menuPane = new MenuBarElement(myResources, canvasPane, ioPane,
+				DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myPen, this);
 		myRoot.setTop(menuPane.getBaseNode());
 
 		myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
@@ -89,13 +90,16 @@ public class GUI {
 	 *            : The path of the Turtle Image
 	 * @return
 	 */
-	private TurtleView makeTurtleView(String imagePath) {
+	public TurtleView makeTurtleView(String imagePath) {
 		Image turtleImage = new Image(GUI.class.getResourceAsStream(imagePath));
 
-		return new TurtleView(turtleImage, canvasPane.getCanvas(), canvasPane
+		TurtleView newTurtle = new TurtleView(turtleImage, canvasPane.getCanvas(), canvasPane
 				.getCanvas().getWidth() / 2,
 				canvasPane.getCanvas().getHeight() / 2,
 				canvasPane.getBaseNode(), myPen);
+		
+		mySceneUpdater.createTurtle(newTurtle);
+		return newTurtle;
 	}
 
 	/**
@@ -128,15 +132,6 @@ public class GUI {
 	 */
 	public void setOutputText(String outputText) {
 		ioPane.getOutputField().setText(outputText);
-	}
-
-	/**
-	 * Returns the TurtleView so that it can be linked to its model
-	 * 
-	 * @return
-	 */
-	public Observer getTurtleView() {
-		return tView;
 	}
 
 	public void bindTable(String type, ObservableList<String> l) {

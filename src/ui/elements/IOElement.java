@@ -2,14 +2,13 @@ package ui.elements;
 
 import java.util.ResourceBundle;
 
-import ui.GUI;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import ui.GUI;
+import util.ButtonMaker;
 
 public class IOElement {
 	private VBox myNode;
@@ -25,6 +24,7 @@ public class IOElement {
 	}
 
 	private void init(GUI myGui) {
+		ButtonMaker bm = new ButtonMaker();
 		myNode = new VBox();
 
 		outputField = new Text();
@@ -32,26 +32,10 @@ public class IOElement {
 		inputField = new TextField();
 		inputField.setPromptText(myResources.getString("InputPrompt"));
 
-		confirmInput = makeButton(myResources.getString("Enter"),
+		confirmInput = bm.makeButton(myResources.getString("Enter"),
 				e -> myGui.parseCommand());
 
 		myNode.getChildren().addAll(inputField, outputField, confirmInput);
-	}
-
-	/**
-	 * Helper method to create buttons with labels and handlers (Taken from the
-	 * example_browser)
-	 * 
-	 * @param property
-	 * @param handler
-	 * @return
-	 */
-	private Button makeButton(String property, EventHandler<ActionEvent> handler) {
-		Button result = new Button();
-		// String label = myResources.getString(property);
-		result.setText(property);
-		result.setOnAction(handler);
-		return result;
 	}
 
 	public Node getBaseNode() {

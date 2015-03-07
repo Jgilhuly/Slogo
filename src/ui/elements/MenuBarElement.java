@@ -1,30 +1,19 @@
 package ui.elements;
 
-import java.io.File;
 import java.util.ResourceBundle;
 
 import ui.GUI;
 import ui.Pen;
-import ui.TurtleView;
 import util.HTMLHelpPage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 public class MenuBarElement {
 	private final String helpPageURL = "http://www.cs.duke.edu/courses/compsci308/spring15/assign/03_slogo/commands.php";
@@ -35,24 +24,20 @@ public class MenuBarElement {
 	private SVGPath svg;
 	private ColorPicker backgroundColorPicker;
 	private ColorPicker penColorPicker;
-	private TurtleView tView;
 	private Pen myPen;
 	private String languages[];
-	private Stage myStage;
 	private String selectedLanguage;
 	private GUI myGui;
 
 	public MenuBarElement(ResourceBundle resourcesIn,
-			CanvasElement canvasPaneIn, IOElement ioPaneIn, TurtleView tViewIn,
+			CanvasElement canvasPaneIn, IOElement ioPaneIn,
 			Color backgroundColor, String[] languagesIn,
-			String defaultLanguageIn, Stage myStageIn, Pen penIn, GUI myGuiIn) {
+			String defaultLanguageIn, Pen penIn, GUI myGuiIn) {
 		myResources = resourcesIn;
 		canvasPane = canvasPaneIn;
-		tView = tViewIn;
 		myPen = penIn;
 		languages = languagesIn;
 		ioPane = ioPaneIn;
-		myStage = myStageIn;
 		selectedLanguage = defaultLanguageIn;
 		myGui = myGuiIn;
 
@@ -79,13 +64,12 @@ public class MenuBarElement {
 	 */
 	private Node makeMenuBar() {
 		Menu fileMenu = new Menu(myResources.getString("File"));
-		MenuItem fileOp1 = new MenuItem(myResources.getString("FileOp1"));
-		fileOp1.setOnAction(e -> selectAndChangeTurtleImage());
-		
-		MenuItem fileOp2 = new MenuItem(myResources.getString("MakeNewWorkspace"));
-		fileOp2.setOnAction(e -> myGui.createNewWorkspace());
-		fileMenu.getItems().addAll(fileOp1, fileOp2);
-		
+
+		MenuItem fileOp1 = new MenuItem(
+				myResources.getString("MakeNewWorkspace"));
+		fileOp1.setOnAction(e -> myGui.createNewWorkspace());
+		fileMenu.getItems().add(fileOp1);
+
 		Menu optionsMenu = new Menu(myResources.getString("Options"));
 		MenuItem htmlHelp = new MenuItem(myResources.getString("Help"));
 		htmlHelp.setOnAction(e -> showHTMLHelp());
@@ -177,7 +161,7 @@ public class MenuBarElement {
 			ioPane.getInputField().setEditable(true);
 		}
 	}
-	
+
 	/**
 	 * Toggles a menuItem
 	 * 
@@ -195,25 +179,6 @@ public class MenuBarElement {
 	}
 
 	/**
-	 * Shows a filechooser to select a new turtle image, then changes to that
-	 * image
-	 */
-	private void selectAndChangeTurtleImage() {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle(myResources.getString("OpenResourceFile"));
-		fileChooser.getExtensionFilters().add(
-				new FileChooser.ExtensionFilter("PNG File", "*.png"));
-
-		File file = fileChooser.showOpenDialog(myStage);
-		if (file != null) {
-			tView.setImage(new Image(file.toURI().toString()));
-		} else {
-			System.err.println("Error Loading Image File");
-			// TODO: MAKE SLOGO EXCEPTION POPUP
-		}
-	}
-
-	/**
 	 * Shows the HTML Help window
 	 */
 	private void showHTMLHelp() {
@@ -224,7 +189,7 @@ public class MenuBarElement {
 	public String getSelectedLanguage() {
 		return selectedLanguage;
 	}
-	
+
 	public Node getBaseNode() {
 		return tb;
 	}
