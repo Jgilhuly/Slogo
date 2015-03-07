@@ -9,36 +9,20 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
+/**
+ * Super class for all Exceptions thrown in this SLogo program
+ */
 public abstract class SLogoException extends RuntimeException {
-
-	/**
-	 * Super class for all Exceptions thrown in this SLogo program
-	 */
 	private static final long serialVersionUID = 1L;
 	private Stage popupStage;
 
 	protected SLogoException(String format) {
 		super(String.format(format));
+		fillInStackTrace();
 		popupStage = new Stage();
 		popup(format);
 	}
 
-	/**
-	 * Create an exception based on a caught exception with a different message.
-	 */
-	protected SLogoException(Throwable cause, String message, Object... values) {
-		super(String.format(message, values), cause);
-	}
-
-	/**
-	 * Create an exception based on a caught exception, with no additional
-	 * message.
-	 */
-	protected SLogoException(Throwable exception) {
-		super(exception);
-	}
-	
 	/**
 	 * disables stack trace
 	 */

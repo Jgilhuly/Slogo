@@ -3,8 +3,6 @@ package ui;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-
-import model.Variable;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import controller.Controller;

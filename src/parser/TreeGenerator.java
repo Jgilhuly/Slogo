@@ -43,9 +43,10 @@ public class TreeGenerator implements TreeWrapper {
 
 			return CommandCase.getRoot();
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
-			e.printStackTrace();
-			if (ListStartCount != ListEndCount)
+//			e.printStackTrace();
+			if (ListStartCount != ListEndCount) {
 				throw new UnmatchedBracketException();
+			}
 			throw new NoInputFoundException();
 		}
 	}
@@ -71,19 +72,14 @@ public class TreeGenerator implements TreeWrapper {
 	}
 
 	private Map<Pattern, Cases> createHandlerMap() {
-		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper
-				.makePatterns("Syntax");
+		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper.makePatterns("Syntax");
 		Map<Pattern, Cases> ret = new HashMap<>();
 		for (Entry<String, Pattern> p : syntaxPatternList) {
 			String category = p.getKey();
 			try {
-				Class<?> myInstance = Class.forName("parser." + category
-						+ "Case");
-				Constructor<?> constructor = myInstance
-						.getConstructor(new Class[] { TreeWrapper.class,
-								List.class });
-				Cases myCases = (Cases) constructor.newInstance(
-						(TreeWrapper) this, myInput);
+				Class<?> myInstance = Class.forName("parser." + category + "Case");
+				Constructor<?> constructor = myInstance.getConstructor(new Class[] { TreeWrapper.class, List.class });
+				Cases myCases = (Cases) constructor.newInstance((TreeWrapper) this, myInput);
 				if (category.equals("Command")) {
 					CommandCase = new CommandCase((TreeWrapper) this, myInput);
 					ret.put(p.getValue(), CommandCase);

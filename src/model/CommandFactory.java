@@ -14,7 +14,6 @@ public class CommandFactory {
 
 			Class<?> command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
 
-
 			object = (Command) command.newInstance();
 			
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {

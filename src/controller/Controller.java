@@ -4,17 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-
-import model.*;
-import javafx.beans.property.Property;
-
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import main.WorkspaceManager;
 import model.TreeInterpreter;
 import model.Turtle;
-import model.Variable;
-import model.VariableList;
 import parser.CommandTreeNode;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
@@ -31,11 +24,18 @@ public class Controller {
 	}
 	
 	public void init(Stage s) {
-//		turtle = new Turtle();
+
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
 		previousCommands = new HashMap<String, CommandTreeNode>();
 		interpreter = new TreeInterpreter();
+		generator = new TreeGenerator();
+		createTurtle();
+		
+	}
+	public void createTurtle() {
+		Turtle t = new Turtle();
+		interpreter.getTurtleList().add(t);
 		
 	}
 

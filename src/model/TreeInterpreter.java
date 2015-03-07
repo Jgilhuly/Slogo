@@ -6,20 +6,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import command.Command;
+import errors.IllegalParameterNumberException;
 import parser.CommandTreeNode;
 
 
 public class TreeInterpreter {
     private CommandFactory factory;
     private VariableList variables;
-    private int activeTurtleIndex = 1;
+    private int activeTurtleIndex;
     private List<Turtle> listTurtles;
     
     public TreeInterpreter () {
         factory = new CommandFactory();
 		variables = new VariableList();
-		listTurtles = new ArrayList<Turtle>();
+		activeTurtleIndex = 1;
+		listTurtles =new ArrayList<Turtle>();
     }
     
     public void interpretTree (CommandTreeNode node) {
@@ -33,7 +37,7 @@ public class TreeInterpreter {
 			}
 		}
 		update(node, paramList);
-		// variables.printThing();
+	
 	}
     public void setActiveTurtle(int num) {
     	activeTurtleIndex = num;
@@ -45,8 +49,6 @@ public class TreeInterpreter {
 
     public void executeCommand (CommandTreeNode node, List<Object> paramList) {
         Command c = factory.createCommand(node.getType(), node.getName());
-//        Class[] cArg = new Class[1];
-//        cArg[0] = List.class;
         Class<?>[] params;
         Method method;
         try {
@@ -64,8 +66,11 @@ public class TreeInterpreter {
         }
         catch (NoSuchMethodException | SecurityException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException e) {
-            System.err.print("Error processing Command" + c.getClass().getName());
-            e.printStackTrace();
+        	e.printStackTrace();
+        	System.err.print("Error processing Command" + c.getClass().getName());
+        	throw new IllegalParameterNumberException();
+            
+            
         }
     }
 
@@ -73,7 +78,7 @@ public class TreeInterpreter {
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
             case "COMMAND.TURTLE":
-                paramList.add(listTurtles);
+                paramList.add(listTurtles.get(activeTurtleIndex-1));
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
@@ -95,8 +100,8 @@ public class TreeInterpreter {
     
     
 
-    public VariableList getVariableList() {
-        return variables;
+    public List<Turtle> getTurtleList() {
+        return listTurtles;
     }
 
 }
