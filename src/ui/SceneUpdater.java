@@ -70,8 +70,8 @@ public class SceneUpdater implements Observer {
 	 * 
 	 * @return
 	 */
-	public Observer getTurtleView() {
-		return myGUI.getTurtleView();
+	public void createTurtle(TurtleView tView) {
+		myController.createTurtle(tView);
 	}
 	
 	public void createNewWorkspace() {

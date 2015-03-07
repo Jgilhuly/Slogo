@@ -1,4 +1,4 @@
-package ui;
+package ui.elements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
+import ui.GUI;
 import ui_table.PreviousCommands;
 import ui_table.TableElements;
 import ui_table.Variable;
