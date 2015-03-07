@@ -1,4 +1,4 @@
-package ui;
+package ui.elements;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Background;

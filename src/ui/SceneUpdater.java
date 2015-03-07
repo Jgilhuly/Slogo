@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
 
+import ui_table.TableElements;
 import model.Variable;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
@@ -51,7 +52,7 @@ public class SceneUpdater implements Observer {
 	public ObservableList<Variable> getVariableList() {
 		return myController.getVariableList();
 	}
-	public void setListBind(String type, ObservableList<String> l) {
+	public void setListBind(String type, ObservableList<TableElements> l) {
 		myGUI.bindTable(type, l);
 	}
 	public Set<String> getPrevCommandList() {
@@ -69,12 +70,16 @@ public class SceneUpdater implements Observer {
 	 * 
 	 * @return
 	 */
-	public Observer getTurtleView() {
-		return myGUI.getTurtleView();
+	public void createTurtle(TurtleView tView) {
+		myController.createTurtle(tView);
 	}
 	
 	public void createNewWorkspace() {
 		myController.createNewWorkspace();
+	}
+
+	public void addCommandHistory(String input) {
+		myGUI.addCommandHistory(input);
 	}
 
 }

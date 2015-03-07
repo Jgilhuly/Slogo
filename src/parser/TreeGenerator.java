@@ -17,7 +17,6 @@ public class TreeGenerator implements TreeWrapper {
 	private Map<Pattern, Cases> handlerMap;
 	private List<String> myInput;
 	private int index;
-	private String language;
 	private CommandCase CommandCase;
 
 	private int ListStartCount = 0;
@@ -33,7 +32,6 @@ public class TreeGenerator implements TreeWrapper {
 	public CommandTreeNode createCommands(String input, String language) {
 		try {
 			myInput = Arrays.asList(input.split("\\s+"));
-			this.language = language;
 			handlerMap = createHandlerMap();
 			index = 0;
 			CommandCase.initiate(language);
@@ -84,49 +82,19 @@ public class TreeGenerator implements TreeWrapper {
 								List.class });
 				Cases myCases = (Cases) constructor.newInstance(
 						(TreeWrapper) this, myInput);
+				
 				if (category.equals("Command")) {
 					CommandCase = new CommandCase((TreeWrapper) this, myInput);
 					ret.put(p.getValue(), CommandCase);
 				} else
 					ret.put(p.getValue(), myCases);
+				
 			} catch (NoSuchMethodException | SecurityException
 					| IllegalArgumentException | ClassNotFoundException
 					| IllegalAccessException | InstantiationException
 					| InvocationTargetException e) {
-				e.printStackTrace();
+				
 			}
-			// switch (category) {
-			// case "ListStart":
-			// ret.put(p.getValue(), new ListStartCase((TreeWrapper) this,
-			// myInput));
-			// break;
-			// case "ListEnd":
-			// ret.put(p.getValue(), new ListEndCase((TreeWrapper) this,
-			// myInput));
-			// break;
-			// case "Command":
-			// CommandCase = new CommandCase((TreeWrapper) this, myInput);
-			// ret.put(p.getValue(), CommandCase);
-			// break;
-			// case "Variable":
-			// ret.put(p.getValue(), new VariableCase((TreeWrapper) this,
-			// myInput));
-			// break;
-			// case "Constant":
-			// ret.put(p.getValue(), new ConstantCase((TreeWrapper) this,
-			// myInput));
-			// break;
-			// case "GroupStart":
-			// ret.put(p.getValue(), new GroupStartCase((TreeWrapper) this,
-			// myInput));
-			// break;
-			// case "GroupEnd":
-			// ret.put(p.getValue(), new GroupEndCase((TreeWrapper) this,
-			// myInput));
-			// break;
-			// default:
-			// break;
-			// }
 		}
 		return ret;
 	}
@@ -143,16 +111,10 @@ public class TreeGenerator implements TreeWrapper {
 		return index;
 	}
 
-	public String getLanguage() {
-		return language;
-	}
-
-	@Override
 	public void incrementListStartIndex() {
 		ListStartCount++;
 	}
 
-	@Override
 	public void incrementListEndIndex() {
 		ListEndCount++;
 	}

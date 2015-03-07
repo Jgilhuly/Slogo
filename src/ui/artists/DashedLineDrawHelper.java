@@ -1,13 +1,14 @@
-package ui;
+package ui.artists;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.util.Pair;
 
-public class DashedLineDrawHelper implements LineDrawHelper{
+public class DashedLineDrawHelper extends LineDrawHelper{
 	protected int intervalConstant = 10;
 	
 	@Override
-	public void drawLine(Canvas canvas, double x1, double y1, double x2,
+	public Pair<Double, Double> drawLine(Canvas canvas, double x1, double y1, double x2,
 			double y2) {
 		GraphicsContext gContext = canvas.getGraphicsContext2D();
 		gContext.beginPath();
@@ -28,10 +29,15 @@ public class DashedLineDrawHelper implements LineDrawHelper{
 
 			x -= dx;
 			y -= dy;
+					
+			checkEdges(canvas, gContext, y, y);
+			
 			on = !on;
 		}
 		
 		gContext.closePath();
 		gContext.stroke();
+		
+		return new Pair<Double, Double>(x, y);
 	}
 }
