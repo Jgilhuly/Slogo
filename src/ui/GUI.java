@@ -134,7 +134,12 @@ public class GUI {
 	public void setOutputText(String outputText) {
 		ioPane.getOutputField().setText(outputText);
 	}
-
+	public void addCommandHistory(String input) {
+		infoPane.setBindCommandList(input);
+	}
+	public void setInputText(String inputText) {
+		ioPane.getInputField().setText(inputText);
+	}
 	public void bindTable(String type, ObservableList<TableElements> l) {
 		List<TableView<TableElements>> tables = infoPane.getTables();
 		if (type.equals("Commands")) {
@@ -152,10 +157,5 @@ public class GUI {
 	 * Updates the right side info tables
 	 */
 	private void addHistory() {
-	}
-
-	public void setInputText(String string) {
-		// TODO Auto-generated method stub
-		
 	}
 }
