@@ -4,7 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
-public class NormalLineDrawHelper implements LineDrawHelper{
+public class NormalLineDrawHelper extends LineDrawHelper{
 
 	private double intervalConstant = 10;
 
@@ -22,22 +22,7 @@ public class NormalLineDrawHelper implements LineDrawHelper{
 		double y = y1;
 		
 		for (int i = 0; i < numIntervals; i++) {
-			if (x >= canvas.getWidth()) {
-				x = 0;
-				gContext.moveTo(x, y);
-			}
-			if (x <= 0) {
-				x = canvas.getWidth();
-				gContext.moveTo(x, y);
-			}
-			if (y >= canvas.getHeight()) {
-				y = 0;
-				gContext.moveTo(x, y);
-			}
-			if (y <= 0) {
-				y = canvas.getHeight();
-				gContext.moveTo(x, y);
-			}
+			checkEdges(canvas, gContext, y, y);
 			
 			gContext.lineTo(x - dx, y - dy);
 

@@ -16,6 +16,8 @@ public abstract class SLogoException extends RuntimeException {
 	 * Super class for all Exceptions thrown in this SLogo program
 	 */
 	private static final long serialVersionUID = 1L;
+	private static final int X_COOR = 300;
+	private static final int Y_COOR = 200;
 	private Stage popupStage;
 
 	protected SLogoException(String format) {
@@ -55,8 +57,8 @@ public abstract class SLogoException extends RuntimeException {
 	protected void popup(String message) {
 		popupStage.setTitle("Error");
 		Popup popup = new Popup();
-		popup.setX(300);
-		popup.setY(200);
+		popup.setX(X_COOR);
+		popup.setY(Y_COOR);
 		Label prompt = new Label(message);
 
 		Button ok = new Button("OK");
