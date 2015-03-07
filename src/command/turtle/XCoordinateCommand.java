@@ -1,14 +1,20 @@
 package command.turtle;
 
-import java.util.List;
+
 
 import command.Command;
 import model.Turtle;
-
+/*
+ * returns the turtle's X coordinate from the center of the screen
+ */
 public class XCoordinateCommand extends Command {
+	private Turtle myTurtle;
+	
+	public XCoordinateCommand(Turtle t) {
+		myTurtle = t;
+	}
 	@Override
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(0);
-		return t.getX();
+	public double calculateValue() {
+		return myTurtle.getX();
 	}
 }

@@ -1,15 +1,27 @@
 package command.turtle;
 
-import java.util.List;
+
 
 import model.Turtle;
 import command.Command;
-
+/*
+ * turns turtle to face the point (x, y), where (0, 0) is the center of the screen
+ * returns the number of degrees turtle turned
+ */
 public class SetTowardsCommand extends Command {
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(2);
-		double xdiff = (double) param.get(0) - t.getX();
-		double ydiff = (double) param.get(1) - t.getY();
+    private Turtle myTurtle;
+    private double double1;
+    private double double2;
+	
+	public SetTowardsCommand(double op1, double op2, Turtle t) {
+		double1 = op1;
+		double2 = op2;
+		myTurtle = t;
+	}
+	
+	public double calculateValue() {
+		double xdiff = double1 - myTurtle.getX();
+		double ydiff = double2 - myTurtle.getY();
 
 		Double angle = Math.toDegrees(Math.atan(ydiff / xdiff));
 		// third quadrant
@@ -20,9 +32,8 @@ public class SetTowardsCommand extends Command {
 		else if (xdiff>0 && ydiff < 0) {
 			angle = 90-angle;
 		}
-		t.setHeading(angle);
-
-		t.updateTurtleViewers();
+		myTurtle.setHeading(angle);
+		myTurtle.updateTurtleViewers();
 		return angle;
 	}
 }

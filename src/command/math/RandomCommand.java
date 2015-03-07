@@ -1,14 +1,18 @@
 package command.math;
 
-import java.util.List;
 import java.util.Random;
 import command.Command;
 
+
 public class RandomCommand extends Command {
+    private double double1;
 
-	public double calculateValue(List<Object> param) {
-		Random r = new Random();
+    public RandomCommand (double op1) {
+        double1 = op1;
+    }
 
-		return r.nextInt((int) (double) param.get(0));
-	}
+    public double calculateValue () {
+        Random r = new Random();
+        return r.nextInt((int) double1);
+    }
 }

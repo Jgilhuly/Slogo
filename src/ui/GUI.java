@@ -7,6 +7,7 @@ import ui.elements.IOElement;
 import ui.elements.InfoElement;
 import ui.elements.MenuBarElement;
 import ui.elements.TPropertiesElement;
+import ui_table.TableElements;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,9 +21,9 @@ public class GUI {
 
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
 	public static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";
+	private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
 
 	private ResourceBundle myResources; // for node text/names
-	private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
@@ -64,7 +65,7 @@ public class GUI {
 				myStage.getHeight());
 		myRoot.setCenter(canvasPane.getBaseNode());
 
-		infoPane = new InfoElement();
+		infoPane = new InfoElement(this);
 		myRoot.setRight(infoPane.getBaseNode());
 
 		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
@@ -133,9 +134,14 @@ public class GUI {
 	public void setOutputText(String outputText) {
 		ioPane.getOutputField().setText(outputText);
 	}
-
-	public void bindTable(String type, ObservableList<String> l) {
-		List<TableView<String>> tables = infoPane.getTables();
+	public void addCommandHistory(String input) {
+		infoPane.setBindCommandList(input);
+	}
+	public void setInputText(String inputText) {
+		ioPane.getInputField().setText(inputText);
+	}
+	public void bindTable(String type, ObservableList<TableElements> l) {
+		List<TableView<TableElements>> tables = infoPane.getTables();
 		if (type.equals("Commands")) {
 			tables.get(1).setItems(l);
 		} else if (type.equals("User Commands")) {

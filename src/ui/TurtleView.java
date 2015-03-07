@@ -80,8 +80,11 @@ public class TurtleView implements Observer {
 		System.out.println(x2 % myCanvas.getWidth());
 		System.out.println(y2 % myCanvas.getHeight());
 		
-		myImageView.setTranslateX(x2 % myCanvas.getWidth());
-		myImageView.setTranslateY(- (y2 % myCanvas.getHeight()));
+//		myImageView.setTranslateX(x2 % myCanvas.getWidth());
+//		myImageView.setTranslateY(- (y2 % myCanvas.getHeight()));
+		myImageView.setTranslateX(Math.abs(x1 - newCoordinates.getKey()));
+		myImageView.setTranslateY(Math.abs(y1 - newCoordinates.getValue()));
+		
 
 		// set values - different coordinates
 		myImageView.setX(newCoordinates.getKey());
@@ -105,6 +108,7 @@ public class TurtleView implements Observer {
 
 		if (newX != (canvasCenterX - myImageView.getX()) || newY != (canvasCenterY - myImageView.getY()) || myHeading.getValue() != newHeading) {
 			myHeading.set(newHeading);
+			myHeading.set(myHeading.doubleValue()%360);
 			draw(myImageView.getX(), myImageView.getY(), newX, newY,
 					tModel.getVisibility());
 		}

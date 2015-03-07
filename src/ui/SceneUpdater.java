@@ -3,6 +3,10 @@ package ui;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+
+import ui_table.TableElements;
+
+
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import controller.Controller;
@@ -46,8 +50,8 @@ public class SceneUpdater implements Observer {
 		myGUI.setOutputText(outputText);
 	}
 	
+	public void setListBind(String type, ObservableList<TableElements> l) {
 
-	public void setListBind(String type, ObservableList<String> l) {
 		myGUI.bindTable(type, l);
 	}
 	public Set<String> getPrevCommandList() {
@@ -71,6 +75,10 @@ public class SceneUpdater implements Observer {
 	
 	public void createNewWorkspace() {
 		myController.createNewWorkspace();
+	}
+
+	public void addCommandHistory(String input) {
+		myGUI.addCommandHistory(input);
 	}
 
 }

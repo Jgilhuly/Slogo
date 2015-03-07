@@ -2,7 +2,7 @@ package controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Observer;
+
 import java.util.Set;
 
 import javafx.stage.Stage;
@@ -21,10 +21,10 @@ public class Controller {
 	private TreeInterpreter interpreter;
 	private WorkspaceManager myManager;
 
-	public Controller (WorkspaceManager wm) {
+	public Controller(WorkspaceManager wm) {
 		myManager = wm;
 	}
-	
+
 	public void init(Stage s) {
 
 		sceneUpdater = new SceneUpdater(s, this);
@@ -54,6 +54,15 @@ public class Controller {
 		generator.getMethodsList();
 		interpreter.interpretTree(node);
 		sceneUpdater.setOutputText(node.getValue().toString());
+
+		
+		interpreter.interpretTree(node);
+		setOutputText(node.getValue().toString());
+		addCommandHistory(input);
+
+	}
+	public void setOutputText(String outputText) {
+		sceneUpdater.setOutputText(outputText);
 	}
 	
 	private void addCommandHistory(String name, CommandTreeNode prev) {
@@ -62,6 +71,14 @@ public class Controller {
 		}
 
 	}
+	
+	public void addCommandHistory(String input) {
+		sceneUpdater.addCommandHistory(input);
+	}
+
+//	public void linkTurtles(Turtle turtleModel) {
+//		turtleModel.addObserver(sceneUpdater.getTurtleView());
+//	}
 
 
 
@@ -69,10 +86,11 @@ public class Controller {
 	public Set<String> getPrevCommandList() {
 		return previousCommands.keySet();
 	}
-	
+
 	public void createNewWorkspace() {
 		myManager.createWorkspace(null);
 	}
+
 
 
 }
