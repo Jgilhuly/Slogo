@@ -1,7 +1,8 @@
-package ui;
+package ui.elements;
 
 import java.util.ResourceBundle;
 
+import ui.GUI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

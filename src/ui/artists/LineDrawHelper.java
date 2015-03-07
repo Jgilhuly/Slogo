@@ -1,4 +1,4 @@
-package ui;
+package ui.artists;
 
 import javafx.scene.canvas.Canvas;
 import javafx.util.Pair;

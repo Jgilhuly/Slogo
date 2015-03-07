@@ -1,7 +1,9 @@
-package ui;
+package ui.elements;
 
 import java.util.ResourceBundle;
 
+import ui.Pen;
+import ui.TurtleView;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

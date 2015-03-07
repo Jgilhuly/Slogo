@@ -1,8 +1,12 @@
-package ui;
+package ui.elements;
 
 import java.io.File;
 import java.util.ResourceBundle;
 
+import ui.GUI;
+import ui.Pen;
+import ui.TurtleView;
+import util.HTMLHelpPage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;

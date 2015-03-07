@@ -18,8 +18,6 @@ public class TurtleView implements Observer {
 	private double canvasCenterX;
 	private double canvasCenterY;
 	private DoubleProperty myHeading; // in degrees, 0 is north
-	private double myWidthOffset;
-	private double myHeightOffset;
 	private StackPane myCanvasHolder;
 	private boolean turtleIsVisible;
 	private Pen myPen;
@@ -35,10 +33,6 @@ public class TurtleView implements Observer {
 		turtleIsVisible = true;
 		myHeading = new SimpleDoubleProperty();
 
-		canvasCenterX = myCanvas.getWidth() / 2;
-		canvasCenterY = myCanvas.getHeight() / 2;
-		myWidthOffset = canvasCenterX;
-		myHeightOffset = canvasCenterY;
 		myCanvas.toBack();
 
 		myCanvasHolder = canvasHolder; // used to hold the imageView within the
@@ -83,17 +77,15 @@ public class TurtleView implements Observer {
 			boolean hasTurtle) {
 		Pair<Double, Double> newCoordinates = myPen.draw(x1, y1, x2, y2, hasTurtle);
 		// move image
-//		myImageView.setTranslateX(x2);
-//		myImageView.setTranslateY(-y2);
-		myImageView.setTranslateX(newCoordinates.getKey());
-		myImageView.setTranslateY(newCoordinates.getValue());
+		System.out.println(x2 % myCanvas.getWidth());
+		System.out.println(y2 % myCanvas.getHeight());
+		
+		myImageView.setTranslateX(x2 % myCanvas.getWidth());
+		myImageView.setTranslateY(- (y2 % myCanvas.getHeight()));
 
 		// set values - different coordinates
 		myImageView.setX(newCoordinates.getKey());
 		myImageView.setY(newCoordinates.getValue());
-		
-		System.out.println(myImageView.getX());
-		System.out.println(myImageView.getY());
 
 		// rotate image
 		myImageView.setRotate(myHeading.doubleValue());
@@ -110,8 +102,9 @@ public class TurtleView implements Observer {
 		double newX = tModel.getX();
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
-		myHeading.set(newHeading);
-		if (newX != getCenterX() || newY != getCenterY()) {
+
+		if (newX != (canvasCenterX - myImageView.getX()) || newY != (canvasCenterY - myImageView.getY()) || myHeading.getValue() != newHeading) {
+			myHeading.set(newHeading);
 			draw(myImageView.getX(), myImageView.getY(), newX, newY,
 					tModel.getVisibility());
 		}
@@ -120,26 +113,6 @@ public class TurtleView implements Observer {
 					myCanvas.getWidth(), myCanvas.getHeight());
 		}
 
-	}
-
-	/**
-	 * Gets the Center X of the imageView
-	 * 
-	 * @return
-	 */
-	private double getCenterX() {
-		return (myImageView.getX() - (myCanvas.getWidth() / 20))
-				- myWidthOffset;
-	}
-
-	/**
-	 * Gets the Center Y of the imageView
-	 * 
-	 * @return
-	 */
-	private double getCenterY() {
-		return (myImageView.getY() - (myCanvas.getHeight() / 20))
-				- myHeightOffset;
 	}
 
 	public ImageView getImageView() {

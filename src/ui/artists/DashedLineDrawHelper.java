@@ -1,4 +1,4 @@
-package ui;
+package ui.artists;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -32,15 +32,19 @@ public class DashedLineDrawHelper implements LineDrawHelper{
 			
 			if (x > canvas.getWidth()) {
 				x = 0;
+				gContext.moveTo(x, y);
 			}
 			if (x < 0) {
-				x = canvas.getWidth()-1;
+				x = canvas.getWidth();
+				gContext.moveTo(x, y);
 			}
 			if (y > canvas.getHeight()) {
 				y = 0;
+				gContext.moveTo(x, y);
 			}
 			if (y < 0) {
 				y = canvas.getHeight()-1;
+				gContext.moveTo(x, y);
 			}
 			
 			on = !on;

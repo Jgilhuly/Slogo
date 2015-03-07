@@ -2,6 +2,11 @@ package ui;
 
 import java.util.*;
 
+import ui.elements.CanvasElement;
+import ui.elements.IOElement;
+import ui.elements.InfoElement;
+import ui.elements.MenuBarElement;
+import ui.elements.TPropertiesElement;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -62,7 +67,7 @@ public class GUI {
 		infoPane = new InfoElement();
 		myRoot.setRight(infoPane.getBaseNode());
 
-		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true, this);
+		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
 		tView = makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
 
 		propertiesPane = new TPropertiesElement(myResources, tView, myPen);
