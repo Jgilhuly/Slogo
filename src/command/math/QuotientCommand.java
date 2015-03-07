@@ -5,11 +5,11 @@ import command.Command;
 
 public class QuotientCommand extends Command {
 
-	public QuotientCommand (double hi, double bye) {
+    public QuotientCommand (double hi, double bye) {
         super(hi, bye);
     }
 
-    public double calculateValue(List<Object> param) {
-		return (double) param.get(0) / (double) param.get(1);
-	}
+    public double calculateValue() {
+	return double1 / double2;
+    }
 }

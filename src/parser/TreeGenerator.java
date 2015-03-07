@@ -32,25 +32,6 @@ public class TreeGenerator implements TreeWrapper {
 	 */
 	public CommandTreeNode createCommands(String input, String language) {
 		try {
-<<<<<<< HEAD
-			myInput = input;
-			String value = myInput.get(index);
-			myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0,
-					null);
-			int numParams = obtainNumParams(value);
-			printTestStatements(value, obtainSubCommand(value), null);
-			index++;
-			boolean to = value.equals("MakeUserInstruction");
-			if (to) {
-				isMethod = true;
-			}
-			for (int i = 0; i < numParams; i++) {
-				helper(myRoot);
-			}
-
-			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getValue());
-			return myRoot;
-=======
 			myInput = Arrays.asList(input.split("\\s+"));
 			this.language = language;
 			handlerMap = createHandlerMap();
@@ -61,7 +42,6 @@ public class TreeGenerator implements TreeWrapper {
 					+ CommandCase.getRoot().getName());
 
 			return CommandCase.getRoot();
->>>>>>> cb2c6197c6142e0211c3c563c588b54d237c13ef
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			if (ListStartCount != ListEndCount)

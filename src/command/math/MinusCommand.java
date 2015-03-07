@@ -5,7 +5,11 @@ import command.Command;
 
 public class MinusCommand extends Command {
 
-	public double calculateValue(List<Object> param) {
-		return -(double) param.get(0);
-	}
+	    public MinusCommand (double op1) {
+	        super(op1);
+	    }
+	    
+	    public double calculateValue() {
+	        return -double1;
+	    }
 }

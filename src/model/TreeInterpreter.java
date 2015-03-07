@@ -1,8 +1,10 @@
 package model;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import command.Command;
 import parser.CommandTreeNode;
@@ -18,14 +20,17 @@ public class TreeInterpreter {
         factory = new CommandFactory();
         myTurtle = turtle;
     }
-    
     public void interpretTree (CommandTreeNode node) {
-
+//        Method method; 
+//        if (!(Arrays.asList("VARIABLE", "CONSTANT", "BRACKET").contains(node.getType()))){
+//            method = getCommand(node);
+//            
+//        }
 		List<Object> paramList = new ArrayList<>();
 		if (!isLeaf(node)) {
 			if (!(node.getType().equals("BRACKET"))) {
 				for (CommandTreeNode child : node.getChildren()) { 
-					interpretTree(child);
+				    interpretTree(child);
 					paramList.add(node.getType().equals("COMMAND.CONTROL") ? child : child.getValue());
 				}
 			}
@@ -34,6 +39,21 @@ public class TreeInterpreter {
 		// variables.printThing();
 	}
 
+    public Method getCommand(CommandTreeNode node){
+      Command c = factory.createCommand(node.getType(), node.getName());
+      Method method = null;
+      System.out.println(c.toString());
+      try {
+          method = c.getClass().getDeclaredMethod("calculateValue");
+          
+          return method;
+      } catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
+          System.err.print("Error processing Command" + c.getClass().getName());
+          e.printStackTrace();
+      }
+      return method;
+      
+    }
 
     private boolean isLeaf (CommandTreeNode node){
         return node.getChildren().isEmpty(); 
@@ -45,7 +65,8 @@ public class TreeInterpreter {
         cArg[0] = List.class;
         Method method;
         try {
-            method = c.getClass().getDeclaredMethod("calculateValue", cArg);
+            method = c.getClass().getDeclaredMethod("calculateValue", null);
+            System.out.println(c.getClass().toString());
             Double value = (Double) method.invoke(c, paramList);
             node.setValue(value);
         }
@@ -55,7 +76,6 @@ public class TreeInterpreter {
             e.printStackTrace();
         }
     }
-//    public Double getDisplayValue()
 
     public void update(CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()){
