@@ -1,16 +1,26 @@
 package command.turtle;
 
-import java.util.List;
+
 
 import command.Command;
-
 import model.Turtle;
 
+/*
+ * turns turtle to an absolute heading
+ * returns number of degrees moved
+ */
+
 public class SetHeadingCommand extends Command {
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(1);
-		t.setHeading((double) param.get(0));
-		t.updateTurtleViewers();
-		return (double) param.get(0);
+    private Turtle myTurtle;
+    private double double1;
+    
+    public SetHeadingCommand(double op1, Turtle t){
+        double1 = op1;
+        myTurtle = t;
+    }
+	public double calculateValue() {
+		myTurtle.setHeading(double1);
+		myTurtle.updateTurtleViewers();
+		return double1;
 	}
 }

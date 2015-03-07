@@ -7,14 +7,14 @@ import java.util.List;
 public class CommandTreeNode {
 	private String myType;
 	private String myName;
-	private double myValue;
+	private Object myValue;
 	private List<CommandTreeNode> myChildren;
 
-	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> Children) {
-		this.myType = type;
-		this.myName = name;
-		this.myValue = value;
-		this.myChildren = Children;
+	public CommandTreeNode(String type, String name, double value, List<CommandTreeNode> children) {
+		myType = type;
+		myName = name;
+		myValue = value;
+		myChildren = children;
 		myChildren = new ArrayList<>();
 	}
 	
@@ -65,5 +65,7 @@ public class CommandTreeNode {
 
 		return true;
 	}
-
+	public String toString() {
+		return myValue.toString();
+	}
 }

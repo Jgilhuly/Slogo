@@ -17,4 +17,5 @@ public class TangentCommand extends Command {
     public double calculateValue(){
         return ((double) Math.tan(Math.toRadians(double1)));
     }
+
 }

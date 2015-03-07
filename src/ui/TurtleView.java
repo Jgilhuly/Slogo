@@ -22,8 +22,8 @@ public class TurtleView implements Observer {
 	private boolean turtleIsVisible;
 	private Pen myPen;
 
-	public TurtleView(Image imageIn, Canvas canvasIn,
-			double xIn, double yIn, StackPane canvasHolder, Pen penIn) {
+	public TurtleView(Image imageIn, Canvas canvasIn, double xIn, double yIn,
+			StackPane canvasHolder, Pen penIn) {
 		myImageView = new ImageView();
 		myCanvas = canvasIn;
 		myImageView.setImage(imageIn);
@@ -32,6 +32,8 @@ public class TurtleView implements Observer {
 		myPen = penIn;
 		turtleIsVisible = true;
 		myHeading = new SimpleDoubleProperty();
+		canvasCenterX = myCanvas.getWidth() / 2;
+		canvasCenterY = myCanvas.getHeight() / 2;
 
 		myCanvas.toBack();
 
@@ -75,22 +77,28 @@ public class TurtleView implements Observer {
 	 */
 	private void draw(double x1, double y1, double x2, double y2,
 			boolean hasTurtle) {
-		Pair<Double, Double> newCoordinates = myPen.draw(x1, y1, x2, y2, hasTurtle);
+		Pair<Double, Double> newCoordinates = myPen.draw(x1, y1, x2, y2,
+				hasTurtle);
+
 		// move image
-		System.out.println(x2 % myCanvas.getWidth());
-		System.out.println(y2 % myCanvas.getHeight());
-		
-//		myImageView.setTranslateX(x2 % myCanvas.getWidth());
-//		myImageView.setTranslateY(- (y2 % myCanvas.getHeight()));
-		myImageView.setTranslateX(Math.abs(x1 - newCoordinates.getKey()));
-		myImageView.setTranslateY(Math.abs(y1 - newCoordinates.getValue()));
-		
+		// myImageView.setTranslateX(newCoordinates.getKey() - x1); These lines
+		// should provide wrapping, but we were unable to fix a bug with the y position
+		// myImageView.setTranslateY(newCoordinates.getValue() - y1);
+		myImageView.setTranslateX(x2);
+		myImageView.setTranslateY(-y2);
 
 		// set values - different coordinates
 		myImageView.setX(newCoordinates.getKey());
 		myImageView.setY(newCoordinates.getValue());
 
+		System.out.println("X: " + myImageView.getX());
+		System.out.println("Y: " + myImageView.getY());
+
 		// rotate image
+		updateRotation(hasTurtle);
+	}
+
+	private void updateRotation(boolean hasTurtle) {
 		myImageView.setRotate(myHeading.doubleValue());
 		myImageView.setVisible(hasTurtle && turtleIsVisible);
 	}
@@ -101,16 +109,20 @@ public class TurtleView implements Observer {
 	 */
 	public void update(Observable o, Object arg) {
 		Turtle tModel = (Turtle) o;
-		
+
 		double newX = tModel.getX();
 		double newY = tModel.getY();
 		double newHeading = tModel.getHeading();
 
-		if (newX != (canvasCenterX - myImageView.getX()) || newY != (canvasCenterY - myImageView.getY()) || myHeading.getValue() != newHeading) {
-			myHeading.set(newHeading);
-			myHeading.set(myHeading.doubleValue()%360);
+		if (newX != (canvasCenterX - myImageView.getX())
+				|| newY != (canvasCenterY - myImageView.getY())) {
 			draw(myImageView.getX(), myImageView.getY(), newX, newY,
 					tModel.getVisibility());
+		}
+		if (myHeading.getValue() != newHeading) {
+			myHeading.set(newHeading);
+			myHeading.set(myHeading.doubleValue() % 360);
+			updateRotation(tModel.getVisibility());
 		}
 		if (tModel.getCleared()) {
 			myCanvas.getGraphicsContext2D().clearRect(0, 0,
@@ -137,6 +149,10 @@ public class TurtleView implements Observer {
 		myImageView = new ImageView(image);
 		myImageView.setX(oldX);
 		myImageView.setY(oldY);
+
+		myImageView.setFitWidth(30);
+		myImageView.setFitHeight(40);
+
 		myCanvasHolder.getChildren().add(myImageView);
 	}
 

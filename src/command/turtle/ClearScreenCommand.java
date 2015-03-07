@@ -1,25 +1,30 @@
 package command.turtle;
 
-import java.util.List;
-
 import command.Command;
-
 import model.Turtle;
-
+/**
+ * erases turtle's trails and sends it to the home position
+ * returns the distance turtle moved
+ * @author GA
+ *
+ */
 public class ClearScreenCommand extends Command {
-	private static final int ORIGIN_X = 0;
-	private static final int ORIGIN_Y = 0;
-	private static final int ORIGIN_HEADING = 0;
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(0);
-		double distance = Math.sqrt(Math.pow(t.getX() - ORIGIN_X, 2)
-				+ Math.pow(t.getY() - ORIGIN_Y, 2));
-		t.setXY(ORIGIN_X, ORIGIN_Y);
-		t.setHeading(ORIGIN_HEADING);
-		t.setClear(true);
-		t.updateTurtleViewers();
-		t.setClear(false);
+	private Turtle myTurtle;
+	
+	
+	public ClearScreenCommand(Turtle t) {
+		myTurtle = t;
+	}
+	
+	public double calculateValue() {
+		double distance = Math.sqrt(Math.pow(myTurtle.getX() - 0, 2) + Math.pow(myTurtle.getY() - 0, 2));
+		myTurtle.setXY(0, 0);
+		myTurtle.setHeading(0);
+		myTurtle.setClear(true);
+		myTurtle.updateTurtleViewers();
+		myTurtle.setClear(false);
 		return distance;
 
 	}
+
 }

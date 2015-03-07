@@ -4,7 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Pair;
 
-public class DashedLineDrawHelper extends LineDrawHelper{
+public class DashedLineDrawHelper implements LineDrawHelper{
 	protected int intervalConstant = 10;
 	
 	@Override
@@ -30,8 +30,22 @@ public class DashedLineDrawHelper extends LineDrawHelper{
 			x -= dx;
 			y -= dy;
 					
-			checkEdges(canvas, gContext, y, y);
-			
+//			if (x > canvas.getWidth()) {
+//				x = 0;
+//				gContext.moveTo(x, y);
+//			}
+//			if (x < 0) {
+//				x = canvas.getWidth();
+//				gContext.moveTo(x, y);
+//			}
+//			if (y > canvas.getHeight()) {
+//				y = 0;
+//				gContext.moveTo(x, y);
+//			}
+//			if (y < 0) {
+//				y = canvas.getHeight();
+//				gContext.moveTo(x, y);
+//			}			
 			on = !on;
 		}
 		

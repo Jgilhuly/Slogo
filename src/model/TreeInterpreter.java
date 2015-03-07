@@ -5,22 +5,26 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import command.Command;
+import errors.IllegalParameterNumberException;
 import parser.CommandTreeNode;
 
 
 public class TreeInterpreter {
     private CommandFactory factory;
     private VariableList variables;
-    private Turtle myTurtle;
-
-    public TreeInterpreter (VariableList varList, Turtle turtle) {
-        variables = varList;
+    private int activeTurtleIndex;
+    private List<Turtle> listTurtles;
+    
+    
+    public TreeInterpreter () {
         factory = new CommandFactory();
-        myTurtle = turtle;
+		variables = new VariableList();
+		activeTurtleIndex = 1;
+		listTurtles =new ArrayList<Turtle>();
     }
+
 
     public void interpretTree (CommandTreeNode node) {
         // Method method;
@@ -61,8 +65,9 @@ public class TreeInterpreter {
         }
         catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
-            System.err.print("Illegal Argument present");
-            e.printStackTrace();
+        	e.printStackTrace();
+        	System.err.print("Error processing Command" + c.getClass().getName());
+        	throw new IllegalParameterNumberException();
         }
         Method method = null;
         try {
@@ -84,7 +89,7 @@ public class TreeInterpreter {
     public void update (CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()) {
             case "COMMAND.TURTLE":
-                paramList.add(myTurtle);
+                paramList.add(listTurtles.get(activeTurtleIndex-1));
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
@@ -105,7 +110,11 @@ public class TreeInterpreter {
         }
     }
 
-    public VariableList getVariableList () {
+    public List<Turtle> getTurtleList() {
+        return listTurtles;
+    }
+    
+    public VariableList getVariableList(){
         return variables;
     }
 

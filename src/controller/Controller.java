@@ -2,15 +2,13 @@ package controller;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import java.util.Set;
 
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import main.WorkspaceManager;
 import model.TreeInterpreter;
 import model.Turtle;
-import model.Variable;
-import model.VariableList;
 import parser.CommandTreeNode;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
@@ -18,10 +16,8 @@ import ui.TurtleView;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
-	private Map<String, CommandTreeNode> commands;
-	private Turtle turtle;
-	private VariableList variables;
-	private TreeGenerator generator = new TreeGenerator();
+	private Map<String, CommandTreeNode> previousCommands;
+	private TreeGenerator generator;
 	private TreeInterpreter interpreter;
 	private WorkspaceManager myManager;
 
@@ -30,16 +26,21 @@ public class Controller {
 	}
 
 	public void init(Stage s) {
-		Turtle t = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
+		previousCommands = new HashMap<String, CommandTreeNode>();
+		interpreter = new TreeInterpreter();
+		generator = new TreeGenerator();
 		sceneUpdater.initGUI();
-		variables = new VariableList();
-		commands = new HashMap<String, CommandTreeNode>();
+		
+		
+	}
+	public void createTurtle(TurtleView view) {
+		Turtle t = new Turtle();
+		interpreter.getTurtleList().add(t);
+		t.addObserver(view);
+		
 	}
 
-	// public void syncCommandandVariableLists() {
-	// variables = new SimpleListProperty<Variable>();
-	// }
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -49,27 +50,25 @@ public class Controller {
 	 */
 	public void parseCommand(String input, String language) {
 		CommandTreeNode node = generator.createCommands(input, language);
-
-		// get method list if needed - up to back-end on how to deal with this
-		// case
-		// generator.getMethodsList();
-
-		interpreter = new TreeInterpreter(variables, turtle);
+		generator.getMethodsList();
 		interpreter.interpretTree(node);
-		if (variables != null) {
-			// sceneUpdater.setListBind("Variable", variables.getList());
-		}
-		setOutputText(Double.toString(node.getValue()));
-		addCommandHistory(input);
-	}
+		sceneUpdater.setOutputText(node.getValue().toString());
 
-	/**
-	 * Sends text to be outputted to the front-end from the back-end
-	 * 
-	 * @param outputText
-	 */
+		
+		interpreter.interpretTree(node);
+		setOutputText(node.getValue().toString());
+		addCommandHistory(input);
+
+	}
 	public void setOutputText(String outputText) {
 		sceneUpdater.setOutputText(outputText);
+	}
+	
+	private void addCommandHistory(String name, CommandTreeNode prev) {
+		if (!previousCommands.containsKey(name)) {
+			previousCommands.put(name, prev);
+		}
+
 	}
 	
 	public void addCommandHistory(String input) {
@@ -80,26 +79,20 @@ public class Controller {
 //		turtleModel.addObserver(sceneUpdater.getTurtleView());
 //	}
 
-	public ObservableList<Variable> getVariableList() {
-		return variables.getList();
-	}
+
+
 
 	public Set<String> getPrevCommandList() {
-		return commands.keySet();
+		return previousCommands.keySet();
 	}
 
 	public void createNewWorkspace() {
 		myManager.createWorkspace(null);
 	}
 
-	public void createTurtle(TurtleView tView) {
-		Turtle t = new Turtle();
-		t.addObserver(tView);
-	}
 
-	// public void play() {
-	// frame = addKeyFrame(fps);
-	// animation.getKeyFrames().add(frame);
-	// animation.setCycleCount(Animation.INDEFINITE);
-	// }
+
+
+
+
 }

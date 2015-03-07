@@ -1,7 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
+
 import command.Command;
 
 
@@ -19,11 +20,7 @@ public class CommandFactory {
 		}
 		return command;
 	}
-
-
-    public Command createBracket (String name) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	
+	
 	
 }
