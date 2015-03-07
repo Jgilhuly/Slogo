@@ -1,38 +1,48 @@
 package parser;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import util.PatternMapper;
 import errors.CommandNotFoundException;
 
-public class CommandCase extends TreeGenerator {
+public class CommandCase implements Cases {
 	private Map<String, String[]> parametersMap;
 	private static final int PARAM_INDEX = 0;
 	private static final int TYPE_INDEX = 1;
 	private boolean makingUserInstruction;
 	private List<String> methodList = new ArrayList<>();
+	private List<Entry<String, Pattern>> languagePatternList;
 
-	public CommandCase() {
-		parametersMap = createParametersMap();
+	private TreeWrapper wrapper;
+	private List<String> myInput;
+	private CommandTreeNode myRoot;
+
+	public CommandCase(TreeWrapper wrapper, List<String> input) {
+		this.wrapper = wrapper;
+		parametersMap = PatternMapper.createParametersMap();
+		myInput = input;
 	}
 
-	public void initiate(CommandTreeNode root, String language) {
-		String value = useResourceBundle(myInput.get(index));
+	public void initiate(String language) {
+		languagePatternList = PatternMapper.makePatterns(language);
+		String value = useResourceBundle(myInput.get(wrapper.getIndex()));
 		makingUserInstruction = value.equals("MakeUserInstruction");
 
 		myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0, null);
 		int numParams = obtainNumParams(value);
-		printTestStatements(value, obtainSubCommand(value), null);
-		index++;
+		wrapper.printTestStatements(value, obtainSubCommand(value), null);
+		wrapper.incrementIndex();
 		for (int i = 0; i < numParams; i++) {
-			super.helper(myRoot);
+			wrapper.recurse(myRoot);
 		}
+	}
+
+	public CommandTreeNode getRoot() {
+		return myRoot;
 	}
 
 	/**
@@ -40,9 +50,9 @@ public class CommandCase extends TreeGenerator {
 	 *
 	 * @param root
 	 */
-	protected void helper(CommandTreeNode root) {
-		String value = useResourceBundle(myInput.get(index));
-		index++;
+	public void recurse(CommandTreeNode root) {
+		String value = useResourceBundle(myInput.get(wrapper.getIndex()));
+		wrapper.incrementIndex();
 		if (makingUserInstruction) {
 			makingUserInstruction = false;
 			makingInstructionsCase(root, value);
@@ -54,15 +64,15 @@ public class CommandCase extends TreeGenerator {
 				value, 0, null);
 		root.add(temp);
 
-		printTestStatements(value, temp.getType(), root.getName());
+		wrapper.printTestStatements(value, temp.getType(), root.getName());
 
 		if (value.equals("Repeat")) {
-			while (!myInput.get(index).equals("]")) {
-				super.helper(temp);
+			while (!myInput.get(wrapper.getIndex()).equals("]")) {
+				wrapper.recurse(temp);
 			}
 		} else {
 			for (int i = 0; i < numParams; i++) {
-				super.helper(temp);
+				wrapper.recurse(temp);
 			}
 		}
 	}
@@ -71,8 +81,8 @@ public class CommandCase extends TreeGenerator {
 		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
 				value, 0, null);
 		root.add(temp);
-		printTestStatements(value, temp.getType(), root.getName());
-		super.helper(root);
+		wrapper.printTestStatements(value, temp.getType(), root.getName());
+		wrapper.recurse(root);
 	}
 
 	private String useResourceBundle(String input) {
@@ -87,25 +97,6 @@ public class CommandCase extends TreeGenerator {
 		}
 		// if none found
 		throw new CommandNotFoundException(input);
-	}
-
-	/**
-	 * Creates a map that maps the Key to the number of parameters and its
-	 * subcommand type
-	 * 
-	 * @return
-	 */
-	private HashMap<String, String[]> createParametersMap() {
-		ResourceBundle resources = ResourceBundle
-				.getBundle("parser/parameters");
-		Enumeration<String> paramKeys = resources.getKeys();
-		HashMap<String, String[]> newMap = new HashMap<>();
-
-		while (paramKeys.hasMoreElements()) {
-			String Key = paramKeys.nextElement();
-			newMap.put(Key, resources.getString(Key).split(","));
-		}
-		return newMap;
 	}
 
 	/**
@@ -132,8 +123,9 @@ public class CommandCase extends TreeGenerator {
 		}
 
 	}
-	
+
 	public List<String> getMethodsList() {
 		return methodList;
 	}
+
 }

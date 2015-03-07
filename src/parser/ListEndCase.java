@@ -2,10 +2,10 @@ package parser;
 
 import java.util.List;
 
-public class GroupEndCase implements Cases{
+public class ListEndCase implements Cases{
 	private TreeWrapper wrapper;
 	private List<String> myInput;
-	public GroupEndCase(TreeWrapper wrapper,List<String> input) {
+	public ListEndCase(TreeWrapper wrapper,List<String> input) {
 		this.wrapper = wrapper;
 		myInput = input;
 	}

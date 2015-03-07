@@ -1,5 +1,7 @@
 package parser;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -11,17 +13,15 @@ import util.PatternMapper;
 import errors.NoInputFoundException;
 import errors.UnmatchedBracketException;
 
-public class TreeGenerator {
-	private static final int START_INDEX = 0;
-	private static Map<Pattern, TreeGenerator> handlerMap;
-	protected static List<Entry<String, Pattern>> languagePatternList;
-	protected static List<String> myInput;
-	protected static int index;
-	protected static CommandTreeNode myRoot;
-	private static String language;
-	protected static int ListStartCount = 0;
-	protected static int ListEndCount = 0;
-	private static CommandCase CommandCase;
+public class TreeGenerator implements TreeWrapper {
+	private Map<Pattern, Cases> handlerMap;
+	private List<String> myInput;
+	private int index;
+	private String language;
+	private CommandCase CommandCase;
+
+	private int ListStartCount = 0;
+	private int ListEndCount = 0;
 
 	/**
 	 * Create a CommandTreeNode that includes all the commands
@@ -32,16 +32,16 @@ public class TreeGenerator {
 	 */
 	public CommandTreeNode createCommands(String input, String language) {
 		try {
-			handlerMap = createHandlerMap();
-			languagePatternList = PatternMapper.makePatterns(language);
 			myInput = Arrays.asList(input.split("\\s+"));
+			this.language = language;
+			handlerMap = createHandlerMap();
 			index = 0;
+			CommandCase.initiate(language);
+			
+			System.out.println("FINAL ROOT VALUE IS: "
+					+ CommandCase.getRoot().getName());
 
-			helper(myRoot);
-
-			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getName());
-
-			return myRoot;
+			return CommandCase.getRoot();
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
 			if (ListStartCount != ListEndCount)
@@ -50,64 +50,110 @@ public class TreeGenerator {
 		}
 	}
 
-	protected void helper(CommandTreeNode root) {
+	public void recurse(CommandTreeNode root) {
 		if (index >= myInput.size()) {
-			return;
-		}
-		if (index == START_INDEX) {
-			CommandCase.initiate(root, language);
 			return;
 		}
 		for (Pattern pt : handlerMap.keySet()) {
 			if (pt.matcher(myInput.get(index)).matches()) {
-				TreeGenerator sc = handlerMap.get(pt);
-				sc.helper(root);
+				Cases sc = handlerMap.get(pt);
+				sc.recurse(root);
 				break;
 			}
 		}
 	}
 
-	protected void printTestStatements(String value, String type, String name) {
+	public void printTestStatements(String value, String type, String name) {
 		System.out.println(value);
 		System.out.println("Type is: " + type);
 		System.out.println("Root value is: " + name);
 		System.out.println();
 	}
-	
-	private Map<Pattern, TreeGenerator> createHandlerMap() {
+
+	private Map<Pattern, Cases> createHandlerMap() {
 		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper
 				.makePatterns("Syntax");
-		Map<Pattern, TreeGenerator> ret = new HashMap<>();
+		Map<Pattern, Cases> ret = new HashMap<>();
 		for (Entry<String, Pattern> p : syntaxPatternList) {
 			String category = p.getKey();
-			switch (category) {
-			case "ListStart":
-				ret.put(p.getValue(), new ListStartCase());
-				break;
-			case "Command":
-				CommandCase = new CommandCase();
-				ret.put(p.getValue(), CommandCase);
-				break;
-			case "Variable":
-				ret.put(p.getValue(), new VariableCase());
-				break;
-			case "Constant":
-				ret.put(p.getValue(), new ConstantCase());
-				break;
-			case "GroupStart":
-				ret.put(p.getValue(), new GroupStartCase());
-				break;
-			case "GroupEnd":
-				ret.put(p.getValue(), new GroupEndCase());
-				break;
-			default:
-				break;
+			try {
+				Class<?> myInstance = Class.forName("parser." + category
+						+ "Case");
+				Constructor<?> constructor = myInstance
+						.getConstructor(new Class[] { TreeWrapper.class,
+								List.class });
+				Cases myCases = (Cases) constructor.newInstance(
+						(TreeWrapper) this, myInput);
+				if (category.equals("Command")) {
+					CommandCase = new CommandCase((TreeWrapper) this, myInput);
+					ret.put(p.getValue(), CommandCase);
+				} else
+					ret.put(p.getValue(), myCases);
+			} catch (NoSuchMethodException | SecurityException
+					| IllegalArgumentException | ClassNotFoundException
+					| IllegalAccessException | InstantiationException
+					| InvocationTargetException e) {
+				e.printStackTrace();
 			}
+			// switch (category) {
+			// case "ListStart":
+			// ret.put(p.getValue(), new ListStartCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "ListEnd":
+			// ret.put(p.getValue(), new ListEndCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "Command":
+			// CommandCase = new CommandCase((TreeWrapper) this, myInput);
+			// ret.put(p.getValue(), CommandCase);
+			// break;
+			// case "Variable":
+			// ret.put(p.getValue(), new VariableCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "Constant":
+			// ret.put(p.getValue(), new ConstantCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "GroupStart":
+			// ret.put(p.getValue(), new GroupStartCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "GroupEnd":
+			// ret.put(p.getValue(), new GroupEndCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// default:
+			// break;
+			// }
 		}
 		return ret;
 	}
-	
+
 	public List<String> getMethodsList() {
 		return CommandCase.getMethodsList();
+	}
+
+	public void incrementIndex() {
+		index++;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	@Override
+	public void incrementListStartIndex() {
+		ListStartCount++;
+	}
+
+	@Override
+	public void incrementListEndIndex() {
+		ListEndCount++;
 	}
 }
