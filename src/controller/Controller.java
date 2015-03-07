@@ -30,7 +30,7 @@ public class Controller {
 	}
 	
 	public void init(Stage s) {
-		turtle = new Turtle();
+		Turtle t = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
 		sceneUpdater.initGUI();
 		variables = new VariableList();
@@ -84,6 +84,8 @@ public class Controller {
 	}
 
 	public void createTurtle(TurtleView tView) {
+		Turtle t = new Turtle();
+		t.addObserver(tView);
 	}
 
 	// public void play() {
