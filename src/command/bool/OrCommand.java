@@ -2,6 +2,11 @@ package command.bool;
 
 import command.Command;
 
+/**
+ *  returns 1 if exp1 or exp2 are non-zero, otherwise 0
+ * @author OWNER
+ *
+ */
 public class OrCommand extends Command{
     private double double1;
     private double double2;

@@ -6,31 +6,44 @@ import model.Variable;
 import parser.CommandTreeNode;
 import command.Command;
 
+
+/**
+ * runs command(s) for each value specified in the range, i.e., from (1 - limit) inclusive
+ * returns the value of the final command executed
+ * 
+ * @author CZ
+ *
+ */
 public class DoTimesCommand extends Command {
-    /**
-     * TODO: UNDO HACK WAY TO RETRIEVE PARAMETER NODES!!!
-     * Current method extracts "second" bracket node from children list of the 1st bracket node
-     */
-    public double calculateValue(List<Object> param) {
-        TreeInterpreter yay = (TreeInterpreter) param.get(1);
-        List<CommandTreeNode> parameters = ((CommandTreeNode) param.get(0)).getChildren(); 
-        CommandTreeNode bracket = parameters.get(parameters.size() -1);
-//        List<CommandTreeNode> subCommands = ((CommandTreeNode) param.get(1)).getChildren();
-        List<CommandTreeNode> subCommands = (bracket).getChildren();
-        Variable shit = yay.getVariableList().get(parameters.get(0).getName());
-        
-        for (int j = 1; j < parameters.size(); j++){
-            yay.interpretTree(parameters.get(j));
+    private List<CommandTreeNode> parameters;
+    private List<CommandTreeNode> subCommands;
+    private TreeInterpreter tree;
+
+    public DoTimesCommand (CommandTreeNode node1, CommandTreeNode node2, TreeInterpreter t) {
+        parameters = node1.getChildren();
+        subCommands = node2.getChildren();
+        tree = t;
+    }
+
+    public double calculateValue () {
+        Variable var = tree.getVariableList().get(parameters.get(0).getName());
+
+        for (int j = 1; j < parameters.size(); j++) {
+            tree.interpretTree(parameters.get(j));
         }
+
         int limit = (int) parameters.get(1).getValue();
 
-        for(int i = 0; i < limit; i++){
-            for(int j = 0; j < subCommands.size(); j++){
-                yay.interpretTree(subCommands.get(j));
+        for (int i = 0; i < limit; i++) {
+            for (int j = 0; j < subCommands.size(); j++) {
+                tree.interpretTree(subCommands.get(j));
             }
-            
-            yay.getVariableList().get(shit.getName()).setValue(subCommands.get(subCommands.size() - 1).getValue());//Is this a correct interpretation?
+            tree.getVariableList().get(var.getName())
+                    .setValue(subCommands.get(subCommands.size() - 1).getValue());// Is this a
+                                                                                  // correct
+                                                                                  // interpretation?
         }
-        return shit.getValue();
+        return var.getValue();
     }
+
 }

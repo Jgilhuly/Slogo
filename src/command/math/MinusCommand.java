@@ -1,9 +1,12 @@
 package command.math;
 
-import java.util.List;
 import command.Command;
 
-
+/**
+ * Returns the negative of a number
+ * @author OWNER
+ *
+ */
 public class MinusCommand extends Command {
     private double double1;
     

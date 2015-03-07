@@ -2,6 +2,11 @@ package command.math;
 
 import command.Command;
 
+/**
+ * Returns the quotient of two numbers
+ * @author OWNER
+ *
+ */
 public class QuotientCommand extends Command {
     private double double1;
     private double double2;

@@ -2,6 +2,11 @@ package command.math;
 
 import command.Command;
 
+/**
+ * Returns the tangent of a given number, in radians
+ * @author OWNER
+ *
+ */
 public class TangentCommand extends Command {
     private double double1;
     

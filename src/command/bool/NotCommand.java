@@ -2,6 +2,11 @@ package command.bool;
 
 import command.Command;
 
+/**
+ * returns 1 if expression is 0; 0 if expression is non-zero
+ * @author GA, CZ
+ *
+ */
 
 public class NotCommand extends Command {
     private double double1;

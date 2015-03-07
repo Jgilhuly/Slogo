@@ -1,7 +1,11 @@
 package command.math;
 
 import command.Command;
-
+/**
+ * Returns the difference between two numbers
+ * @author OWNER
+ *
+ */
 public class DifferenceCommand extends Command {
     private double double1;
     private double double2;
