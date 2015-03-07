@@ -1,21 +1,28 @@
 package command.turtle;
 
-import java.util.List;
-
 import model.Turtle;
 import command.Command;
-
+/**
+ * moves turtle forward in its current heading by pixels distance
+ * returns the value of pixels
+ * @author GA
+ *
+ */
 public class ForwardCommand extends Command {
-
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(1);
-		double newX = t.getX() + (double) param.get(0) * Math.sin(t.getHeading()*Math.PI/180);
-		double newY = t.getY() + (double) param.get(0) * Math.cos(t.getHeading()*Math.PI/180);
-		t.setXY(newX, newY);
-		t.updateTurtleViewers();
-		return (double) param.get(0);
-		
+    private Turtle myTurtle;
+    private double double1;
+    
+    public ForwardCommand(double op1, Turtle t){
+        double1 = op1;
+        myTurtle = t;
+    }
+    
+    public double calculateValue() {
+		double newX = myTurtle.getX() + double1 * Math.sin(myTurtle.getHeading() * Math.PI / 180);
+		double newY = myTurtle.getY() + double1 * Math.cos(myTurtle.getHeading() * Math.PI / 180);
+		myTurtle.setXY(newX, newY);
+		myTurtle.updateTurtleViewers();
+		return double1;
 	}
 
-	
 }

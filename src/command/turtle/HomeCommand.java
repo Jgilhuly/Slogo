@@ -1,27 +1,28 @@
 package command.turtle;
 
-import java.util.List;
 
 import command.Command;
-
 import model.Turtle;
 
 /**
- * resets the turtle's position to 
- * @author GA
+ * moves turtle to the center of the screen (0,0)
+ * returns the distance turtle moved
  *
  */
-public class HomeCommand extends Command{
-	private static final int ORIGIN_X = 0;
-	private static final int ORIGIN_Y = 0;
+public class HomeCommand extends Command{	
+	private Turtle myTurtle;
 	
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(0);
-		double distance = Math.sqrt(Math.pow(t.getX() - ORIGIN_X, 2)
-				+ Math.pow(t.getY() - ORIGIN_Y, 2));
-		t.setXY(ORIGIN_X, ORIGIN_Y);
-		t.updateTurtleViewers();
+	private HomeCommand(Turtle t) {
+		myTurtle = t;
+	}
+	
+	public double calculateValue() {
+		double distance = Math.sqrt(Math.pow(myTurtle.getX() - 0, 2) + Math.pow(myTurtle.getY() - 0, 2));
+		myTurtle.setXY(0, 0);
+		myTurtle.updateTurtleViewers();
 		return distance;
 
 	}
+
+
 }

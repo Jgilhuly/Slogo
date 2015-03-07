@@ -1,33 +1,26 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+
+
+
 import command.Command;
 
 
 public class CommandFactory {
 
-	public Command createCommand(String prefix, String commandName) {
-		Command object = null;
+	public Class<?> createCommand(String prefix, String commandName) {
+//		Command object = null;
+	        Class<?> command = null;
 		try {
-
-			Class<?> command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
-
-			object = (Command) command.newInstance();
-			
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			// NEED TO THROW ERRORS
+			command = Class.forName(prefix.toLowerCase() + "." + commandName + "Command");
+//			object = (Command) command.newInstance();	
+		} catch (ClassNotFoundException e) {
+		        System.err.println("Error creating Command; Command not found!");
 			e.printStackTrace();
 		}
-		return object;
-		
+		return command;
 	}
-
-
-    public Command createBracket (String name) {
-        // TODO Auto-generated method stub
-        return null;
-    }
+	
+	
 	
 }
