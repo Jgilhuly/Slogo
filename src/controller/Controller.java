@@ -24,13 +24,12 @@ public class Controller {
         myManager = wm;
         interpreter = new TreeInterpreter();
         generator = new TreeGenerator();
+        previousCommands = new HashMap<String, CommandTreeNode>();
     }
 
     public void init (Stage s) {
         sceneUpdater = new SceneUpdater(s, this);
-        previousCommands = new HashMap<String, CommandTreeNode>();
         sceneUpdater.initGUI();
-
     }
 
     public void createTurtle (TurtleView view) {
@@ -48,16 +47,14 @@ public class Controller {
      */
     public void parseCommand (String input, String language) {
         CommandTreeNode node = generator.createCommands(input, language);
-        generator.getMethodsList();
+        generator.getMethodsList(); //TODO: USE TO GET USER GENERATED COMMANDS
         interpreter.interpretTree(node);
         sceneUpdater.setOutputText(Double.toString(node.getValue()));
-        addCommandHistory(input);
+        sceneUpdater.addCommandHistory(input);
 
     }
 
-    public void setOutputText (String outputText) {
-        sceneUpdater.setOutputText(outputText);
-    }
+
 
     private void addCommandHistory (String name, CommandTreeNode prev) {
         if (!previousCommands.containsKey(name)) {
@@ -65,14 +62,6 @@ public class Controller {
         }
 
     }
-
-    public void addCommandHistory (String input) {
-        sceneUpdater.addCommandHistory(input);
-    }
-
-    // public void linkTurtles(Turtle turtleModel) {
-    // turtleModel.addObserver(sceneUpdater.getTurtleView());
-    // }
 
     public Set<String> getPrevCommandList () {
         return previousCommands.keySet();

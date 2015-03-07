@@ -14,15 +14,16 @@ public class CommandCase implements Cases {
     private static final int PARAM_INDEX = 0;
     private static final int TYPE_INDEX = 1;
     private boolean makingUserInstruction;
-    private List<String> methodList = new ArrayList<>();
+    private List<String> methodList; 
+    
     private List<Entry<String, Pattern>> languagePatternList;
-
     private TreeWrapper wrapper;
     private List<String> myInput;
     private CommandTreeNode myRoot;
 
     public CommandCase (TreeWrapper wrapper, List<String> input) {
         this.wrapper = wrapper;
+        methodList = new ArrayList<String>();
         parametersMap = PatternMapper.createParametersMap();
         myInput = input;
     }
