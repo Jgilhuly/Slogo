@@ -36,7 +36,7 @@ public class TreeInterpreter {
      */
     public void interpretTree (CommandTreeNode node) {
         List<Object> paramList = new ArrayList<>();
-        if (!node.getChildren().isEmpty()) {
+        if (!node.getChildren().isEmpty()) { //checks for leaf nodes
             if (!(node.getType().equals("BRACKET"))) {
                 for (CommandTreeNode child : node.getChildren()) {
                     interpretTree(child);
@@ -47,7 +47,6 @@ public class TreeInterpreter {
         }
         
         update(node, paramList);
-//        variables.printThing();
     }
 
     public Constructor[] getConstructors (Class<?> className) {
@@ -96,13 +95,11 @@ public class TreeInterpreter {
     public void update (CommandTreeNode node, List<Object> paramList) {
         switch (node.getType()) {
             case "COMMAND.TURTLE":
-                paramList.add(listTurtles.get(activeTurtleIndex - 1));
+                paramList.add(listTurtles.get(activeTurtleIndex - 1)); //acts on the current activeTurtle
                 executeCommand(node, paramList);
                 break;
             case "COMMAND.CONTROL":
-                paramList.add(this); // maybe should extract out for specific make/set variable
-                                     // commands
-                // the class is added to the last value
+                paramList.add(this); 
                 executeCommand(node, paramList);
                 break;
             case "VARIABLE":

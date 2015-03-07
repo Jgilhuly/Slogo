@@ -25,7 +25,7 @@ public class AskWithCommand extends Command{
                 tree.setActiveTurtleIndex(i+1);
                 for (int j = 0; j < subCommands.size(); j++) {
                     tree.interpretTree(subCommands.get(j));
-                    if (j == (subCommands.size() - 1)) { // return the last command run
+                    if ((i == turtles.size() - 1) && (j == (subCommands.size() - 1))) { // return the last command run
                         tree.setActiveTurtleIndex(1); // set the activeTurtleIndex back to 1;
                         return subCommands.get(j).getValue();
                     }
