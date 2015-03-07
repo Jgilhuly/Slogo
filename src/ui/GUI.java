@@ -100,6 +100,8 @@ public class GUI {
 				canvasPane.getBaseNode(), myPen);
 		
 		mySceneUpdater.createTurtle(newTurtle);
+		infoPane = new InfoElement(this);
+		myRoot.setRight(infoPane.getBaseNode());
 		return newTurtle;
 	}
 
@@ -122,7 +124,6 @@ public class GUI {
 		if (ioPaneCasted.getInputField().getText() != null)
 			mySceneUpdater.sendCommands(ioPaneCasted.getInputField().getText(),
 					menuPane.getSelectedLanguage());
-		addHistory(); // for previous commands tab
 		ioPaneCasted.getInputField().setText("");
 	}
 
@@ -151,11 +152,5 @@ public class GUI {
 
 	public void createNewWorkspace() {
 		mySceneUpdater.createNewWorkspace();
-	}
-
-	/**
-	 * Updates the right side info tables
-	 */
-	private void addHistory() {
 	}
 }
