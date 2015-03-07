@@ -31,7 +31,7 @@ public class CommandCase implements Cases {
 		languagePatternList = PatternMapper.makePatterns(language);
 		String value = useResourceBundle(myInput.get(wrapper.getIndex()));
 		makingUserInstruction = value.equals("MakeUserInstruction");
-
+		
 		myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0, null);
 		int numParams = obtainNumParams(value);
 		wrapper.printTestStatements(value, obtainSubCommand(value), null);
@@ -66,14 +66,8 @@ public class CommandCase implements Cases {
 
 		wrapper.printTestStatements(value, temp.getType(), root.getName());
 
-		if (value.equals("Repeat")) {
-			while (!myInput.get(wrapper.getIndex()).equals("]")) {
-				wrapper.recurse(temp);
-			}
-		} else {
-			for (int i = 0; i < numParams; i++) {
-				wrapper.recurse(temp);
-			}
+		for (int i = 0; i < numParams; i++) {
+			wrapper.recurse(temp);
 		}
 	}
 

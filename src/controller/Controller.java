@@ -25,10 +25,10 @@ public class Controller {
 	private TreeInterpreter interpreter;
 	private WorkspaceManager myManager;
 
-	public Controller (WorkspaceManager wm) {
+	public Controller(WorkspaceManager wm) {
 		myManager = wm;
 	}
-	
+
 	public void init(Stage s) {
 		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
@@ -52,14 +52,15 @@ public class Controller {
 
 		// get method list if needed - up to back-end on how to deal with this
 		// case
-//		generator.getMethodsList();
+		// generator.getMethodsList();
 
 		interpreter = new TreeInterpreter(variables, turtle);
 		interpreter.interpretTree(node);
 		if (variables != null) {
-//			sceneUpdater.setListBind("Variable", variables.getList());
+			// sceneUpdater.setListBind("Variable", variables.getList());
 		}
 		setOutputText(Double.toString(node.getValue()));
+		addCommandHistory(input);
 	}
 
 	/**
@@ -70,6 +71,14 @@ public class Controller {
 	public void setOutputText(String outputText) {
 		sceneUpdater.setOutputText(outputText);
 	}
+	
+	public void addCommandHistory(String input) {
+		sceneUpdater.addCommandHistory(input);
+	}
+
+//	public void linkTurtles(Turtle turtleModel) {
+//		turtleModel.addObserver(sceneUpdater.getTurtleView());
+//	}
 
 	public ObservableList<Variable> getVariableList() {
 		return variables.getList();
@@ -78,7 +87,7 @@ public class Controller {
 	public Set<String> getPrevCommandList() {
 		return commands.keySet();
 	}
-	
+
 	public void createNewWorkspace() {
 		myManager.createWorkspace(null);
 	}
