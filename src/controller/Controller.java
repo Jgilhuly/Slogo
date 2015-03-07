@@ -2,6 +2,7 @@ package controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observer;
 import java.util.Set;
 
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ import model.Turtle;
 import parser.CommandTreeNode;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
+import ui.TurtleView;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
@@ -30,14 +32,16 @@ public class Controller {
 		previousCommands = new HashMap<String, CommandTreeNode>();
 		interpreter = new TreeInterpreter();
 		generator = new TreeGenerator();
-		createTurtle();
+		
 		
 	}
-	public void createTurtle() {
+	public void createTurtle(TurtleView view) {
 		Turtle t = new Turtle();
 		interpreter.getTurtleList().add(t);
+		t.addObserver(view);
 		
 	}
+
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -47,13 +51,8 @@ public class Controller {
 	 */
 	public void parseCommand(String input, String language) {
 		CommandTreeNode node = generator.createCommands(input, language);
-
-		// get method list if needed - up to back-end on how to deal with this case
 		generator.getMethodsList();
 		interpreter.interpretTree(node);
-//		if (interpreter.getVariableList() != null) {
-//			sceneUpdater.setListBind("Variable", variables.getList());
-//		}
 		sceneUpdater.setOutputText(node.getValue().toString());
 	}
 	
@@ -63,15 +62,6 @@ public class Controller {
 		}
 
 	}
-	
-//	/**
-//	 * Sends text to be outputted to the front-end from the back-end
-//	 * 
-//	 * @param outputText
-//	 */
-//	public void setOutputText(String outputText) {
-//		sceneUpdater.setOutputText(outputText);
-//	}
 
 
 
@@ -83,5 +73,6 @@ public class Controller {
 	public void createNewWorkspace() {
 		myManager.createWorkspace(null);
 	}
+
 
 }
