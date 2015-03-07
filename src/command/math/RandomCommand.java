@@ -3,8 +3,10 @@ package command.math;
 import java.util.Random;
 import command.Command;
 
+
 /**
  * Returns random integer generated between 0 and given number
+ * 
  * @author OWNER
  *
  */
