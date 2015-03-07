@@ -2,6 +2,7 @@ package ui;
 
 import java.util.*;
 
+import ui_table.TableElements;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -59,7 +60,7 @@ public class GUI {
 				myStage.getHeight());
 		myRoot.setCenter(canvasPane.getBaseNode());
 
-		infoPane = new InfoElement();
+		infoPane = new InfoElement(this);
 		myRoot.setRight(infoPane.getBaseNode());
 
 		myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true, this);
@@ -124,7 +125,10 @@ public class GUI {
 	public void setOutputText(String outputText) {
 		ioPane.getOutputField().setText(outputText);
 	}
-
+	
+	public void setInputText(String inputText) {
+		ioPane.getInputField().setText(inputText);
+	}
 	/**
 	 * Returns the TurtleView so that it can be linked to its model
 	 * 
@@ -134,11 +138,14 @@ public class GUI {
 		return tView;
 	}
 
-	public void bindTable(String type, ObservableList<String> l) {
-		List<TableView<String>> tables = infoPane.getTables();
+	public void bindTable(String type, ObservableList<TableElements> l) {
+		List<TableView<TableElements>> tables = infoPane.getTables();
 		if (type.equals("Commands")) {
 			tables.get(1).setItems(l);
-		} else if (type.equals("User Commands")) {
+		} else if (type.equals("Variables")) {
+			
+		}
+		else if (type.equals("User Commands")) {
 			tables.get(2).setItems(l);
 		}
 	}
@@ -151,5 +158,9 @@ public class GUI {
 	 * Updates the right side info tables
 	 */
 	private void addHistory() {
+	}
+
+	public void addCommandHistory(String input) {
+		infoPane.setBindCommandList(input);
 	}
 }
