@@ -5,7 +5,7 @@ import command.Command;
 
 public class PiCommand extends Command {
 
-	public double calculateValue(List<Object> param) {
-		return Math.PI;
-	}
+    public double calculateValue () {
+        return Math.PI;
+    }
 }

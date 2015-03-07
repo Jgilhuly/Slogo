@@ -5,10 +5,13 @@ import java.util.Random;
 import command.Command;
 
 public class RandomCommand extends Command {
+    public RandomCommand(double op1){
+        super(op1);
+    }
+    
+    public double calculateValue() {
+	Random r = new Random();
 
-	public double calculateValue(List<Object> param) {
-		Random r = new Random();
-
-		return r.nextInt((int) (double) param.get(0));
-	}
+	return r.nextInt((int) double1);
+    }
 }

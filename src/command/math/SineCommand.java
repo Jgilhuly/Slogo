@@ -4,7 +4,13 @@ import java.util.List;
 import command.Command;
 
 public class SineCommand extends Command {
-	public double calculateValue(List<Object> param) {
-		return (double) Math.sin(Math.toRadians((double)param.get(0)));
-	}
+
+	
+	    public SineCommand(double op1){
+	        super(op1);
+	    }
+
+	    public double calculateValue(){
+	        return ((double) Math.sin(Math.toRadians(double1)));
+	    }
 }
