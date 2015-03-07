@@ -16,6 +16,7 @@ public class TreeInterpreter {
     private VariableList variables;
     private int activeTurtleIndex;
     private List<Turtle> listTurtles;
+    private List<String> userCommands;
 
     public TreeInterpreter () {
         factory = new CommandFactory();
@@ -25,11 +26,6 @@ public class TreeInterpreter {
     }
 
     public void interpretTree (CommandTreeNode node) {
-        // Method method;
-        // if (!(Arrays.asList("VARIABLE", "CONSTANT", "BRACKET").contains(node.getType()))){
-        // method = getCommand(node);
-        //
-        // }
         List<Object> paramList = new ArrayList<>();
         if (!node.getChildren().isEmpty()) {
             if (!(node.getType().equals("BRACKET"))) {
@@ -40,8 +36,9 @@ public class TreeInterpreter {
                 }
             }
         }
+        
         update(node, paramList);
-        // variables.printThing();
+//        variables.printThing();
     }
 
     public Constructor[] getConstructors (Class<?> className) {
@@ -51,17 +48,11 @@ public class TreeInterpreter {
     public void executeCommand (CommandTreeNode node, List<Object> paramList) {
         Class<?> c = factory.createCommand(node.getType(), node.getName());
         Constructor<?> constructor = getConstructors(c)[0];
-        Parameter[] returntypes = constructor.getParameters();
-        // for(int i = 0; i < returntypes.length; i++){
-        // System.out.println(returntypes[i].toString());
-        // }
+
         Command command = null;
         try {
-            command = (Command) constructor.newInstance(paramList.toArray()); // testing sum 20 30;
-                                                                              // haven't type cast
-                                                                              // paramList yet
-        }
-        catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+            command = (Command) constructor.newInstance(paramList.toArray()); 
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                 | InvocationTargetException e) {
             e.printStackTrace();
             System.err.print("Error processing Command" + c.getClass().getName());
@@ -77,8 +68,7 @@ public class TreeInterpreter {
             catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
             }
-        }
-        catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalArgumentException e) {
             System.err.print("Error processing Command" + c.getClass().getName());
             e.printStackTrace();
         }
@@ -114,6 +104,15 @@ public class TreeInterpreter {
 
     public VariableList getVariableList () {
         return variables;
+    }
+    
+
+    public double getActiveTurtleIndex () {
+        return (double) activeTurtleIndex;
+    }
+    
+    public void setActiveTurtleIndex(int index){
+        activeTurtleIndex = index;
     }
 
 }
