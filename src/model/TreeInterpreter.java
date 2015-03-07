@@ -5,7 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import command.Command;
 import errors.IllegalParameterNumberException;
 import parser.CommandTreeNode;
@@ -21,13 +23,14 @@ public class TreeInterpreter {
     private VariableList variables;
     private int activeTurtleIndex;
     private List<Turtle> listTurtles;
-    private List<String> userCommands;
+    private Map<String, List<CommandTreeNode>> userCommands;
 
     public TreeInterpreter () {
         factory = new CommandFactory();
         variables = new VariableList();
         activeTurtleIndex = 1;
         listTurtles = new ArrayList<Turtle>();
+        userCommands = new HashMap<String, List<CommandTreeNode>>();
     }
 
     /**
@@ -103,6 +106,9 @@ public class TreeInterpreter {
                 executeCommand(node, paramList);
                 break;
             case "VARIABLE":
+                if(userCommands.containsKey(node.getName())){ //assumes parser will parser the command as a variable
+                    //call executeUserCommand!
+                }
                 node.setValue((variables.get(node.getName())).getValue());
                 break;
             case "CONSTANT":
@@ -129,6 +135,14 @@ public class TreeInterpreter {
     
     public void setActiveTurtleIndex(int index){
         activeTurtleIndex = index;
+    }
+    
+    public Map<String, List<CommandTreeNode>> getUserCommands(){
+        return userCommands;
+    }
+    
+    public void setUserCommands(Map<String, List<CommandTreeNode>> commands){
+        userCommands = commands;
     }
 
 }
