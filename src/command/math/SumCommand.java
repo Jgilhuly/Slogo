@@ -2,6 +2,11 @@ package command.math;
 
 import command.Command;
 
+/**
+ * Returns the sum between two numbers
+ * @author OWNER
+ *
+ */
 public class SumCommand extends Command {
     private double double1;
     private double double2;

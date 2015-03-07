@@ -2,7 +2,11 @@ package command.bool;
 
 import command.Command;
 
-
+/**
+ * returns 1 if test1 and test2 are non-zero, otherwise 0
+ * @author OWNER
+ *
+ */
 public class AndCommand extends Command {
     private double double1;
     private double double2;

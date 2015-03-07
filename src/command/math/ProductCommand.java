@@ -2,6 +2,11 @@ package command.math;
 
 import command.Command;
 
+/**
+ * Returns the product of two numbers
+ * @author OWNER
+ *
+ */
 
 public class ProductCommand extends Command {
     private double double1;

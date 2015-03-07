@@ -33,4 +33,10 @@ public class DoTimesCommand extends Command {
         }
         return shit.getValue();
     }
+
+    @Override
+    public double calculateValue () {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

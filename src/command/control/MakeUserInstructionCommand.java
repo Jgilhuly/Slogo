@@ -7,6 +7,8 @@ import parser.CommandTreeNode;
 import command.Command;
 
 public class MakeUserInstructionCommand {
+    
+    
     public double calculateValue(List<Object> param) {
         TreeInterpreter yay = (TreeInterpreter) param.get(1);
         List<CommandTreeNode> parameters = ((CommandTreeNode) param.get(0)).getChildren(); 
