@@ -1,13 +1,15 @@
 package command.math;
 
-import java.util.List;
 import command.Command;
 
 public class CosineCommand extends Command {
+    private double double1;
+    
+    public CosineCommand(double op1){
+        double1 = op1;
+    }
 
-	@Override
-	public double calculateValue(List<Object> param) {
-		return Math.cos(Math.toRadians((double) param.get(0)));
-	}
-
+    public double calculateValue(){
+        return ((double) Math.cos(Math.toRadians(double1)));
+    }
 }

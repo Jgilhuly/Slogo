@@ -1,18 +1,23 @@
 package command.turtle;
 
-import java.util.List;
 
 import command.Command;
-
 import model.Turtle;
 
+/**
+ * returns 1 if turtle is showing, 0 if it is hiding
+ * @author GA
+ *
+ */
 public class IsShowingCommand extends Command{
+	private Turtle myTurtle;
+	
+	public IsShowingCommand(Turtle t) {
+		myTurtle = t;
+	}
+	
 	@Override
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(0);
-		if (t.getVisibility()) {
-			return 1;
-		}
-		return 0;
+	public double calculateValue() {
+		return (myTurtle.getVisibility()) ? 1:0;
 	}
 }

@@ -1,17 +1,22 @@
 package command.turtle;
 
-import java.util.List;
 
 import model.Turtle;
 import command.Command;
-
+/**
+ * returns 1 if turtle's pen is down, 0 if it is up
+ * @author GA
+ *
+ */
 public class IsPenDownCommand extends Command {
+	private Turtle myTurtle;
+	
+	public IsPenDownCommand(Turtle t) {
+		myTurtle = t;
+	}
+	
 	@Override
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(0);
-		if (t.getLine()) {
-			return 1;
-		}
-		return 0;
+	public double calculateValue() {
+		return (myTurtle.getLine()) ? 1 : 0 ;
 	}
 }

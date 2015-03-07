@@ -1,18 +1,27 @@
 package command.turtle;
 
-import java.util.List;
 
 import model.Turtle;
 import command.Command;
 
+/*
+ * turns turtle clockwise by degrees angle
+ * returns the value of degrees
+ */
 public class RightCommand extends Command{
-
+    private Turtle myTurtle;
+    private double double1;
+    
+    public RightCommand(double op1, Turtle t){
+        double1 = op1;
+        myTurtle = t;
+    }
+    
 	@Override
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(1);
-		t.setHeading(t.getHeading() + (double) param.get(0));
-		t.updateTurtleViewers();
-		return (double) param.get(0);
+	public double calculateValue() {
+		myTurtle.setHeading(myTurtle.getHeading() + double1);
+		myTurtle.updateTurtleViewers();
+		return double1;
 	}
 
 }
