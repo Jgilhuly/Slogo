@@ -1,23 +1,33 @@
 package command.turtle;
 
-import java.util.List;
 
 import model.Turtle;
 import command.Command;
 
-
+/**
+ * makes turtle invisible
+ * returns 0
+ * @author GA
+ *
+ */
 public class HideTurtleCommand extends Command {
+	private Turtle myTurtle;
+	
+	public HideTurtleCommand(Turtle t) {
+		myTurtle = t;
+	}
 	
 	@Override
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(0);
-		t.setTurtleVisibility(false);
-		t.updateTurtleViewers();
+	public double calculateValue() {
+		myTurtle.setTurtleVisibility(false);
+		myTurtle.updateTurtleViewers();
 		return 0;
 	}
 
-
-
-
-
 }
+
+
+
+
+
+

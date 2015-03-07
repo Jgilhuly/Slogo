@@ -1,20 +1,22 @@
 package command.turtle;
 
-import java.util.List;
 
 import model.Turtle;
 import command.Command;
-
+/*
+ * puts pen up such that when the turtle moves, it does not leave a trail
+ * returns 0
+ */
 public class PenUpCommand extends Command {
-
+	private Turtle myTurtle;
+	
+	public PenUpCommand(Turtle t) {
+		myTurtle = t;
+	}
 	@Override
-	public double calculateValue(List<Object> param) {
-		// for these cases do we just hard code that theres only turtle in there
-		// or is there a hierachy?
-
-		Turtle t = (Turtle) param.get(0);
-		t.setLine(false);
-		t.updateTurtleViewers();
+	public double calculateValue() {
+		myTurtle.setLine(false);
+		myTurtle.updateTurtleViewers();
 		return 0;
 	}
 

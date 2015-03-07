@@ -1,20 +1,26 @@
 package command.turtle;
 
-import java.util.List;
 
 import model.Turtle;
 import command.Command;
-
+/*
+ * moves turtle to an absolute screen position, where (0, 0) is the center of the screen
+ * returns the distance turtle moved
+ */
 public class SetPositionCommand extends Command {
-	private static final int ORIGIN_X = 0;
-	private static final int ORIGIN_Y = 0;
-	//just in case the origin changes
-	
-	public double calculateValue(List<Object> param) {
-		Turtle t = (Turtle) param.get(2);
-		t.setXY((double) param.get(0), (double) param.get(1));
-		t.updateTurtleViewers();
-		return Math.sqrt(Math.pow(t.getX() - ORIGIN_X, 2)
-				+ Math.pow(t.getY() - ORIGIN_Y, 2));
+    private Turtle myTurtle;
+    private double double1;
+    private double double2;
+    
+    public SetPositionCommand(double op1, double op2, Turtle t){
+        double1 = op1;
+        double2 = op2;
+        myTurtle = t;
+    }
+
+	public double calculateValue() {
+		myTurtle.setXY(double1, double2);
+		myTurtle.updateTurtleViewers();
+		return Math.sqrt(Math.pow(myTurtle.getX() - 0, 2) + Math.pow(myTurtle.getY() - 0, 2));
 	}
 }
