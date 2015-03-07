@@ -1,42 +1,27 @@
 package parser;
 
-import java.util.Enumeration;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
+import util.PatternMapper;
 import errors.NoInputFoundException;
+import errors.UnmatchedBracketException;
 
-public class TreeGenerator {
-	private static final int PARAM_INDEX = 0;
-	private static final int TYPE_INDEX = 1;
-	private Map<String, String[]> parametersMap; // toDo: implement the correct
-	// parametersMap
-	private int index = 0;
-	private int bracketCount = 0;
-	private CommandTreeNode myRoot;
+public class TreeGenerator implements TreeWrapper {
+	private Map<Pattern, Cases> handlerMap;
 	private List<String> myInput;
-	private boolean isMethod = false;
+	private int index;
+	private String language;
+	private CommandCase CommandCase;
 
-	public TreeGenerator() {
-		parametersMap = createParametersMap();
-	}
-
-	/**
-	 * Just to print out the tree and its parent node for testing
-	 * 
-	 * @param value
-	 * @param type
-	 * @param name
-	 */
-	private void printTestStatements(String value, String type, String name) {
-		System.out.println(value);
-		System.out.println("Type is: " + type);
-		System.out.println("Root value is: " + name);
-		System.out.println();
-	}
+	private int ListStartCount = 0;
+	private int ListEndCount = 0;
 
 	/**
 	 * Create a CommandTreeNode that includes all the commands
@@ -45,8 +30,9 @@ public class TreeGenerator {
 	 *            : List of strings taken from the parser
 	 * @return: CommandTreeNode with commands
 	 */
-	public CommandTreeNode createCommands(List<String> input) {
+	public CommandTreeNode createCommands(String input, String language) {
 		try {
+<<<<<<< HEAD
 			myInput = input;
 			String value = myInput.get(index);
 			myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0,
@@ -64,159 +50,130 @@ public class TreeGenerator {
 
 			System.out.println("FINAL ROOT VALUE IS: " + myRoot.getValue());
 			return myRoot;
+=======
+			myInput = Arrays.asList(input.split("\\s+"));
+			this.language = language;
+			handlerMap = createHandlerMap();
+			index = 0;
+			CommandCase.initiate(language);
+			
+			System.out.println("FINAL ROOT VALUE IS: "
+					+ CommandCase.getRoot().getName());
+
+			return CommandCase.getRoot();
+>>>>>>> cb2c6197c6142e0211c3c563c588b54d237c13ef
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
 			e.printStackTrace();
+			if (ListStartCount != ListEndCount)
+				throw new UnmatchedBracketException();
 			throw new NoInputFoundException();
 		}
 	}
 
-	/*
-	 * THIS METHOD REQUIRES FIXING - Prof Duvall suggests inheritance hierachy
-	 * (?)
-	 */
-	/**
-	 * Recursive helper method that creates the tree
-	 *
-	 * @param count
-	 * @param root
-	 */
-	private void helper(CommandTreeNode root) {
+	public void recurse(CommandTreeNode root) {
 		if (index >= myInput.size()) {
 			return;
 		}
-		if (parametersMap.containsKey(myInput.get(index))) { // command
-			commandCase(root);
-		} else if (myInput.get(index).equals("[")) {
-			bracketCase(root);
-		} else if (Pattern.matches(":[a-zA-Z]+", myInput.get(index))) { //Variable
-			variableCase(root);
-		} else if (Pattern.matches("-?[0-9]+\\.?[0-9]*", myInput.get(index))) {
-			// CONSTANT
-			constantCase(root);
-		} else if (isMethod) {
-			System.out.println("Method name is: " + myInput.get(index));
-			System.out.println();
-			isMethod = false;
-			index++;
-		}
-	}
-
-	/**
-	 * helper method to handle the case when the node is a command
-	 *
-	 * @param root
-	 */
-	private void commandCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		int numParams = obtainNumParams(value);
-		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
-				value, 0, null);
-		root.add(temp);
-
-		printTestStatements(value, temp.getType(), root.getName());
-
-		boolean repeat = value.equals("Repeat");
-
-		index++;
-
-		if (repeat) {
-			while (!myInput.get(index).equals("]")) {
-				helper(temp);
-			}
-		} else {
-			for (int i = 0; i < numParams; i++) {
-				helper(temp);
+		for (Pattern pt : handlerMap.keySet()) {
+			if (pt.matcher(myInput.get(index)).matches()) {
+				Cases sc = handlerMap.get(pt);
+				sc.recurse(root);
+				break;
 			}
 		}
 	}
 
-	/**
-	 * helper method to handle the case when the node is a forward bracket
-	 *
-	 * @param root
-	 */
-	private void bracketCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		CommandTreeNode temp = new CommandTreeNode("BRACKET", value + "-"
-				+ bracketCount++, 0, null);
+	public void printTestStatements(String value, String type, String name) {
+		System.out.println(value);
+		System.out.println("Type is: " + type);
+		System.out.println("Root value is: " + name);
+		System.out.println();
+	}
 
-		root.add(temp);
-
-		printTestStatements(value + "-" + (bracketCount - 1), temp.getType(),
-				root.getName());
-
-		index++;
-		while (!myInput.get(index).equals("]")) {
-			helper(temp);
+	private Map<Pattern, Cases> createHandlerMap() {
+		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper
+				.makePatterns("Syntax");
+		Map<Pattern, Cases> ret = new HashMap<>();
+		for (Entry<String, Pattern> p : syntaxPatternList) {
+			String category = p.getKey();
+			try {
+				Class<?> myInstance = Class.forName("parser." + category
+						+ "Case");
+				Constructor<?> constructor = myInstance
+						.getConstructor(new Class[] { TreeWrapper.class,
+								List.class });
+				Cases myCases = (Cases) constructor.newInstance(
+						(TreeWrapper) this, myInput);
+				if (category.equals("Command")) {
+					CommandCase = new CommandCase((TreeWrapper) this, myInput);
+					ret.put(p.getValue(), CommandCase);
+				} else
+					ret.put(p.getValue(), myCases);
+			} catch (NoSuchMethodException | SecurityException
+					| IllegalArgumentException | ClassNotFoundException
+					| IllegalAccessException | InstantiationException
+					| InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			// switch (category) {
+			// case "ListStart":
+			// ret.put(p.getValue(), new ListStartCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "ListEnd":
+			// ret.put(p.getValue(), new ListEndCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "Command":
+			// CommandCase = new CommandCase((TreeWrapper) this, myInput);
+			// ret.put(p.getValue(), CommandCase);
+			// break;
+			// case "Variable":
+			// ret.put(p.getValue(), new VariableCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "Constant":
+			// ret.put(p.getValue(), new ConstantCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "GroupStart":
+			// ret.put(p.getValue(), new GroupStartCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// case "GroupEnd":
+			// ret.put(p.getValue(), new GroupEndCase((TreeWrapper) this,
+			// myInput));
+			// break;
+			// default:
+			// break;
+			// }
 		}
+		return ret;
+	}
+
+	public List<String> getMethodsList() {
+		return CommandCase.getMethodsList();
+	}
+
+	public void incrementIndex() {
 		index++;
 	}
 
-	/**
-	 * helper method to handle the case when the node is a variable
-	 *
-	 * @param root
-	 */
-	private void variableCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		CommandTreeNode temp = new CommandTreeNode("VARIABLE", value, 0, null);
-		root.add(temp);
-
-		printTestStatements(value, temp.getType(), root.getName());
-		index++;
+	public int getIndex() {
+		return index;
 	}
 
-	/**
-	 * helper method to handle the case when the node is a constant
-	 *
-	 * @param root
-	 */
-	private void constantCase(CommandTreeNode root) {
-		String value = myInput.get(index);
-		CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT",
-				Double.parseDouble(myInput.get(index)), null);
-		root.add(temp);
-
-		printTestStatements(value, temp.getType(), root.getName());
-		index++;
+	public String getLanguage() {
+		return language;
 	}
 
-	/**
-	 * Creates a map that maps the Key to the number of parameters and its
-	 * subcommand type
-	 * 
-	 * @return
-	 */
-	private HashMap<String, String[]> createParametersMap() {
-		ResourceBundle resources = ResourceBundle
-				.getBundle("parser/parameters");
-		Enumeration<String> paramKeys = resources.getKeys();
-		HashMap<String, String[]> newMap = new HashMap<>();
-
-		while (paramKeys.hasMoreElements()) {
-			String Key = paramKeys.nextElement();
-			newMap.put(Key, resources.getString(Key).split(","));
-		}
-		return newMap;
+	@Override
+	public void incrementListStartIndex() {
+		ListStartCount++;
 	}
 
-	/**
-	 * Obtains the number of parameters given the key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	private int obtainNumParams(String key) {
-		return Integer.parseInt(parametersMap.get(key)[PARAM_INDEX]);
-	}
-
-	/**
-	 * Obtains the subcommand type given the key
-	 * 
-	 * @param key
-	 * @return
-	 */
-	private String obtainSubCommand(String key) {
-		return "COMMAND." + parametersMap.get(key)[TYPE_INDEX];
+	@Override
+	public void incrementListEndIndex() {
+		ListEndCount++;
 	}
 }

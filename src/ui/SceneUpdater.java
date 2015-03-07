@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -11,7 +10,7 @@ import javafx.stage.Stage;
 import controller.Controller;
 
 public class SceneUpdater implements Observer {
-	private final int SCREEN_WIDTH = 600;
+	private final int SCREEN_WIDTH = 1000;
 	private final int SCREEN_HEIGHT = 600;
 	private GUI myGUI;
 
@@ -52,7 +51,7 @@ public class SceneUpdater implements Observer {
 	public ObservableList<Variable> getVariableList() {
 		return myController.getVariableList();
 	}
-	public void setListBind(String type, ObservableList<Variable> l) {
+	public void setListBind(String type, ObservableList<String> l) {
 		myGUI.bindTable(type, l);
 	}
 	public Set<String> getPrevCommandList() {
@@ -72,6 +71,10 @@ public class SceneUpdater implements Observer {
 	 */
 	public Observer getTurtleView() {
 		return myGUI.getTurtleView();
+	}
+	
+	public void createNewWorkspace() {
+		myController.createNewWorkspace();
 	}
 
 }

@@ -1,19 +1,17 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import model.*;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import main.WorkspaceManager;
 import model.TreeInterpreter;
 import model.Turtle;
 import model.Variable;
+import model.VariableList;
 import parser.CommandTreeNode;
-import parser.Parser;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
 
@@ -22,9 +20,14 @@ public class Controller {
 	private Map<String, CommandTreeNode> commands;
 	private Turtle turtle;
 	private VariableList variables;
-
+	private TreeGenerator generator = new TreeGenerator();
 	private TreeInterpreter interpreter;
+	private WorkspaceManager myManager;
 
+	public Controller (WorkspaceManager wm) {
+		myManager = wm;
+	}
+	
 	public void init(Stage s) {
 		turtle = new Turtle();
 		sceneUpdater = new SceneUpdater(s, this);
@@ -34,9 +37,9 @@ public class Controller {
 		linkTurtles(turtle);
 	}
 
-//	public void syncCommandandVariableLists() {
-//		variables = new SimpleListProperty<Variable>();
-//	}
+	// public void syncCommandandVariableLists() {
+	// variables = new SimpleListProperty<Variable>();
+	// }
 
 	/**
 	 * Parses command from front-end and sends the result to back-end
@@ -45,14 +48,16 @@ public class Controller {
 	 * @param language
 	 */
 	public void parseCommand(String input, String language) {
-		Parser pp = new Parser(language);
-		List<String> inputList = pp.parseList(input);
-		TreeGenerator tg = new TreeGenerator();
-		CommandTreeNode node = tg.createCommands(inputList);
-		interpreter = new TreeInterpreter(variables, turtle);		
+		CommandTreeNode node = generator.createCommands(input, language);
+
+		// get method list if needed - up to back-end on how to deal with this
+		// case
+//		generator.getMethodsList();
+
+		interpreter = new TreeInterpreter(variables, turtle);
 		interpreter.interpretTree(node);
 		if (variables != null) {
-			sceneUpdater.setListBind("Variable", variables.getList());
+//			sceneUpdater.setListBind("Variable", variables.getList());
 		}
 		setOutputText(Double.toString(node.getValue()));
 	}
@@ -69,8 +74,6 @@ public class Controller {
 	public void linkTurtles(Turtle turtleModel) {
 		turtleModel.addObserver(sceneUpdater.getTurtleView());
 	}
-	
-	
 
 	public ObservableList<Variable> getVariableList() {
 		return variables.getList();
@@ -80,6 +83,9 @@ public class Controller {
 		return commands.keySet();
 	}
 	
+	public void createNewWorkspace() {
+		myManager.createWorkspace(null);
+	}
 
 	// public void play() {
 	// frame = addKeyFrame(fps);
