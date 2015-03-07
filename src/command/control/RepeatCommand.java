@@ -28,7 +28,6 @@ public class RepeatCommand extends Command {
     public double calculateValue () {
         tree.interpretTree(num); // Retrieves the number of times to be traversed
         int numTimes = (int) num.getValue();
-        System.out.println(numTimes);
         for (int i = 0; i < numTimes; i++) {
             for (int j = 0; j < subCommands.size(); j++) {
                 tree.interpretTree(subCommands.get(j));
