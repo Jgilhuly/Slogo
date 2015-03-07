@@ -23,13 +23,13 @@ public class Controller {
 
 	public Controller(WorkspaceManager wm) {
 		myManager = wm;
+		interpreter = new TreeInterpreter();
+		generator = new TreeGenerator();
 	}
 
 	public void init(Stage s) {
 		sceneUpdater = new SceneUpdater(s, this);
 		previousCommands = new HashMap<String, CommandTreeNode>();
-		interpreter = new TreeInterpreter();
-		generator = new TreeGenerator();
 		sceneUpdater.initGUI();
 		
 		
