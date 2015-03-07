@@ -5,8 +5,6 @@ import command.Command;
 
 public class ArcTangentCommand extends Command {
     
-
-    
     public ArcTangentCommand(double op1){
         super(op1);
     }
