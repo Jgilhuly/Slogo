@@ -1,13 +1,12 @@
 package command.math;
 
-import java.util.List;
-
 import command.Command;
 
 public class TangentCommand extends Command {
+    private double double1;
     
     public TangentCommand(double op1){
-        super(op1);
+        double1 = op1;
     }
 
     public double calculateValue(){
