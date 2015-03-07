@@ -14,6 +14,7 @@ import model.VariableList;
 import parser.CommandTreeNode;
 import parser.TreeGenerator;
 import ui.SceneUpdater;
+import ui.TurtleView;
 
 public class Controller {
 	private SceneUpdater sceneUpdater;
@@ -34,7 +35,6 @@ public class Controller {
 		sceneUpdater.initGUI();
 		variables = new VariableList();
 		commands = new HashMap<String, CommandTreeNode>();
-		linkTurtles(turtle);
 	}
 
 	// public void syncCommandandVariableLists() {
@@ -71,10 +71,6 @@ public class Controller {
 		sceneUpdater.setOutputText(outputText);
 	}
 
-	public void linkTurtles(Turtle turtleModel) {
-		turtleModel.addObserver(sceneUpdater.getTurtleView());
-	}
-
 	public ObservableList<Variable> getVariableList() {
 		return variables.getList();
 	}
@@ -85,6 +81,9 @@ public class Controller {
 	
 	public void createNewWorkspace() {
 		myManager.createWorkspace(null);
+	}
+
+	public void createTurtle(TurtleView tView) {
 	}
 
 	// public void play() {
