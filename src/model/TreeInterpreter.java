@@ -17,6 +17,7 @@ public class TreeInterpreter {
     private int activeTurtleIndex;
     private List<Turtle> listTurtles;
     
+    
     public TreeInterpreter () {
         factory = new CommandFactory();
 		variables = new VariableList();

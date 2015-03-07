@@ -26,12 +26,11 @@ public class Controller {
 	}
 
 	public void init(Stage s) {
-
 		sceneUpdater = new SceneUpdater(s, this);
-		sceneUpdater.initGUI();
 		previousCommands = new HashMap<String, CommandTreeNode>();
 		interpreter = new TreeInterpreter();
 		generator = new TreeGenerator();
+		sceneUpdater.initGUI();
 		
 		
 	}
@@ -90,6 +89,9 @@ public class Controller {
 	public void createNewWorkspace() {
 		myManager.createWorkspace(null);
 	}
+
+
+
 
 
 
