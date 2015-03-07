@@ -20,9 +20,9 @@ public class GUI {
 
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
 	public static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";
+	private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
 
 	private ResourceBundle myResources; // for node text/names
-	private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
 	private Scene myScene;
 	private Stage myStage;
 	private BorderPane myRoot;
