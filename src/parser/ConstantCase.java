@@ -2,26 +2,34 @@ package parser;
 
 import java.util.List;
 
-
+/**
+ * A class that deals with when the word is a constant.
+ * 
+ * @author Kei Yoshikoshi
+ *
+ */
 public class ConstantCase implements Cases {
-    private TreeWrapper wrapper;
-    private List<String> myInput;
+	private TreeWrapper wrapper;
+	private List<String> myInput;
 
-    public ConstantCase (TreeWrapper wrapper, List<String> input) {
-        this.wrapper = wrapper;
-        myInput = input;
-    }
+	public ConstantCase(TreeWrapper wrapper, List<String> input) {
+		this.wrapper = wrapper;
+		myInput = input;
+	}
 
-    public void recurse (CommandTreeNode root) {
-        // TODO Auto-generated method stub
-        String value = myInput.get(wrapper.getIndex());
-        CommandTreeNode temp =
-                new CommandTreeNode("CONSTANT", "CONSTANT",
-                                    Double.parseDouble(myInput.get(wrapper.getIndex())), null);
-        root.add(temp);
+	/**
+	 * recursive method to generate the Tree
+	 * 
+	 * @param root
+	 */
+	public void recurse(CommandTreeNode root) {
+		String value = myInput.get(wrapper.getIndex());
+		CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT",
+				Double.parseDouble(myInput.get(wrapper.getIndex())), null);
+		root.add(temp);
 
-        wrapper.printTestStatements(value, temp.getType(), root.getName());
-        wrapper.incrementIndex();
-    }
+		wrapper.printTestStatements(value, temp.getType(), root.getName());
+		wrapper.incrementIndex();
+	}
 
 }

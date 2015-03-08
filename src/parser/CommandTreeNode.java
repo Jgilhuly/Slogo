@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
+/**
+ * A TreeNode class for handling the commands
+ * @author Kei Yoshikoshi
+ *
+ */
 public class CommandTreeNode {
     private String myType;
     private String myName;
