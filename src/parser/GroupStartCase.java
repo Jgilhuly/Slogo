@@ -28,8 +28,6 @@ public class GroupStartCase implements Cases {
 
 		root.add(temp);
 
-		wrapper.printTestStatements(value, temp.getType(), root.getName());
-
 		wrapper.incrementIndex();
 		while (!myInput.get(wrapper.getIndex()).equals(")")) {
 			wrapper.recurse(temp);

@@ -17,6 +17,7 @@ public class ListStartCase implements Cases {
 		this.wrapper = wrapper;
 		myInput = input;
 	}
+
 	/**
 	 * recurse method to generate the tree
 	 * 
@@ -29,9 +30,6 @@ public class ListStartCase implements Cases {
 				+ bracketCount++, 0, null);
 
 		root.add(temp);
-
-		wrapper.printTestStatements(value + "-" + (bracketCount - 1),
-				temp.getType(), root.getName());
 
 		wrapper.incrementIndex();
 		while (!myInput.get(wrapper.getIndex()).equals("]")) {

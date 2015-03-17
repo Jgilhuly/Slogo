@@ -28,7 +28,6 @@ public class ConstantCase implements Cases {
 				Double.parseDouble(myInput.get(wrapper.getIndex())), null);
 		root.add(temp);
 
-		wrapper.printTestStatements(value, temp.getType(), root.getName());
 		wrapper.incrementIndex();
 	}
 

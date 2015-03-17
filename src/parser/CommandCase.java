@@ -49,7 +49,6 @@ public class CommandCase implements Cases {
 
 		myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0, null);
 		int numParams = obtainNumParams(value);
-		wrapper.printTestStatements(value, obtainSubCommand(value), null);
 		wrapper.incrementIndex();
 		for (int i = 0; i < numParams; i++) {
 			wrapper.recurse(myRoot);
@@ -75,8 +74,6 @@ public class CommandCase implements Cases {
 				value, 0, null);
 		root.add(temp);
 
-		wrapper.printTestStatements(value, temp.getType(), root.getName());
-
 		for (int i = 0; i < numParams; i++) {
 			wrapper.recurse(temp);
 		}
@@ -92,7 +89,6 @@ public class CommandCase implements Cases {
 		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
 				value, 0, null);
 		root.add(temp);
-		wrapper.printTestStatements(value, temp.getType(), root.getName());
 		wrapper.recurse(root);
 	}
 

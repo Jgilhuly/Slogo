@@ -26,7 +26,6 @@ public class VariableCase implements Cases {
 		CommandTreeNode temp = new CommandTreeNode("VARIABLE", value, 0, null);
 		root.add(temp);
 
-		wrapper.printTestStatements(value, temp.getType(), root.getName());
 		wrapper.incrementIndex();
 	}
 

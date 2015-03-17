@@ -10,8 +10,8 @@ import controller.Controller;
 
 
 public class SceneUpdater implements Observer {
-    private final int SCREEN_WIDTH = 1000;
-    private final int SCREEN_HEIGHT = 600;
+    private final int SCREEN_WIDTH = 1200;
+    private final int SCREEN_HEIGHT = 800;
     private GUI myGUI;
 
     private Controller myController;
@@ -19,7 +19,7 @@ public class SceneUpdater implements Observer {
     public SceneUpdater (Stage s, Controller c) {
         s.setWidth(SCREEN_WIDTH);
         s.setHeight(SCREEN_HEIGHT);
-
+        s.setResizable(false);
         myGUI = new GUI(s, this);
         myController = c;
 

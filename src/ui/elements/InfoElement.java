@@ -46,8 +46,7 @@ public class InfoElement {
         myBaseNode.getChildren().add(prevCommandsTable);
 
         cols.clear();
-        cols.add("Names");
-        cols.add("Values");
+        cols.add("Commands");
 
         variablesTable = makeTable(cols);
         variablesTable.setItems(var);
@@ -96,17 +95,18 @@ public class InfoElement {
 
     public void setBindVariableList (String command, double value) {
         var.add(new Variable(command, value));
-        update();
+        variablesTable.setItems(var);
     }
 
     public void setBindCommandList (String command) {
         commands.add(new PreviousCommands(command));
-        update();
-    }
-
-    private void update () {
         prevCommandsTable.setItems(commands);
     }
+
+//    private void update () {
+//        prevCommandsTable.setItems(commands);
+//        variablesTable.setItems(var);
+//    }
 
     public Node getBaseNode () {
         return myBaseNode;
