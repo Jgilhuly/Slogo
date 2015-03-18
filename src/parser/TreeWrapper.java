@@ -18,5 +18,4 @@ public interface TreeWrapper {
 
 	public void recurse(CommandTreeNode root);
 
-	public void printTestStatements(String value, String type, String name);
 }
