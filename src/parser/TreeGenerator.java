@@ -73,16 +73,6 @@ public class TreeGenerator implements TreeWrapper {
 	}
 
 	/**
-	 * A temporary method to print statements to visualize the tree.
-	 */
-	public void printTestStatements(String value, String type, String name) {
-		System.out.println(value);
-		System.out.println("Type is: " + type);
-		System.out.println("Root value is: " + name);
-		System.out.println();
-	}
-
-	/**
 	 * A method creates a map that maps regex patterns to a case class
 	 * 
 	 * @return
