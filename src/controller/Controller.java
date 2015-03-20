@@ -23,7 +23,7 @@ public class Controller {
     }
 
     public void init (Stage s) {
-        frontEnd = new SceneUpdater(s, this).initialize();
+        frontEnd = new FrontEndLiason(s, this).initialize();
     }
 
     public void createTurtle (TurtleView view) {

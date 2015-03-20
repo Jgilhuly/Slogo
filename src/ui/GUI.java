@@ -27,7 +27,7 @@ public class GUI {
     private Scene myScene;
     private Stage myStage;
     private BorderPane myRoot;
-    private SceneUpdater mySceneUpdater;
+    private FrontEndLiason mySceneUpdater;
     private List<TurtleView> turtleViews;
     private Pen myPen;
 
@@ -44,7 +44,7 @@ public class GUI {
 
     // private List<String> variables;
 
-    public GUI (Stage stageIn, SceneUpdater sceneUpIn) {
+    public GUI (Stage stageIn, FrontEndLiason sceneUpIn) {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
                                                + "English");
         myStage = stageIn;
