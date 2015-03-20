@@ -105,9 +105,6 @@ public class TreeGenerator implements TreeWrapper {
 		return ret;
 	}
 
-	public List<String> getMethodsList() {
-		return CommandCase.getMethodsList();
-	}
 
 	public void incrementIndex() {
 		index++;
