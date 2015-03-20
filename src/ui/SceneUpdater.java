@@ -1,7 +1,8 @@
+// This entire file is part of my masterpiece.
+// John Gilhuly
+
 package ui;
 
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Set;
 import ui_table.TableElements;
 import javafx.collections.ObservableList;
@@ -9,24 +10,24 @@ import javafx.stage.Stage;
 import controller.Controller;
 
 
-public class SceneUpdater implements Observer {
+public class SceneUpdater implements FrontEndInterface {
     private final int SCREEN_WIDTH = 1000;
     private final int SCREEN_HEIGHT = 600;
     private GUI myGUI;
 
     private Controller myController;
-
-    public SceneUpdater (Stage s, Controller c) {
-        s.setWidth(SCREEN_WIDTH);
-        s.setHeight(SCREEN_HEIGHT);
-
-        myGUI = new GUI(s, this);
-        myController = c;
-
+    
+    public SceneUpdater(Stage s, Controller c) {
+    	s.setWidth(SCREEN_WIDTH);
+    	s.setHeight(SCREEN_HEIGHT);
+    	
+    	myGUI = new GUI(s, this);
+    	myController = c;
     }
-
-    public void initGUI () {
-        myGUI.initialize();
+    
+    public FrontEndInterface initialize() {
+    	myGUI.initialize();
+		return this;
     }
 
     /**
@@ -48,20 +49,6 @@ public class SceneUpdater implements Observer {
         myGUI.setOutputText(outputText);
     }
 
-    public void setListBind (String type, ObservableList<TableElements> l) {
-
-        myGUI.bindTable(type, l);
-    }
-
-    public Set<String> getPrevCommandList () {
-        return myController.getPrevCommandList();
-    }
-
-    @Override
-    public void update (Observable o, Object arg) {
-        // Update things from GhostView - for Sprint 3
-    }
-
     /**
      * Sends the GUI's TurtleView, used to link it to corresponding Turtle in
      * back-end
@@ -75,9 +62,16 @@ public class SceneUpdater implements Observer {
     public void createNewWorkspace () {
         myController.createNewWorkspace();
     }
+    
+    public void setListBind (String type, ObservableList<TableElements> l) {
+    	myGUI.bindTable(type, l);
+    }
+    
+    public Set<String> getPrevCommandList () {
+    	return myController.getPrevCommandList();
+    }
 
     public void addCommandHistory (String input) {
         myGUI.addCommandHistory(input);
     }
-
 }

@@ -1,20 +1,15 @@
 package controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import javafx.stage.Stage;
 import main.WorkspaceManager;
-import model.TreeInterpreter;
-import model.Turtle;
-import parser.CommandTreeNode;
-import parser.TreeGenerator;
-import ui.SceneUpdater;
-import ui.TurtleView;
+import model.*;
+import parser.*;
+import ui.*;
 
 
 public class Controller {
-    private SceneUpdater sceneUpdater;
+    private FrontEndInterface frontEnd;
     private Map<String, CommandTreeNode> previousCommands;
     private TreeGenerator generator;
     private TreeInterpreter interpreter;
@@ -28,8 +23,7 @@ public class Controller {
     }
 
     public void init (Stage s) {
-        sceneUpdater = new SceneUpdater(s, this);
-        sceneUpdater.initGUI();
+        frontEnd = new SceneUpdater(s, this).initialize();
     }
 
     public void createTurtle (TurtleView view) {
@@ -49,22 +43,13 @@ public class Controller {
         CommandTreeNode node = generator.createCommands(input, language);
         generator.getMethodsList(); //TODO: USE TO GET USER GENERATED COMMANDS
         interpreter.interpretTree(node);
-        sceneUpdater.setOutputText(Double.toString(node.getValue()));
-        sceneUpdater.addCommandHistory(input);
-
-    }
-
-
-
-    private void addCommandHistory (String name, CommandTreeNode prev) {
-        if (!previousCommands.containsKey(name)) {
-            previousCommands.put(name, prev);
-        }
+        frontEnd.setOutputText(Double.toString(node.getValue()));
+        frontEnd.addCommandHistory(input);
 
     }
 
     public void addCommandHistory (String input) {
-        sceneUpdater.addCommandHistory(input);
+        frontEnd.addCommandHistory(input);
     }
 
     public Set<String> getPrevCommandList () {
