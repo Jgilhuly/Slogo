@@ -161,7 +161,7 @@ public class MenuBarElement {
         }
         else {
             ioPane.getButton().setDisable(true);
-            toggleMenuItems(menu, language, true);
+            toggleMenuItems(menu, language, false);
             ioPane.getInputField().setEditable(true);
         }
     }

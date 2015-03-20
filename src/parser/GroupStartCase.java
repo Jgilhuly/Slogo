@@ -9,6 +9,7 @@ import java.util.List;
  *
  */
 public class GroupStartCase implements Cases {
+	private static final String TYPE = "GROUP";
 	private TreeWrapper wrapper;
 	private List<String> myInput;
 
@@ -24,7 +25,7 @@ public class GroupStartCase implements Cases {
 	 */
 	public void recurse(CommandTreeNode root) {
 		String value = myInput.get(wrapper.getIndex());
-		CommandTreeNode temp = new CommandTreeNode("BRACKET", value, 0, null);
+		CommandTreeNode temp = new CommandTreeNode(TYPE, value, 0);
 
 		root.add(temp);
 

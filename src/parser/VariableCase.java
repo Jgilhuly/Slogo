@@ -9,6 +9,7 @@ import java.util.List;
  *
  */
 public class VariableCase implements Cases {
+	private static final String TYPE = "VARIABLE";
 	private TreeWrapper wrapper;
 	private List<String> myInput;
 
@@ -16,6 +17,7 @@ public class VariableCase implements Cases {
 		this.wrapper = wrapper;
 		myInput = input;
 	}
+	
 	/**
 	 * recurse method to generate the tree
 	 * 
@@ -23,9 +25,8 @@ public class VariableCase implements Cases {
 	 */
 	public void recurse(CommandTreeNode root) {
 		String value = myInput.get(wrapper.getIndex());
-		CommandTreeNode temp = new CommandTreeNode("VARIABLE", value, 0, null);
+		CommandTreeNode temp = new CommandTreeNode(TYPE, value, 0);
 		root.add(temp);
-
 		wrapper.incrementIndex();
 	}
 

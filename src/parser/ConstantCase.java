@@ -9,6 +9,7 @@ import java.util.List;
  *
  */
 public class ConstantCase implements Cases {
+	private static final String TYPE = "CONSTANT";
 	private TreeWrapper wrapper;
 	private List<String> myInput;
 
@@ -24,8 +25,8 @@ public class ConstantCase implements Cases {
 	 */
 	public void recurse(CommandTreeNode root) {
 		String value = myInput.get(wrapper.getIndex());
-		CommandTreeNode temp = new CommandTreeNode("CONSTANT", "CONSTANT",
-				Double.parseDouble(myInput.get(wrapper.getIndex())), null);
+		CommandTreeNode temp = new CommandTreeNode(TYPE, TYPE,
+				Double.parseDouble(value));
 		root.add(temp);
 
 		wrapper.incrementIndex();

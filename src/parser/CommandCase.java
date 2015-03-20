@@ -24,7 +24,6 @@ public class CommandCase implements Cases {
 	private static final int TYPE_INDEX = 1;
 	private boolean makingUserInstruction;
 	private List<String> methodList;
-
 	private List<Entry<String, Pattern>> languagePatternList;
 	private TreeWrapper wrapper;
 	private List<String> myInput;
@@ -47,7 +46,7 @@ public class CommandCase implements Cases {
 		String value = useResourceBundle(myInput.get(wrapper.getIndex()));
 		makingUserInstruction = value.equals("MakeUserInstruction");
 
-		myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0, null);
+		myRoot = new CommandTreeNode(obtainSubCommand(value), value, 0);
 		int numParams = obtainNumParams(value);
 		wrapper.incrementIndex();
 		for (int i = 0; i < numParams; i++) {
@@ -71,14 +70,14 @@ public class CommandCase implements Cases {
 		int numParams = obtainNumParams(value);
 
 		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
-				value, 0, null);
+				value, 0);
 		root.add(temp);
 
 		for (int i = 0; i < numParams; i++) {
 			wrapper.recurse(temp);
 		}
 	}
-
+	
 	/**
 	 * recursive case when the command is to make an instruction
 	 * 
@@ -87,7 +86,7 @@ public class CommandCase implements Cases {
 	 */
 	private void makingInstructionsCase(CommandTreeNode root, String value) {
 		CommandTreeNode temp = new CommandTreeNode(obtainSubCommand(value),
-				value, 0, null);
+				value, 0);
 		root.add(temp);
 		wrapper.recurse(root);
 	}

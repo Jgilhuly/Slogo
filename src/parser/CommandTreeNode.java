@@ -15,11 +15,10 @@ public class CommandTreeNode {
     private Double myValue;
     private List<CommandTreeNode> myChildren;
 
-    public CommandTreeNode (String type, String name, double value, List<CommandTreeNode> children) {
+    public CommandTreeNode (String type, String name, double value) {
         myType = type;
         myName = name;
         myValue = value;
-        myChildren = children;
         myChildren = new ArrayList<>();
     }
 

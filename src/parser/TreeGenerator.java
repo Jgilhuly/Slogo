@@ -41,12 +41,8 @@ public class TreeGenerator implements TreeWrapper {
 			index = 0;
 			CommandCase.initialize(language);
 
-			System.out.println("FINAL ROOT VALUE IS: "
-					+ CommandCase.getRoot().getName());
-
 			return CommandCase.getRoot();
 		} catch (NullPointerException | IndexOutOfBoundsException e) {
-			// e.printStackTrace();
 			if (ListStartCount != ListEndCount) {
 				throw new UnmatchedBracketException();
 			}
@@ -71,7 +67,7 @@ public class TreeGenerator implements TreeWrapper {
 			}
 		}
 	}
-
+	
 	/**
 	 * A method creates a map that maps regex patterns to a case class
 	 * 
