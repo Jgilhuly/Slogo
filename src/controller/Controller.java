@@ -63,13 +63,11 @@ public class Controller {
 
     }
 
-<<<<<<< HEAD
-=======
+
     public void addCommandHistory (String input) {
         sceneUpdater.addCommandHistory(input);
     }
 
->>>>>>> 3f0af1a8228034be9ca15dd5cdc72985645647b2
     public Set<String> getPrevCommandList () {
         return previousCommands.keySet();
     }
