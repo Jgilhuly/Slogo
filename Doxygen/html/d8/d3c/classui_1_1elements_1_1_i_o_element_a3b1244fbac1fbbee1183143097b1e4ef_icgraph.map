@@ -1,0 +1,23 @@
+<map id="ui.elements.IOElement.getInputField" name="ui.elements.IOElement.getInputField">
+<area shape="rect" id="node2" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a2fe6c8936d469e50e26a806b8660fc8b" title="ui.elements.MenuBarElement.check\lLanguageMenuItems" alt="" coords="246,9,498,50"/>
+<area shape="rect" id="node7" href="$dc/d3b/classui_1_1_g_u_i.html#ad8f08a79a20a498bcaafdc7e2e2ce0a9" title="ui.GUI.parseCommand" alt="" coords="289,96,455,123"/>
+<area shape="rect" id="node19" href="$dc/d3b/classui_1_1_g_u_i.html#ada22074441d08ce00bb69499f8707fc3" title="ui.GUI.setInputText" alt="" coords="301,151,443,177"/>
+<area shape="rect" id="node3" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a3ee62dedaa9a64b73d373f4e58ea5690" title="ui.elements.MenuBarElement.makeMenu" alt="" coords="1345,5,1631,32"/>
+<area shape="rect" id="node4" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a98c13995a31d997aa10f2950583da6cc" title="ui.elements.MenuBarElement.make\lMenuBar" alt="" coords="2691,26,2941,67"/>
+<area shape="rect" id="node5" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a7bdb58f78cf8b61ba28498c5c86ab682" title="ui.elements.MenuBarElement.init" alt="" coords="2989,33,3224,60"/>
+<area shape="rect" id="node6" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#ab4a4e6841c924a9d9c70b8073b56dffc" title="ui.elements.MenuBarElement.\lMenuBarElement" alt="" coords="3273,26,3487,67"/>
+<area shape="rect" id="node8" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a139a046f0c771f86696f2eee04047c64" title="ui.elements.IOElement.init" alt="" coords="569,56,759,83"/>
+<area shape="rect" id="node10" href="$dc/d3b/classui_1_1_g_u_i.html#ab8ec2a37b3d5bd9e8c2abbb3642fb965" title="ui.GUI.setupKeyboardCommands" alt="" coords="547,107,781,133"/>
+<area shape="rect" id="node9" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a556e1a3ad292fe3ab731065eef59b187" title="ui.elements.IOElement.IOElement" alt="" coords="829,56,1067,83"/>
+<area shape="rect" id="node11" href="$dc/d3b/classui_1_1_g_u_i.html#a765d554102f38969231261686f2f8e27" title="ui.GUI.initialize" alt="" coords="891,107,1005,133"/>
+<area shape="rect" id="node12" href="$d5/d06/classui_1_1_scene_updater.html#aeef5dd7a8ec2ad6179e33fdd71ea90d6" title="ui.SceneUpdater.initGUI" alt="" coords="1118,107,1293,133"/>
+<area shape="rect" id="node13" href="$d9/df7/classcontroller_1_1_controller.html#a57e42ba83ee2145e6262cd72eac59570" title="controller.Controller.init" alt="" coords="1403,107,1573,133"/>
+<area shape="rect" id="node14" href="$dd/df2/classmain_1_1_workspace_manager.html#abc818b59211f6e14940b86a42bb868d0" title="main.WorkspaceManager.create\lWorkspace" alt="" coords="1680,99,1907,141"/>
+<area shape="rect" id="node15" href="$d9/df7/classcontroller_1_1_controller.html#a3a9d672bb57047df70945ad1a9582c9a" title="controller.Controller.create\lNewWorkspace" alt="" coords="1955,57,2146,98"/>
+<area shape="rect" id="node18" href="$d1/d0b/classmain_1_1_main.html#a9f1e5657b2f6f9bdd69a3b6412ceda74" title="main.Main.start" alt="" coords="1989,123,2112,149"/>
+<area shape="rect" id="node16" href="$d5/d06/classui_1_1_scene_updater.html#a2858ad8edb0c0f59a21e2ae015f2fa1e" title="ui.SceneUpdater.createNew\lWorkspace" alt="" coords="2195,57,2395,98"/>
+<area shape="rect" id="node17" href="$dc/d3b/classui_1_1_g_u_i.html#a2edc294ba07311e6c4b85c9fe749d1bf" title="ui.GUI.createNewWorkspace" alt="" coords="2443,60,2643,87"/>
+<area shape="rect" id="node20" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#a0751ba2956cfc8eb22668ac7dd5b1e88" title="ui.elements.InfoElement.make\lTable" alt="" coords="555,158,773,199"/>
+<area shape="rect" id="node21" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#a903c163f8db1ff4a909d837c202c25ba" title="ui.elements.InfoElement.init" alt="" coords="848,165,1048,192"/>
+<area shape="rect" id="node22" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#a74e5d4ca26d93950429bd7e287ac12e3" title="ui.elements.InfoElement.\lInfoElement" alt="" coords="1115,158,1296,199"/>
+</map>

@@ -1,0 +1,31 @@
+<map id="model.VariableList.add" name="model.VariableList.add">
+<area shape="rect" id="node2" href="$d5/d8e/classcommand_1_1control_1_1_make_variable_command.html#a8f9ffb360b0bc51047bf673464598c90" title="command.control.MakeVariable\lCommand.calculateValue" alt="" coords="435,157,659,198"/>
+<area shape="rect" id="node3" href="$db/d55/classmodel_1_1_variable_list.html#a09697cca38c12cf837ee40e71d02f78b" title="model.VariableList.get" alt="" coords="222,223,386,249"/>
+<area shape="rect" id="node4" href="$d7/dae/classcommand_1_1control_1_1_do_times_command.html#a932eb0f99c5b2fecf8fd6939ef4b0c5b" title="command.control.DoTimesCommand.calculate\lValue" alt="" coords="1000,527,1323,569"/>
+<area shape="rect" id="node5" href="$da/db2/classcommand_1_1control_1_1_for_command.html#ad494f107c7c0e97f862dcfddc476a064" title="command.control.ForCommand.calculate\lValue" alt="" coords="1018,5,1305,46"/>
+<area shape="rect" id="node6" href="$d9/d88/classmodel_1_1_tree_interpreter.html#a3e460e5ebe66f781afb480f0f0ec2ce7" title="model.TreeInterpreter.update" alt="" coords="443,273,651,300"/>
+<area shape="rect" id="node7" href="$d9/d88/classmodel_1_1_tree_interpreter.html#a501df6b8cfe1a8175a9da0ed96d30d6f" title="model.TreeInterpreter.interpretTree" alt="" coords="707,273,951,300"/>
+<area shape="rect" id="node8" href="$d5/d1a/classcommand_1_1control_1_1_ask_with_command.html#a2a79128bce4d0ce305a2fe690675a70e" title="command.control.AskWithCommand.calculate\lValue" alt="" coords="1003,266,1320,307"/>
+<area shape="rect" id="node9" href="$d1/d18/classcommand_1_1control_1_1_execute_user_command.html#a1ce1cab877c9c9199aee9f8e687f74fb" title="command.control.ExecuteUser\lCommand.calculateValue" alt="" coords="1051,331,1271,373"/>
+<area shape="rect" id="node10" href="$d4/dea/classcommand_1_1control_1_1_ask_command.html#a0e92735076727a8f4ef8affeb592e8b4" title="command.control.AskCommand.calculate\lValue" alt="" coords="1016,397,1307,438"/>
+<area shape="rect" id="node11" href="$d1/d0f/classcommand_1_1control_1_1_repeat_command.html#af9c3a3854b4eaabafc7c09bdbe83de0e" title="command.control.RepeatCommand.calculate\lValue" alt="" coords="1006,462,1317,503"/>
+<area shape="rect" id="node12" href="$d6/d3b/classcommand_1_1control_1_1_if_command.html#acf428d2a9882866a2f00fbbee727f4f1" title="command.control.IfCommand.calculate\lValue" alt="" coords="1024,70,1299,111"/>
+<area shape="rect" id="node13" href="$d3/dcf/classcommand_1_1control_1_1_if_else_command.html#ac1a2c320a23705da633419c13a18ff91" title="command.control.IfElseCommand.calculate\lValue" alt="" coords="1011,135,1311,177"/>
+<area shape="rect" id="node14" href="$d9/df7/classcontroller_1_1_controller.html#a3d81fb1a57114f96fb6c319f4c5df370" title="controller.Controller.parse\lCommand" alt="" coords="1068,201,1255,242"/>
+<area shape="rect" id="node15" href="$d5/d06/classui_1_1_scene_updater.html#ab77a04f8b0038429b09237aac18906e8" title="ui.SceneUpdater.sendCommands" alt="" coords="1371,208,1608,235"/>
+<area shape="rect" id="node16" href="$dc/d3b/classui_1_1_g_u_i.html#ad8f08a79a20a498bcaafdc7e2e2ce0a9" title="ui.GUI.parseCommand" alt="" coords="1657,208,1823,235"/>
+<area shape="rect" id="node17" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a139a046f0c771f86696f2eee04047c64" title="ui.elements.IOElement.init" alt="" coords="1894,183,2085,209"/>
+<area shape="rect" id="node19" href="$dc/d3b/classui_1_1_g_u_i.html#ab8ec2a37b3d5bd9e8c2abbb3642fb965" title="ui.GUI.setupKeyboardCommands" alt="" coords="1873,233,2106,260"/>
+<area shape="rect" id="node18" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a556e1a3ad292fe3ab731065eef59b187" title="ui.elements.IOElement.IOElement" alt="" coords="2155,183,2392,209"/>
+<area shape="rect" id="node20" href="$dc/d3b/classui_1_1_g_u_i.html#a765d554102f38969231261686f2f8e27" title="ui.GUI.initialize" alt="" coords="2216,233,2331,260"/>
+<area shape="rect" id="node21" href="$d5/d06/classui_1_1_scene_updater.html#aeef5dd7a8ec2ad6179e33fdd71ea90d6" title="ui.SceneUpdater.initGUI" alt="" coords="2441,233,2615,260"/>
+<area shape="rect" id="node22" href="$d9/df7/classcontroller_1_1_controller.html#a57e42ba83ee2145e6262cd72eac59570" title="controller.Controller.init" alt="" coords="2665,233,2834,260"/>
+<area shape="rect" id="node23" href="$dd/df2/classmain_1_1_workspace_manager.html#abc818b59211f6e14940b86a42bb868d0" title="main.WorkspaceManager.create\lWorkspace" alt="" coords="2883,226,3109,267"/>
+<area shape="rect" id="node24" href="$d9/df7/classcontroller_1_1_controller.html#a3a9d672bb57047df70945ad1a9582c9a" title="controller.Controller.create\lNewWorkspace" alt="" coords="3158,197,3349,238"/>
+<area shape="rect" id="node30" href="$d1/d0b/classmain_1_1_main.html#a9f1e5657b2f6f9bdd69a3b6412ceda74" title="main.Main.start" alt="" coords="3192,263,3315,289"/>
+<area shape="rect" id="node25" href="$d5/d06/classui_1_1_scene_updater.html#a2858ad8edb0c0f59a21e2ae015f2fa1e" title="ui.SceneUpdater.createNew\lWorkspace" alt="" coords="3397,197,3597,238"/>
+<area shape="rect" id="node26" href="$dc/d3b/classui_1_1_g_u_i.html#a2edc294ba07311e6c4b85c9fe749d1bf" title="ui.GUI.createNewWorkspace" alt="" coords="3645,204,3845,231"/>
+<area shape="rect" id="node27" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a98c13995a31d997aa10f2950583da6cc" title="ui.elements.MenuBarElement.make\lMenuBar" alt="" coords="3893,197,4144,238"/>
+<area shape="rect" id="node28" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a7bdb58f78cf8b61ba28498c5c86ab682" title="ui.elements.MenuBarElement.init" alt="" coords="4192,204,4427,231"/>
+<area shape="rect" id="node29" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#ab4a4e6841c924a9d9c70b8073b56dffc" title="ui.elements.MenuBarElement.\lMenuBarElement" alt="" coords="4475,197,4690,238"/>
+</map>

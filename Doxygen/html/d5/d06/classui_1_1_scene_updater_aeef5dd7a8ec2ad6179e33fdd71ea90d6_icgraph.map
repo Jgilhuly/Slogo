@@ -1,0 +1,11 @@
+<map id="ui.SceneUpdater.initGUI" name="ui.SceneUpdater.initGUI">
+<area shape="rect" id="node2" href="$d9/df7/classcontroller_1_1_controller.html#a57e42ba83ee2145e6262cd72eac59570" title="controller.Controller.init" alt="" coords="230,41,399,68"/>
+<area shape="rect" id="node3" href="$dd/df2/classmain_1_1_workspace_manager.html#abc818b59211f6e14940b86a42bb868d0" title="main.WorkspaceManager.create\lWorkspace" alt="" coords="448,34,675,75"/>
+<area shape="rect" id="node4" href="$d9/df7/classcontroller_1_1_controller.html#a3a9d672bb57047df70945ad1a9582c9a" title="controller.Controller.create\lNewWorkspace" alt="" coords="723,5,914,46"/>
+<area shape="rect" id="node10" href="$d1/d0b/classmain_1_1_main.html#a9f1e5657b2f6f9bdd69a3b6412ceda74" title="main.Main.start" alt="" coords="757,71,880,97"/>
+<area shape="rect" id="node5" href="$d5/d06/classui_1_1_scene_updater.html#a2858ad8edb0c0f59a21e2ae015f2fa1e" title="ui.SceneUpdater.createNew\lWorkspace" alt="" coords="963,5,1163,46"/>
+<area shape="rect" id="node6" href="$dc/d3b/classui_1_1_g_u_i.html#a2edc294ba07311e6c4b85c9fe749d1bf" title="ui.GUI.createNewWorkspace" alt="" coords="1211,12,1411,39"/>
+<area shape="rect" id="node7" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a98c13995a31d997aa10f2950583da6cc" title="ui.elements.MenuBarElement.make\lMenuBar" alt="" coords="1459,5,1709,46"/>
+<area shape="rect" id="node8" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a7bdb58f78cf8b61ba28498c5c86ab682" title="ui.elements.MenuBarElement.init" alt="" coords="1757,12,1992,39"/>
+<area shape="rect" id="node9" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#ab4a4e6841c924a9d9c70b8073b56dffc" title="ui.elements.MenuBarElement.\lMenuBarElement" alt="" coords="2041,5,2255,46"/>
+</map>

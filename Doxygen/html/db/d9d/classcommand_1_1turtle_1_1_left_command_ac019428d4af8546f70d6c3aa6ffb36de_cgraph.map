@@ -1,0 +1,5 @@
+<map id="command.turtle.LeftCommand.calculateValue" name="command.turtle.LeftCommand.calculateValue">
+<area shape="rect" id="node2" href="$d6/d34/classmodel_1_1_turtle.html#a1c5d07962ede5fbfacc59413274d4300" title="model.Turtle.getHeading" alt="" coords="339,5,517,32"/>
+<area shape="rect" id="node3" href="$d6/d34/classmodel_1_1_turtle.html#a2b2a79e69080a0bacbefea42068da2dd" title="model.Turtle.setHeading" alt="" coords="339,56,517,83"/>
+<area shape="rect" id="node4" href="$d6/d34/classmodel_1_1_turtle.html#ab69148692c7de79ad6c276902b81553a" title="model.Turtle.updateTurtle\lViewers" alt="" coords="337,107,519,149"/>
+</map>

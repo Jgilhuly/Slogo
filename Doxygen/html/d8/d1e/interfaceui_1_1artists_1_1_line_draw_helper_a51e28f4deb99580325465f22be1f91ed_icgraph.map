@@ -1,0 +1,5 @@
+<map id="ui.artists.LineDrawHelper.drawLine" name="ui.artists.LineDrawHelper.drawLine">
+<area shape="rect" id="node2" href="$dd/de0/classui_1_1_pen.html#a61ab673a4336e7a1a8ba62a8c8f8f1d3" title="ui.Pen.draw" alt="" coords="294,5,389,32"/>
+<area shape="rect" id="node3" href="$d3/db6/classui_1_1_turtle_view.html#a3bcfd8b9b225b9082d34a55b7ebc90b7" title="ui.TurtleView.draw" alt="" coords="437,5,571,32"/>
+<area shape="rect" id="node4" href="$d3/db6/classui_1_1_turtle_view.html#a08c1ab80fb36ee57f17dcdd42bcf9143" title="ui.TurtleView.update" alt="" coords="619,5,767,32"/>
+</map>

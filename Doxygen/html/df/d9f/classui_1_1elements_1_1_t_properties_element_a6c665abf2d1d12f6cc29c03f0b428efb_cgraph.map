@@ -1,0 +1,19 @@
+<map id="ui.elements.TPropertiesElement.TPropertiesElement" name="ui.elements.TPropertiesElement.TPropertiesElement">
+<area shape="rect" id="node2" href="$df/d9f/classui_1_1elements_1_1_t_properties_element.html#aa9783f0d27dd4082e08b8a23d60883fe" title="ui.elements.TPropertiesElement.init" alt="" coords="286,201,535,228"/>
+<area shape="rect" id="node3" href="$d5/db7/classutil_1_1_button_maker.html#aa97c3a2c321870136f8a07aaa10d79e1" title="util.ButtonMaker.makeToggle\lButton" alt="" coords="615,5,822,46"/>
+<area shape="rect" id="node4" href="$dd/de0/classui_1_1_pen.html#a89a103de9c8352d13ecdc11cea27069a" title="ui.Pen.setPenIsDown" alt="" coords="641,71,796,97"/>
+<area shape="rect" id="node5" href="$d3/db6/classui_1_1_turtle_view.html#a8856d717f42c043e18a5fd4232cee60e" title="ui.TurtleView.setTurtleVisible" alt="" coords="619,121,818,148"/>
+<area shape="rect" id="node6" href="$d5/db7/classutil_1_1_button_maker.html#a3e5f904585878b756ee8079ed25c94b0" title="util.ButtonMaker.makeButton" alt="" coords="614,172,823,199"/>
+<area shape="rect" id="node7" href="$df/d9f/classui_1_1elements_1_1_t_properties_element.html#a2bb678e529943bae624e017430738bb5" title="ui.elements.TPropertiesElement.select\lAndChangeTurtleImage" alt="" coords="585,223,853,265"/>
+<area shape="rect" id="node9" href="$dc/d3b/classui_1_1_g_u_i.html#a0337dd1c0a04ce5b2475037e66b5e3a7" title="ui.GUI.makeTurtleView" alt="" coords="637,289,800,316"/>
+<area shape="rect" id="node16" href="$dd/de0/classui_1_1_pen.html#a533d3faf5e058dcd749609c56654777b" title="ui.Pen.setLineStyle" alt="" coords="647,340,790,367"/>
+<area shape="rect" id="node17" href="$df/d9f/classui_1_1elements_1_1_t_properties_element.html#a186e2c50485f6712ae792ce55c21e2b0" title="ui.elements.TPropertiesElement.make\lTurtleHeadingBox" alt="" coords="585,398,852,439"/>
+<area shape="rect" id="node8" href="$d3/db6/classui_1_1_turtle_view.html#a70ae18d781be20931f64ddc2a54b5808" title="ui.TurtleView.setImage" alt="" coords="933,147,1096,173"/>
+<area shape="rect" id="node10" href="$d5/d06/classui_1_1_scene_updater.html#a794d87263c7d233591c42f2bb7e16675" title="ui.SceneUpdater.createTurtle" alt="" coords="911,197,1118,224"/>
+<area shape="rect" id="node13" href="$d8/d6d/classui_1_1elements_1_1_canvas_element.html#a2e31f129014b25b8f6e3e6d76f977f99" title="ui.elements.CanvasElement.get\lBaseNode" alt="" coords="901,249,1128,290"/>
+<area shape="rect" id="node14" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#ac831e7ac05bb270f9b916f7471d0e9bb" title="ui.elements.InfoElement.get\lBaseNode" alt="" coords="913,314,1116,355"/>
+<area shape="rect" id="node15" href="$d8/d6d/classui_1_1elements_1_1_canvas_element.html#a0bd90830736ace544582f1fe98dc929f" title="ui.elements.CanvasElement.get\lCanvas" alt="" coords="901,379,1128,421"/>
+<area shape="rect" id="node11" href="$d9/df7/classcontroller_1_1_controller.html#a5ff29de29dce4cc460b69294c764adc8" title="controller.Controller.create\lTurtle" alt="" coords="1177,190,1367,231"/>
+<area shape="rect" id="node12" href="$d9/d88/classmodel_1_1_tree_interpreter.html#a3a8c43b61bf2582fe495cae3f27c2c06" title="model.TreeInterpreter.get\lTurtleList" alt="" coords="1416,190,1600,231"/>
+<area shape="rect" id="node18" href="$d3/db6/classui_1_1_turtle_view.html#a38bc5f9733ecbdf8d3e100740f8c5e97" title="ui.TurtleView.getHeading" alt="" coords="926,445,1103,472"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="controller.Controller.addCommandHistory" name="controller.Controller.addCommandHistory">
+<area shape="rect" id="node2" href="$d5/d06/classui_1_1_scene_updater.html#ac93c2b014447efef3a09141521fb4d9e" title="ui.SceneUpdater.addCommand\lHistory" alt="" coords="230,5,453,46"/>
+<area shape="rect" id="node3" href="$dc/d3b/classui_1_1_g_u_i.html#a3c16c78e8d953dbf8ef41113ca03621e" title="ui.GUI.addCommandHistory" alt="" coords="501,12,701,39"/>
+<area shape="rect" id="node4" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#aa14d00daf19b5c3d7cd792c2590f23b3" title="ui.elements.InfoElement.set\lBindCommandList" alt="" coords="750,5,951,46"/>
+<area shape="rect" id="node5" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#a54dbeca14ae734678154142637d3c4ab" title="ui.elements.InfoElement.update" alt="" coords="1000,12,1227,39"/>
+</map>

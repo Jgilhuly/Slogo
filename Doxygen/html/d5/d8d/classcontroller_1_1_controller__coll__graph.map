@@ -1,0 +1,21 @@
+<map id="controller.Controller" name="controller.Controller">
+<area shape="rect" id="node19" href="$d5/d06/classui_1_1_scene_updater.html" title="ui.SceneUpdater" alt="" coords="1898,483,2027,509"/>
+<area shape="rect" id="node2" href="$d9/d88/classmodel_1_1_tree_interpreter.html" title="model.TreeInterpreter" alt="" coords="1164,211,1324,237"/>
+<area shape="rect" id="node3" href="$db/d55/classmodel_1_1_variable_list.html" title="model.VariableList" alt="" coords="796,109,935,136"/>
+<area shape="rect" id="node6" href="$db/d10/classmodel_1_1_command_factory.html" title="model.CommandFactory" alt="" coords="776,211,955,237"/>
+<area shape="rect" id="node8" href="$d0/d05/classparser_1_1_tree_generator.html" title="parser.TreeGenerator" alt="" coords="1165,464,1323,491"/>
+<area shape="rect" id="node9" href="$d9/dc0/interfaceparser_1_1_tree_wrapper.html" title="parser.TreeWrapper" alt="" coords="377,331,521,357"/>
+<area shape="rect" id="node10" href="$d5/d30/classparser_1_1_command_case.html" title="parser.CommandCase" alt="" coords="783,464,948,491"/>
+<area shape="rect" id="node11" href="$d7/d32/interfaceparser_1_1_cases.html" title="parser.Cases" alt="" coords="397,383,502,409"/>
+<area shape="rect" id="node15" href="$dc/d9e/classparser_1_1_command_tree_node.html" title="parser.CommandTreeNode" alt="" coords="353,551,546,577"/>
+<area shape="rect" id="node18" href="$dd/df2/classmain_1_1_workspace_manager.html" title="main.WorkspaceManager" alt="" coords="1153,515,1335,541"/>
+<area shape="rect" id="node21" href="$dc/d3b/classui_1_1_g_u_i.html" title="ui.GUI" alt="" coords="2293,596,2353,623"/>
+<area shape="rect" id="node39" href="$d3/db6/classui_1_1_turtle_view.html" title="ui.TurtleView" alt="" coords="2273,143,2373,169"/>
+<area shape="rect" id="node22" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html" title="ui.elements.MenuBarElement" alt="" coords="2611,689,2821,716"/>
+<area shape="rect" id="node38" href="$df/d9f/classui_1_1elements_1_1_t_properties_element.html" title="ui.elements.TPropertiesElement" alt="" coords="2603,565,2829,592"/>
+<area shape="rect" id="node43" href="$d6/dd8/classui_1_1elements_1_1_info_element.html" title="ui.elements.InfoElement" alt="" coords="2627,1068,2805,1095"/>
+<area shape="rect" id="node23" href="$d8/d6d/classui_1_1elements_1_1_canvas_element.html" title="ui.elements.CanvasElement" alt="" coords="1862,213,2063,240"/>
+<area shape="rect" id="node27" href="$dd/de0/classui_1_1_pen.html" title="ui.Pen" alt="" coords="1932,352,1993,379"/>
+<area shape="rect" id="node30" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html" title="ui.elements.IOElement" alt="" coords="1879,748,2046,775"/>
+<area shape="rect" id="node28" href="$d8/d1e/interfaceui_1_1artists_1_1_line_draw_helper.html" title="ui.artists.LineDrawHelper" alt="" coords="1536,352,1717,379"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="ui.TurtleView.update" name="ui.TurtleView.update">
+<area shape="rect" id="node2" href="$d3/db6/classui_1_1_turtle_view.html#a3bcfd8b9b225b9082d34a55b7ebc90b7" title="ui.TurtleView.draw" alt="" coords="225,5,359,32"/>
+<area shape="rect" id="node5" href="$d3/db6/classui_1_1_turtle_view.html#adae75eb7b3a1cec778b25f6bb7be6648" title="ui.TurtleView.updateRotation" alt="" coords="429,56,629,83"/>
+<area shape="rect" id="node6" href="$d6/d34/classmodel_1_1_turtle.html#abc6be7d821691f3ac0c5377bcb4c1da4" title="model.Turtle.getCleared" alt="" coords="205,107,379,133"/>
+<area shape="rect" id="node7" href="$d6/d34/classmodel_1_1_turtle.html#a1c5d07962ede5fbfacc59413274d4300" title="model.Turtle.getHeading" alt="" coords="203,157,381,184"/>
+<area shape="rect" id="node8" href="$d6/d34/classmodel_1_1_turtle.html#a39ac93a3d824905756d59839933c4b81" title="model.Turtle.getVisibility" alt="" coords="204,208,380,235"/>
+<area shape="rect" id="node9" href="$d6/d34/classmodel_1_1_turtle.html#a5c92e7274d592bbd3df40913004dfa71" title="model.Turtle.getX" alt="" coords="225,259,359,285"/>
+<area shape="rect" id="node10" href="$d6/d34/classmodel_1_1_turtle.html#a60ba63667ad6fe29a4570821539db8c8" title="model.Turtle.getY" alt="" coords="226,309,358,336"/>
+<area shape="rect" id="node3" href="$dd/de0/classui_1_1_pen.html#a61ab673a4336e7a1a8ba62a8c8f8f1d3" title="ui.Pen.draw" alt="" coords="482,5,577,32"/>
+<area shape="rect" id="node4" href="$d8/d1e/interfaceui_1_1artists_1_1_line_draw_helper.html#a51e28f4deb99580325465f22be1f91ed" title="ui.artists.LineDrawHelper.drawLine" alt="" coords="677,5,917,32"/>
+</map>

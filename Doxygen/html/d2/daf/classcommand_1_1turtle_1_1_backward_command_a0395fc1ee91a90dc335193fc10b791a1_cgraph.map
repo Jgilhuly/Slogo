@@ -1,0 +1,7 @@
+<map id="command.turtle.BackwardCommand.calculateValue" name="command.turtle.BackwardCommand.calculateValue">
+<area shape="rect" id="node2" href="$d6/d34/classmodel_1_1_turtle.html#a1c5d07962ede5fbfacc59413274d4300" title="model.Turtle.getHeading" alt="" coords="376,5,555,32"/>
+<area shape="rect" id="node3" href="$d6/d34/classmodel_1_1_turtle.html#a5c92e7274d592bbd3df40913004dfa71" title="model.Turtle.getX" alt="" coords="399,56,532,83"/>
+<area shape="rect" id="node4" href="$d6/d34/classmodel_1_1_turtle.html#a60ba63667ad6fe29a4570821539db8c8" title="model.Turtle.getY" alt="" coords="399,107,531,133"/>
+<area shape="rect" id="node5" href="$d6/d34/classmodel_1_1_turtle.html#a964ce9be930d2ad7c46f0700564bf73c" title="model.Turtle.setXY" alt="" coords="396,157,535,184"/>
+<area shape="rect" id="node6" href="$d6/d34/classmodel_1_1_turtle.html#ab69148692c7de79ad6c276902b81553a" title="model.Turtle.updateTurtle\lViewers" alt="" coords="374,209,557,250"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="errors.SLogoException" name="errors.SLogoException">
+<area shape="rect" id="node3" href="$d5/dc4/classerrors_1_1_command_not_found_exception.html" title="errors.CommandNotFoundException" alt="" coords="406,5,661,32"/>
+<area shape="rect" id="node4" href="$de/dce/classerrors_1_1_illegal_parameter_number_exception.html" title="errors.IllegalParameterNumber\lException" alt="" coords="424,57,643,98"/>
+<area shape="rect" id="node5" href="$d6/db6/classerrors_1_1_no_input_found_exception.html" title="errors.NoInputFoundException" alt="" coords="426,123,641,149"/>
+<area shape="rect" id="node6" href="$d6/d8a/classerrors_1_1_unmatched_bracket_exception.html" title="errors.UnmatchedBracketException" alt="" coords="408,173,659,200"/>
+</map>

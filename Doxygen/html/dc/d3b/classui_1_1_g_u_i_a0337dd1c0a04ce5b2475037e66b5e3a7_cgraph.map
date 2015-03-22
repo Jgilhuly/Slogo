@@ -1,0 +1,8 @@
+<map id="ui.GUI.makeTurtleView" name="ui.GUI.makeTurtleView">
+<area shape="rect" id="node2" href="$d5/d06/classui_1_1_scene_updater.html#a794d87263c7d233591c42f2bb7e16675" title="ui.SceneUpdater.createTurtle" alt="" coords="226,12,433,39"/>
+<area shape="rect" id="node5" href="$d8/d6d/classui_1_1elements_1_1_canvas_element.html#a2e31f129014b25b8f6e3e6d76f977f99" title="ui.elements.CanvasElement.get\lBaseNode" alt="" coords="216,63,443,105"/>
+<area shape="rect" id="node6" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#ac831e7ac05bb270f9b916f7471d0e9bb" title="ui.elements.InfoElement.get\lBaseNode" alt="" coords="228,129,431,170"/>
+<area shape="rect" id="node7" href="$d8/d6d/classui_1_1elements_1_1_canvas_element.html#a0bd90830736ace544582f1fe98dc929f" title="ui.elements.CanvasElement.get\lCanvas" alt="" coords="216,194,443,235"/>
+<area shape="rect" id="node3" href="$d9/df7/classcontroller_1_1_controller.html#a5ff29de29dce4cc460b69294c764adc8" title="controller.Controller.create\lTurtle" alt="" coords="491,5,682,46"/>
+<area shape="rect" id="node4" href="$d9/d88/classmodel_1_1_tree_interpreter.html#a3a8c43b61bf2582fe495cae3f27c2c06" title="model.TreeInterpreter.get\lTurtleList" alt="" coords="731,5,915,46"/>
+</map>

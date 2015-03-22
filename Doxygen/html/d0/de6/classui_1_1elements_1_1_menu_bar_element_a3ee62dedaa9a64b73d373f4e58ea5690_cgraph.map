@@ -1,0 +1,6 @@
+<map id="ui.elements.MenuBarElement.makeMenu" name="ui.elements.MenuBarElement.makeMenu">
+<area shape="rect" id="node2" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a2fe6c8936d469e50e26a806b8660fc8b" title="ui.elements.MenuBarElement.check\lLanguageMenuItems" alt="" coords="342,70,594,111"/>
+<area shape="rect" id="node3" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a585a6ace3538ab4eeef473ec6d46ad28" title="ui.elements.IOElement.get\lButton" alt="" coords="675,5,867,46"/>
+<area shape="rect" id="node4" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a3b1244fbac1fbbee1183143097b1e4ef" title="ui.elements.IOElement.get\lInputField" alt="" coords="675,70,867,111"/>
+<area shape="rect" id="node5" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#ac9ae1ea5775f95bb1a113b11e959f6c0" title="ui.elements.MenuBarElement.toggle\lMenuItems" alt="" coords="643,135,898,177"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="model.Turtle.getHeading" name="model.Turtle.getHeading">
+<area shape="rect" id="node2" href="$d9/d69/classcommand_1_1turtle_1_1_right_command.html#aaa862b47aa679520e6975a9f5a655438" title="command.turtle.RightCommand.calculate\lValue" alt="" coords="247,5,537,46"/>
+<area shape="rect" id="node3" href="$d1/d9f/classcommand_1_1turtle_1_1_heading_command.html#a5314c22a8348ff001a1d9affef7249ca" title="command.turtle.HeadingCommand.calculate\lValue" alt="" coords="237,70,547,111"/>
+<area shape="rect" id="node4" href="$da/d7e/classcommand_1_1turtle_1_1_forward_command.html#a443575ff67afc5873d2c1f78d89b7feb" title="command.turtle.ForwardCommand.calculate\lValue" alt="" coords="239,135,545,177"/>
+<area shape="rect" id="node5" href="$db/d9d/classcommand_1_1turtle_1_1_left_command.html#ac019428d4af8546f70d6c3aa6ffb36de" title="command.turtle.LeftCommand.calculate\lValue" alt="" coords="251,201,533,242"/>
+<area shape="rect" id="node6" href="$d2/daf/classcommand_1_1turtle_1_1_backward_command.html#a0395fc1ee91a90dc335193fc10b791a1" title="command.turtle.BackwardCommand.calculate\lValue" alt="" coords="233,266,551,307"/>
+<area shape="rect" id="node7" href="$d3/db6/classui_1_1_turtle_view.html#a08c1ab80fb36ee57f17dcdd42bcf9143" title="ui.TurtleView.update" alt="" coords="318,332,466,359"/>
+</map>

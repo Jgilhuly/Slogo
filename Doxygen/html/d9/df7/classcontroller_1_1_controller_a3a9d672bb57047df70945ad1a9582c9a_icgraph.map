@@ -1,0 +1,7 @@
+<map id="controller.Controller.createNewWorkspace" name="controller.Controller.createNewWorkspace">
+<area shape="rect" id="node2" href="$d5/d06/classui_1_1_scene_updater.html#a2858ad8edb0c0f59a21e2ae015f2fa1e" title="ui.SceneUpdater.createNew\lWorkspace" alt="" coords="245,5,445,46"/>
+<area shape="rect" id="node3" href="$dc/d3b/classui_1_1_g_u_i.html#a2edc294ba07311e6c4b85c9fe749d1bf" title="ui.GUI.createNewWorkspace" alt="" coords="493,12,693,39"/>
+<area shape="rect" id="node4" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a98c13995a31d997aa10f2950583da6cc" title="ui.elements.MenuBarElement.make\lMenuBar" alt="" coords="741,5,992,46"/>
+<area shape="rect" id="node5" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a7bdb58f78cf8b61ba28498c5c86ab682" title="ui.elements.MenuBarElement.init" alt="" coords="1040,12,1275,39"/>
+<area shape="rect" id="node6" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#ab4a4e6841c924a9d9c70b8073b56dffc" title="ui.elements.MenuBarElement.\lMenuBarElement" alt="" coords="1323,5,1538,46"/>
+</map>

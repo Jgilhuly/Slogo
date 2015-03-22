@@ -1,0 +1,5 @@
+<map id="command.control.MakeVariableCommand" name="command.control.MakeVariableCommand">
+<area shape="rect" id="node2" href="$d7/d35/classcommand_1_1_command.html" title="command.Command" alt="" coords="5,112,163,139"/>
+<area shape="rect" id="node3" href="$db/d55/classmodel_1_1_variable_list.html" title="model.VariableList" alt="" coords="188,112,327,139"/>
+<area shape="rect" id="node5" href="$dc/d9e/classparser_1_1_command_tree_node.html" title="parser.CommandTreeNode" alt="" coords="377,112,569,139"/>
+</map>

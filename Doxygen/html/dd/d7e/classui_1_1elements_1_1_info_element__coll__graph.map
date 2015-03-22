@@ -1,0 +1,21 @@
+<map id="ui.elements.InfoElement" name="ui.elements.InfoElement">
+<area shape="rect" id="node4" href="$dc/d3b/classui_1_1_g_u_i.html" title="ui.GUI" alt="" coords="897,400,957,427"/>
+<area shape="rect" id="node13" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html" title="ui.elements.IOElement" alt="" coords="427,165,594,192"/>
+<area shape="rect" id="node41" href="$df/d9f/classui_1_1elements_1_1_t_properties_element.html" title="ui.elements.TPropertiesElement" alt="" coords="1205,671,1432,697"/>
+<area shape="rect" id="node5" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html" title="ui.elements.MenuBarElement" alt="" coords="1213,188,1424,215"/>
+<area shape="rect" id="node20" href="$d5/d06/classui_1_1_scene_updater.html" title="ui.SceneUpdater" alt="" coords="1254,620,1383,647"/>
+<area shape="rect" id="node6" href="$d8/d6d/classui_1_1elements_1_1_canvas_element.html" title="ui.elements.CanvasElement" alt="" coords="410,483,611,509"/>
+<area shape="rect" id="node42" href="$d3/db6/classui_1_1_turtle_view.html" title="ui.TurtleView" alt="" coords="877,811,977,837"/>
+<area shape="rect" id="node10" href="$dd/de0/classui_1_1_pen.html" title="ui.Pen" alt="" coords="480,840,541,867"/>
+<area shape="rect" id="node11" href="$d8/d1e/interfaceui_1_1artists_1_1_line_draw_helper.html" title="ui.artists.LineDrawHelper" alt="" coords="13,905,195,932"/>
+<area shape="rect" id="node22" href="$d9/df7/classcontroller_1_1_controller.html" title="controller.Controller" alt="" coords="1613,1165,1760,1192"/>
+<area shape="rect" id="node23" href="$d9/d88/classmodel_1_1_tree_interpreter.html" title="model.TreeInterpreter" alt="" coords="1239,1113,1399,1140"/>
+<area shape="rect" id="node24" href="$db/d55/classmodel_1_1_variable_list.html" title="model.VariableList" alt="" coords="857,1063,996,1089"/>
+<area shape="rect" id="node27" href="$db/d10/classmodel_1_1_command_factory.html" title="model.CommandFactory" alt="" coords="837,1164,1016,1191"/>
+<area shape="rect" id="node29" href="$d0/d05/classparser_1_1_tree_generator.html" title="parser.TreeGenerator" alt="" coords="1240,1215,1397,1241"/>
+<area shape="rect" id="node30" href="$d9/dc0/interfaceparser_1_1_tree_wrapper.html" title="parser.TreeWrapper" alt="" coords="439,1269,583,1296"/>
+<area shape="rect" id="node31" href="$d5/d30/classparser_1_1_command_case.html" title="parser.CommandCase" alt="" coords="844,1391,1009,1417"/>
+<area shape="rect" id="node32" href="$d7/d32/interfaceparser_1_1_cases.html" title="parser.Cases" alt="" coords="458,1492,563,1519"/>
+<area shape="rect" id="node36" href="$dc/d9e/classparser_1_1_command_tree_node.html" title="parser.CommandTreeNode" alt="" coords="414,1441,607,1468"/>
+<area shape="rect" id="node39" href="$dd/df2/classmain_1_1_workspace_manager.html" title="main.WorkspaceManager" alt="" coords="1227,1265,1410,1292"/>
+</map>

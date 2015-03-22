@@ -1,0 +1,7 @@
+<map id="model.Turtle.setXY" name="model.Turtle.setXY">
+<area shape="rect" id="node2" href="$d9/d93/classcommand_1_1turtle_1_1_home_command.html#a7bfe956b631e13d950aa71b2c08f648f" title="command.turtle.HomeCommand.calculate\lValue" alt="" coords="204,5,500,46"/>
+<area shape="rect" id="node3" href="$dc/d3e/classcommand_1_1turtle_1_1_clear_screen_command.html#a5db1eed25b73b6ed1d8af858ae9dd541" title="command.turtle.ClearScreen\lCommand.calculateValue" alt="" coords="249,70,455,111"/>
+<area shape="rect" id="node4" href="$d4/d2f/classcommand_1_1turtle_1_1_set_position_command.html#a76724dcf27154b54e56b822e4cfa8ec6" title="command.turtle.SetPosition\lCommand.calculateValue" alt="" coords="251,135,453,177"/>
+<area shape="rect" id="node5" href="$da/d7e/classcommand_1_1turtle_1_1_forward_command.html#a443575ff67afc5873d2c1f78d89b7feb" title="command.turtle.ForwardCommand.calculate\lValue" alt="" coords="199,201,505,242"/>
+<area shape="rect" id="node6" href="$d2/daf/classcommand_1_1turtle_1_1_backward_command.html#a0395fc1ee91a90dc335193fc10b791a1" title="command.turtle.BackwardCommand.calculate\lValue" alt="" coords="193,266,511,307"/>
+</map>

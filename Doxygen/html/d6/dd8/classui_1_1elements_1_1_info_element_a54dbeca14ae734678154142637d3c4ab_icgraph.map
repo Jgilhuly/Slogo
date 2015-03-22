@@ -1,0 +1,24 @@
+<map id="ui.elements.InfoElement.update" name="ui.elements.InfoElement.update">
+<area shape="rect" id="node2" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#aa14d00daf19b5c3d7cd792c2590f23b3" title="ui.elements.InfoElement.set\lBindCommandList" alt="" coords="281,38,482,79"/>
+<area shape="rect" id="node23" href="$d6/dd8/classui_1_1elements_1_1_info_element.html#afb4dbecfadcfe6f073358912f354e289" title="ui.elements.InfoElement.set\lBindVariableList" alt="" coords="281,103,482,145"/>
+<area shape="rect" id="node3" href="$dc/d3b/classui_1_1_g_u_i.html#a3c16c78e8d953dbf8ef41113ca03621e" title="ui.GUI.addCommandHistory" alt="" coords="531,45,731,72"/>
+<area shape="rect" id="node4" href="$d5/d06/classui_1_1_scene_updater.html#ac93c2b014447efef3a09141521fb4d9e" title="ui.SceneUpdater.addCommand\lHistory" alt="" coords="779,38,1002,79"/>
+<area shape="rect" id="node5" href="$d9/df7/classcontroller_1_1_controller.html#a2dc441a48a86dce731d5bb2dd76b3381" title="controller.Controller.add\lCommandHistory" alt="" coords="1057,5,1231,46"/>
+<area shape="rect" id="node6" href="$d9/df7/classcontroller_1_1_controller.html#a3d81fb1a57114f96fb6c319f4c5df370" title="controller.Controller.parse\lCommand" alt="" coords="1051,70,1237,111"/>
+<area shape="rect" id="node7" href="$d5/d06/classui_1_1_scene_updater.html#ab77a04f8b0038429b09237aac18906e8" title="ui.SceneUpdater.sendCommands" alt="" coords="1285,77,1523,104"/>
+<area shape="rect" id="node8" href="$dc/d3b/classui_1_1_g_u_i.html#ad8f08a79a20a498bcaafdc7e2e2ce0a9" title="ui.GUI.parseCommand" alt="" coords="1571,77,1738,104"/>
+<area shape="rect" id="node9" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a139a046f0c771f86696f2eee04047c64" title="ui.elements.IOElement.init" alt="" coords="1809,52,1999,79"/>
+<area shape="rect" id="node11" href="$dc/d3b/classui_1_1_g_u_i.html#ab8ec2a37b3d5bd9e8c2abbb3642fb965" title="ui.GUI.setupKeyboardCommands" alt="" coords="1787,103,2021,129"/>
+<area shape="rect" id="node10" href="$d8/d3c/classui_1_1elements_1_1_i_o_element.html#a556e1a3ad292fe3ab731065eef59b187" title="ui.elements.IOElement.IOElement" alt="" coords="2069,52,2307,79"/>
+<area shape="rect" id="node12" href="$dc/d3b/classui_1_1_g_u_i.html#a765d554102f38969231261686f2f8e27" title="ui.GUI.initialize" alt="" coords="2131,103,2245,129"/>
+<area shape="rect" id="node13" href="$d5/d06/classui_1_1_scene_updater.html#aeef5dd7a8ec2ad6179e33fdd71ea90d6" title="ui.SceneUpdater.initGUI" alt="" coords="2355,103,2530,129"/>
+<area shape="rect" id="node14" href="$d9/df7/classcontroller_1_1_controller.html#a57e42ba83ee2145e6262cd72eac59570" title="controller.Controller.init" alt="" coords="2579,103,2749,129"/>
+<area shape="rect" id="node15" href="$dd/df2/classmain_1_1_workspace_manager.html#abc818b59211f6e14940b86a42bb868d0" title="main.WorkspaceManager.create\lWorkspace" alt="" coords="2797,95,3024,137"/>
+<area shape="rect" id="node16" href="$d9/df7/classcontroller_1_1_controller.html#a3a9d672bb57047df70945ad1a9582c9a" title="controller.Controller.create\lNewWorkspace" alt="" coords="3073,66,3263,107"/>
+<area shape="rect" id="node22" href="$d1/d0b/classmain_1_1_main.html#a9f1e5657b2f6f9bdd69a3b6412ceda74" title="main.Main.start" alt="" coords="3107,132,3229,159"/>
+<area shape="rect" id="node17" href="$d5/d06/classui_1_1_scene_updater.html#a2858ad8edb0c0f59a21e2ae015f2fa1e" title="ui.SceneUpdater.createNew\lWorkspace" alt="" coords="3312,66,3512,107"/>
+<area shape="rect" id="node18" href="$dc/d3b/classui_1_1_g_u_i.html#a2edc294ba07311e6c4b85c9fe749d1bf" title="ui.GUI.createNewWorkspace" alt="" coords="3560,73,3760,100"/>
+<area shape="rect" id="node19" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a98c13995a31d997aa10f2950583da6cc" title="ui.elements.MenuBarElement.make\lMenuBar" alt="" coords="3808,66,4059,107"/>
+<area shape="rect" id="node20" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#a7bdb58f78cf8b61ba28498c5c86ab682" title="ui.elements.MenuBarElement.init" alt="" coords="4107,73,4341,100"/>
+<area shape="rect" id="node21" href="$d0/de6/classui_1_1elements_1_1_menu_bar_element.html#ab4a4e6841c924a9d9c70b8073b56dffc" title="ui.elements.MenuBarElement.\lMenuBarElement" alt="" coords="4390,66,4605,107"/>
+</map>

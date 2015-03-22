@@ -1,0 +1,8 @@
+<map id="command.turtle.ClearScreenCommand.calculateValue" name="command.turtle.ClearScreenCommand.calculateValue">
+<area shape="rect" id="node2" href="$d6/d34/classmodel_1_1_turtle.html#a5c92e7274d592bbd3df40913004dfa71" title="model.Turtle.getX" alt="" coords="287,5,420,32"/>
+<area shape="rect" id="node3" href="$d6/d34/classmodel_1_1_turtle.html#a60ba63667ad6fe29a4570821539db8c8" title="model.Turtle.getY" alt="" coords="287,56,419,83"/>
+<area shape="rect" id="node4" href="$d6/d34/classmodel_1_1_turtle.html#a9a2279c364f9e9673b7d88df6314677b" title="model.Turtle.setClear" alt="" coords="275,107,432,133"/>
+<area shape="rect" id="node5" href="$d6/d34/classmodel_1_1_turtle.html#a2b2a79e69080a0bacbefea42068da2dd" title="model.Turtle.setHeading" alt="" coords="265,157,442,184"/>
+<area shape="rect" id="node6" href="$d6/d34/classmodel_1_1_turtle.html#a964ce9be930d2ad7c46f0700564bf73c" title="model.Turtle.setXY" alt="" coords="284,208,423,235"/>
+<area shape="rect" id="node7" href="$d6/d34/classmodel_1_1_turtle.html#ab69148692c7de79ad6c276902b81553a" title="model.Turtle.updateTurtle\lViewers" alt="" coords="262,259,445,301"/>
+</map>

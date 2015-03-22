@@ -1,0 +1,7 @@
+<map id="model.Turtle.setHeading" name="model.Turtle.setHeading">
+<area shape="rect" id="node2" href="$dc/d3e/classcommand_1_1turtle_1_1_clear_screen_command.html#a5db1eed25b73b6ed1d8af858ae9dd541" title="command.turtle.ClearScreen\lCommand.calculateValue" alt="" coords="274,5,481,46"/>
+<area shape="rect" id="node3" href="$d2/d35/classcommand_1_1turtle_1_1_set_heading_command.html#a12e31ecb910654ccf1080d9a79c903e5" title="command.turtle.SetHeading\lCommand.calculateValue" alt="" coords="275,70,479,111"/>
+<area shape="rect" id="node4" href="$d9/d69/classcommand_1_1turtle_1_1_right_command.html#aaa862b47aa679520e6975a9f5a655438" title="command.turtle.RightCommand.calculate\lValue" alt="" coords="233,135,522,177"/>
+<area shape="rect" id="node5" href="$dd/d2a/classcommand_1_1turtle_1_1_set_towards_command.html#a219218f331b9b73e0b65e3bc96964bd5" title="command.turtle.SetTowards\lCommand.calculateValue" alt="" coords="277,201,478,242"/>
+<area shape="rect" id="node6" href="$db/d9d/classcommand_1_1turtle_1_1_left_command.html#ac019428d4af8546f70d6c3aa6ffb36de" title="command.turtle.LeftCommand.calculate\lValue" alt="" coords="237,266,518,307"/>
+</map>
