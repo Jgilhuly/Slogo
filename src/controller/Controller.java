@@ -63,7 +63,6 @@ public class Controller {
 
     }
 
-
     public void addCommandHistory (String input) {
         sceneUpdater.addCommandHistory(input);
     }

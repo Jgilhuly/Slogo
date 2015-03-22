@@ -12,106 +12,130 @@ import util.PatternMapper;
 import errors.NoInputFoundException;
 import errors.UnmatchedBracketException;
 
-
+/**
+ * Generates the command tree with the first command as the root
+ * 
+ * @author Kei Yoshikoshi
+ *
+ */
 public class TreeGenerator implements TreeWrapper {
-    private Map<Pattern, Cases> handlerMap;
-    private List<String> myInput;
-    private int index;
-    private CommandCase CommandCase;
+	private Map<Pattern, Cases> handlerMap;
+	private List<String> myInput;
+	private int index;
+	private CommandCase CommandCase;
 
-    private int ListStartCount = 0;
-    private int ListEndCount = 0;
+	private int ListStartCount = 0;
+	private int ListEndCount = 0;
 
-    /**
-     * Create a CommandTreeNode that includes all the commands
-     *
-     * @param input
-     *        : List of strings taken from the parser
-     * @return: CommandTreeNode with commands
-     */
-    public CommandTreeNode createCommands (String input, String language) {
-        try {
-            myInput = Arrays.asList(input.split("\\s+"));
-            handlerMap = createHandlerMap();
-            index = 0;
-            CommandCase.initiate(language);
+	/**
+	 * Create a CommandTreeNode that includes all the commands
+	 *
+	 * @param input
+	 *            : List of strings taken from the parser
+	 * @return: CommandTreeNode with commands
+	 */
+	public CommandTreeNode createCommands(String input, String language) {
+		try {
+			myInput = Arrays.asList(input.split("\\s+"));
+			handlerMap = createHandlerMap();
+			index = 0;
+			CommandCase.initialize(language);
 
-            System.out.println("FINAL ROOT VALUE IS: "
-                               + CommandCase.getRoot().getName());
+			System.out.println("FINAL ROOT VALUE IS: "
+					+ CommandCase.getRoot().getName());
 
-            return CommandCase.getRoot();
-        }
-        catch (NullPointerException | IndexOutOfBoundsException e) {
-            // e.printStackTrace();
-            if (ListStartCount != ListEndCount) { throw new UnmatchedBracketException(); }
-            throw new NoInputFoundException();
-        }
-    }
+			return CommandCase.getRoot();
+		} catch (NullPointerException | IndexOutOfBoundsException e) {
+			// e.printStackTrace();
+			if (ListStartCount != ListEndCount) {
+				throw new UnmatchedBracketException();
+			}
+			throw new NoInputFoundException();
+		}
+	}
 
-    public void recurse (CommandTreeNode root) {
-        if (index >= myInput.size()) { return; }
-        for (Pattern pt : handlerMap.keySet()) {
-            if (pt.matcher(myInput.get(index)).matches()) {
-                Cases sc = handlerMap.get(pt);
-                sc.recurse(root);
-                break;
-            }
-        }
-    }
+	/**
+	 * recurse method that generates the tree
+	 * 
+	 * @param root
+	 */
+	public void recurse(CommandTreeNode root) {
+		if (index >= myInput.size()) {
+			return;
+		}
+		for (Pattern pt : handlerMap.keySet()) {
+			if (pt.matcher(myInput.get(index)).matches()) {
+				Cases sc = handlerMap.get(pt);
+				sc.recurse(root);
+				break;
+			}
+		}
+	}
 
-    public void printTestStatements (String value, String type, String name) {
-        System.out.println(value);
-        System.out.println("Type is: " + type);
-        System.out.println("Root value is: " + name);
-        System.out.println();
-    }
+	/**
+	 * A temporary method to print statements to visualize the tree.
+	 */
+	public void printTestStatements(String value, String type, String name) {
+		System.out.println(value);
+		System.out.println("Type is: " + type);
+		System.out.println("Root value is: " + name);
+		System.out.println();
+	}
 
-    private Map<Pattern, Cases> createHandlerMap () {
-        List<Entry<String, Pattern>> syntaxPatternList = PatternMapper.makePatterns("Syntax");
-        Map<Pattern, Cases> ret = new HashMap<>();
-        for (Entry<String, Pattern> p : syntaxPatternList) {
-            String category = p.getKey();
-            try {
+	/**
+	 * A method creates a map that maps regex patterns to a case class
+	 * 
+	 * @return
+	 */
+	private Map<Pattern, Cases> createHandlerMap() {
+		List<Entry<String, Pattern>> syntaxPatternList = PatternMapper
+				.makePatterns("Syntax");
+		Map<Pattern, Cases> ret = new HashMap<>();
+		for (Entry<String, Pattern> p : syntaxPatternList) {
+			String category = p.getKey();
+			try {
 
-                Class<?> myInstance = Class.forName("parser." + category + "Case");
-                Constructor<?> constructor =
-                        myInstance.getConstructor(new Class[] { TreeWrapper.class, List.class });
-                Cases myCases = (Cases) constructor.newInstance((TreeWrapper) this, myInput);
+				Class<?> myInstance = Class.forName("parser." + category
+						+ "Case");
+				Constructor<?> constructor = myInstance
+						.getConstructor(new Class[] { TreeWrapper.class,
+								List.class });
+				Cases myCases = (Cases) constructor.newInstance(
+						(TreeWrapper) this, myInput);
 
-                if (category.equals("Command")) {
-                    CommandCase = new CommandCase((TreeWrapper) this, myInput);
-                    ret.put(p.getValue(), CommandCase);
-                }
-                else ret.put(p.getValue(), myCases);
+				if (category.equals("Command")) {
+					CommandCase = new CommandCase((TreeWrapper) this, myInput);
+					ret.put(p.getValue(), CommandCase);
+				} else
+					ret.put(p.getValue(), myCases);
 
-            }
-            catch (NoSuchMethodException | SecurityException
-                    | IllegalArgumentException | ClassNotFoundException
-                    | IllegalAccessException | InstantiationException
-                    | InvocationTargetException e) {
+			} catch (NoSuchMethodException | SecurityException
+					| IllegalArgumentException | ClassNotFoundException
+					| IllegalAccessException | InstantiationException
+					| InvocationTargetException e) {
 
-            }
-        }
-        return ret;
-    }
+			}
+		}
+		return ret;
+	}
 
-    public List<String> getMethodsList () {
-        return CommandCase.getMethodsList();
-    }
+	public List<String> getMethodsList() {
+		return CommandCase.getMethodsList();
+	}
 
-    public void incrementIndex () {
-        index++;
-    }
+	public void incrementIndex() {
+		index++;
+	}
 
-    public int getIndex () {
-        return index;
-    }
+	public int getIndex() {
+		return index;
+	}
 
-    public void incrementListStartIndex () {
-        ListStartCount++;
-    }
+	public void incrementListStartIndex() {
+		ListStartCount++;
+	}
 
-    public void incrementListEndIndex () {
-        ListEndCount++;
-    }
+	public void incrementListEndIndex() {
+		ListEndCount++;
+	}
 }
