@@ -67,6 +67,12 @@ public class Controller {
 
     }
 
+
+    public void addCommandHistory (String input) {
+        myGUI.addCommandHistory(input);
+    }
+
+
     public Set<String> getPrevCommandList () {
         return previousCommands.keySet();
     }
