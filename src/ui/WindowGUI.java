@@ -1,6 +1,7 @@
 package ui;
 
 import java.util.*;
+import controller.Controller;
 import ui.elements.CanvasElement;
 import ui.elements.IOElement;
 import ui.elements.InfoElement;
@@ -17,17 +18,22 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class GUI {
+// THIS ENTIRE FILE IS A PART OF MY MASTERPIECE
+// GEORGIA TSE
+
+public class WindowGUI implements iGUI{
 
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
     public static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";
     private Color DEFAULT_BACKGROUND = Color.FUCHSIA;
+    private final int SCREEN_WIDTH = 1000;
+    private final int SCREEN_HEIGHT = 600;
 
     private ResourceBundle myResources; // for node text/names
     private Scene myScene;
     private Stage myStage;
     private BorderPane myRoot;
-    private SceneUpdater mySceneUpdater;
+    private Controller myController;
     private List<TurtleView> turtleViews;
     private Pen myPen;
 
@@ -42,20 +48,20 @@ public class GUI {
                                   "Italian", "Japanese", "Korean", "Portuguese", "Russian",
                                   "Spanish" };
 
-    // private List<String> variables;
-
-    public GUI (Stage stageIn, SceneUpdater sceneUpIn) {
+    public WindowGUI (Stage stageIn, Controller control) {
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE
                                                + "English");
         myStage = stageIn;
-        mySceneUpdater = sceneUpIn;
+        myController = control;
+
     }
 
     /**
      * Returns scene for this view so it can be added to stage.
      */
     public void initialize () {
-
+        myStage.setWidth(SCREEN_WIDTH);
+        myStage.setHeight(SCREEN_HEIGHT);
         myStage.setTitle(myResources.getString("Title"));
         myRoot = new BorderPane();
 
@@ -94,14 +100,14 @@ public class GUI {
      * @return
      */
     public TurtleView makeTurtleView (String imagePath) {
-        Image turtleImage = new Image(GUI.class.getResourceAsStream(imagePath));
+        Image turtleImage = new Image(iGUI.class.getResourceAsStream(imagePath));
 
         TurtleView newTurtle = new TurtleView(turtleImage, canvasPane.getCanvas(), canvasPane
                 .getCanvas().getWidth() / 2,
                                               canvasPane.getCanvas().getHeight() / 2,
                                               canvasPane.getBaseNode(), myPen);
 
-        mySceneUpdater.createTurtle(newTurtle);
+        myController.createTurtle(newTurtle);
         infoPane = new InfoElement(this);
         myRoot.setRight(infoPane.getBaseNode());
         return newTurtle;
@@ -124,8 +130,8 @@ public class GUI {
     public void parseCommand () {
         IOElement ioPaneCasted = (IOElement) ioPane;
         if (ioPaneCasted.getInputField().getText() != null)
-            mySceneUpdater.sendCommands(ioPaneCasted.getInputField().getText(),
-                                        menuPane.getSelectedLanguage());
+            myController.parseCommand(ioPaneCasted.getInputField().getText(),
+                                      menuPane.getSelectedLanguage());
         ioPaneCasted.getInputField().setText("");
     }
 
@@ -157,6 +163,6 @@ public class GUI {
     }
 
     public void createNewWorkspace () {
-        mySceneUpdater.createNewWorkspace();
+        myController.createNewWorkspace();
     }
 }

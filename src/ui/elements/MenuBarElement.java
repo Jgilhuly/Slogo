@@ -1,7 +1,7 @@
 package ui.elements;
 
 import java.util.ResourceBundle;
-import ui.GUI;
+import ui.iGUI;
 import ui.Pen;
 import util.HTMLHelpPage;
 import javafx.event.ActionEvent;
@@ -28,12 +28,12 @@ public class MenuBarElement {
     private Pen myPen;
     private String languages[];
     private String selectedLanguage;
-    private GUI myGui;
+    private iGUI myGui;
 
     public MenuBarElement (ResourceBundle resourcesIn,
                            CanvasElement canvasPaneIn, IOElement ioPaneIn,
                            Color backgroundColor, String[] languagesIn,
-                           String defaultLanguageIn, Pen penIn, GUI myGuiIn) {
+                           String defaultLanguageIn, Pen penIn, iGUI myGuiIn) {
         myResources = resourcesIn;
         canvasPane = canvasPaneIn;
         myPen = penIn;

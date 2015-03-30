@@ -9,16 +9,20 @@ import model.TreeInterpreter;
 import model.Turtle;
 import parser.CommandTreeNode;
 import parser.TreeGenerator;
-import ui.SceneUpdater;
+import ui.WindowGUI;
+import ui.iGUI;
 import ui.TurtleView;
 
+//THIS ENTIRE FILE IS A PART OF MY MASTERPIECE
+//GEORGIA TSE
 
 public class Controller {
-    private SceneUpdater sceneUpdater;
+
     private Map<String, CommandTreeNode> previousCommands;
     private TreeGenerator generator;
     private TreeInterpreter interpreter;
     private WorkspaceManager myManager;
+    private iGUI myGUI;
 
     public Controller (WorkspaceManager wm) {
         myManager = wm;
@@ -28,8 +32,8 @@ public class Controller {
     }
 
     public void init (Stage s) {
-        sceneUpdater = new SceneUpdater(s, this);
-        sceneUpdater.initGUI();
+        myGUI = new WindowGUI(s, this);
+        myGUI.initialize();
     }
 
     public void createTurtle (TurtleView view) {
@@ -49,8 +53,8 @@ public class Controller {
         CommandTreeNode node = generator.createCommands(input, language);
         generator.getMethodsList(); //TODO: USE TO GET USER GENERATED COMMANDS
         interpreter.interpretTree(node);
-        sceneUpdater.setOutputText(Double.toString(node.getValue()));
-        sceneUpdater.addCommandHistory(input);
+        myGUI.setOutputText(Double.toString(node.getValue()));
+        myGUI.addCommandHistory(input);
 
     }
 
@@ -63,13 +67,6 @@ public class Controller {
 
     }
 
-<<<<<<< HEAD
-=======
-    public void addCommandHistory (String input) {
-        sceneUpdater.addCommandHistory(input);
-    }
-
->>>>>>> 3f0af1a8228034be9ca15dd5cdc72985645647b2
     public Set<String> getPrevCommandList () {
         return previousCommands.keySet();
     }

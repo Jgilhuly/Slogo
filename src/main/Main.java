@@ -2,8 +2,11 @@ package main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+
 /**
  * Main class that is used to start the program; creates the first workspace
+ * 
  * @author OWNER
  *
  */

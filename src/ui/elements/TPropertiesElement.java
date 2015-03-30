@@ -14,9 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import ui.GUI;
 import ui.Pen;
 import ui.TurtleView;
+import ui.iGUI;
 import util.ButtonMaker;
 
 
@@ -27,10 +27,10 @@ public class TPropertiesElement {
     private TurtleView tView;
     private Pen myPen;
     private Stage myStage;
-    private GUI myGui;
+    private iGUI myGui;
 
     public TPropertiesElement (final ResourceBundle resourcesIn, TurtleView tViewIn,
-                               Pen penIn, Stage stageIn, GUI guiIn) {
+                               Pen penIn, Stage stageIn, iGUI guiIn) {
         tView = tViewIn;
         myResources = resourcesIn;
         myPen = penIn;
@@ -58,7 +58,7 @@ public class TPropertiesElement {
                               e -> selectAndChangeTurtleImage());
         Button createNewTurtleButton =
                 bm.makeButton(myResources.getString("CreateNewTurtle"),
-                              e -> myGui.makeTurtleView(GUI.DEFAULT_TURTLE_IMAGE_PATH));
+                              e -> myGui.makeTurtleView(iGUI.DEFAULT_TURTLE_IMAGE_PATH));
         turtleButtons.getChildren().addAll(turtleVisibleButton, chooseNewTurtleImageButton,
                                            createNewTurtleButton);
 

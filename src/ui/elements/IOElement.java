@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import ui.GUI;
+import ui.iGUI;
 import util.ButtonMaker;
 
 
@@ -18,12 +18,12 @@ public class IOElement {
     private Button confirmInput;
     private ResourceBundle myResources;
 
-    public IOElement (ResourceBundle resourceBundleIn, GUI myGui) {
+    public IOElement (ResourceBundle resourceBundleIn, iGUI myGui) {
         myResources = resourceBundleIn;
         init(myGui);
     }
 
-    private void init (GUI myGui) {
+    private void init (iGUI myGui) {
         ButtonMaker bm = new ButtonMaker();
         myNode = new VBox();
 

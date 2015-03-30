@@ -11,7 +11,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
-import ui.GUI;
+import ui.iGUI;
 import ui_table.PreviousCommands;
 import ui_table.TableElements;
 import ui_table.Variable;
@@ -26,9 +26,9 @@ public class InfoElement {
             .observableArrayList();
     private TableView<TableElements> prevCommandsTable;
     private TableView<TableElements> variablesTable;
-    private GUI myGUI;
+    private iGUI myGUI;
 
-    public InfoElement (GUI gui) {
+    public InfoElement (iGUI gui) {
         init();
         myGUI = gui;
     }
