@@ -2,8 +2,10 @@ package ui.elements;
 
 import java.io.File;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,14 +26,14 @@ public class TPropertiesElement {
 
     private VBox myBaseNode;
     private ResourceBundle myResources;
-    private TurtleView tView;
+    private ObservableList<TurtleView> tViews;
     private Pen myPen;
     private Stage myStage;
     private GUI myGui;
 
-    public TPropertiesElement (final ResourceBundle resourcesIn, TurtleView tViewIn,
+    public TPropertiesElement (final ResourceBundle resourcesIn, ObservableList<TurtleView> turtleViews,
                                Pen penIn, Stage stageIn, GUI guiIn) {
-        tView = tViewIn;
+        tViews = turtleViews;
         myResources = resourcesIn;
         myPen = penIn;
         myStage = stageIn;
@@ -51,11 +53,11 @@ public class TPropertiesElement {
         VBox turtleButtons = new VBox();
         ToggleButton turtleVisibleButton =
                 bm.makeToggleButton(myResources.getString("TurtleHideToggle"), null, null);
-        turtleVisibleButton.setOnAction(e -> tView.setTurtleVisible(turtleVisibleButton
+        turtleVisibleButton.setOnAction(e -> tViews.get(0).setTurtleVisible(turtleVisibleButton
                 .isSelected()));
         Button chooseNewTurtleImageButton =
                 bm.makeButton(myResources.getString("ChooseTurtleImage"),
-                              e -> selectAndChangeTurtleImage());
+                              e -> selectAndChangeTurtleImage(tViews.get(0)));
         Button createNewTurtleButton =
                 bm.makeButton(myResources.getString("CreateNewTurtle"),
                               e -> myGui.makeTurtleView(GUI.DEFAULT_TURTLE_IMAGE_PATH));
@@ -72,9 +74,13 @@ public class TPropertiesElement {
         ToggleButton dotted =
                 bm.makeToggleButton(myResources.getString("DottedLine"),
                                     e -> myPen.setLineStyle("dotted"), lineStyleGroup);
+        
+        Consumer<TurtleView> p = tView -> selectAndChangeTurtleImage(tView);
+        TurtleImageSelectorView popupView = new TurtleImageSelectorView(myResources, p);
+        Button showTurtleImages = bm.makeButton(myResources.getString("ShowTurtleImages"), e -> popupView.showWindow(tViews));
 
         myBaseNode.getChildren().addAll(penUpDown, turtleButtons, makeTurtleHeadingBox(), normal,
-                                        dashed, dotted);
+                                        dashed, dotted, showTurtleImages);
     }
 
     private HBox makeTurtleHeadingBox () {
@@ -84,7 +90,7 @@ public class TPropertiesElement {
                                              myResources.getString("TurtleHeadingLabel"));
 
         Label turtleHeadingValue = new Label("0.0");
-        tView.getHeading().addListener(new ChangeListener<Object>() {
+        tViews.get(0).getHeading().addListener(new ChangeListener<Object>() {
             public void changed (ObservableValue<?> o, Object oldVal,
                                  Object newVal) {
                 turtleHeadingValue.setText(newVal.toString());
@@ -100,7 +106,7 @@ public class TPropertiesElement {
      * Shows a filechooser to select a new turtle image, then changes to that
      * image
      */
-    private void selectAndChangeTurtleImage () {
+    private void selectAndChangeTurtleImage (TurtleView tView) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(myResources.getString("OpenResourceFile"));
         fileChooser.getExtensionFilters().add(
@@ -112,7 +118,6 @@ public class TPropertiesElement {
         }
         else {
             System.err.println("Error Loading Image File");
-            // TODO: MAKE SLOGO EXCEPTION POPUP
         }
     }
 

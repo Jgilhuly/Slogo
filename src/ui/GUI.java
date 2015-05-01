@@ -7,6 +7,7 @@ import ui.elements.InfoElement;
 import ui.elements.MenuBarElement;
 import ui.elements.TPropertiesElement;
 import ui_table.TableElements;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,7 +29,7 @@ public class GUI {
     private Stage myStage;
     private BorderPane myRoot;
     private FrontEndLiason mySceneUpdater;
-    private List<TurtleView> turtleViews;
+    private ObservableList<TurtleView> turtleViews;
     private Pen myPen;
 
     private IOElement ioPane;
@@ -70,11 +71,11 @@ public class GUI {
         myRoot.setRight(infoPane.getBaseNode());
 
         myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
-        turtleViews = new ArrayList<TurtleView>();
+        turtleViews = FXCollections.observableArrayList();
         turtleViews.add(makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH));
 
         propertiesPane =
-                new TPropertiesElement(myResources, turtleViews.get(0), myPen, myStage, this);
+                new TPropertiesElement(myResources, turtleViews, myPen, myStage, this);
         myRoot.setLeft(propertiesPane.getMyBaseNode());
 
         menuPane = new MenuBarElement(myResources, canvasPane, ioPane,
@@ -104,6 +105,7 @@ public class GUI {
         mySceneUpdater.createTurtle(newTurtle);
         infoPane = new InfoElement(this);
         myRoot.setRight(infoPane.getBaseNode());
+        turtleViews.add(newTurtle);
         return newTurtle;
     }
 
