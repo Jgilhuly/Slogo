@@ -13,8 +13,7 @@ import ui.WindowGUI;
 import ui.iGUI;
 import ui.TurtleView;
 
-//THIS ENTIRE FILE IS A PART OF MY MASTERPIECE
-//GEORGIA TSE
+
 
 public class Controller {
 

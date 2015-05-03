@@ -21,9 +21,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-// THIS ENTIRE FILE IS A PART OF MY MASTERPIECE
-// GEORGIA TSE
-
 public class WindowGUI implements iGUI{
 
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources.displayText/";
