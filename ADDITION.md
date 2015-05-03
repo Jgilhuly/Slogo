@@ -20,7 +20,9 @@ No - I had issues with setting the path for the ImageView as it kept giving me a
 ####Analysis: what do you feel this exercise reveals about your project's design and documentation?
  **Was it as good (or bad) as you remembered?**
 The overall layout was decently done but the documentation was close to non-existent. I was surprised at how quickly I was able to implement this new feature, aside from taking the time to go through and track the method calls. My partners and I had done some refactoring before we submitted the code, resulting in a cleaner design.
+
  **What could be improved?**
 There are a lot of element classes (classes with the name Element in them) without an interface. I believe that there are similarities among all these classes and the instantiations can be generalized using an interface. However, in regards to adding a new element, it was very easy to do as only one centralized class contained all of these elements. Another thing that could be improved is to comment the code so I can easily navigate, rather than having to use Eclipse's Reference tool.
+
  **What would it have been like if you were not familiar with the code at all?**
  It would have been hard to understand which methods were calling which class or which method, as the code was poorly commented. It was because of a rather clean structure and the familiarity of the code that I was able to navigate through relatively quickly. I understand that this task is to help us understand the importance of good design and documentation as even we forget our own code and must re-familiarize ourselves.
