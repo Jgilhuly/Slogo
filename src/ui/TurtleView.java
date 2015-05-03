@@ -21,9 +21,11 @@ public class TurtleView implements Observer {
     private StackPane myCanvasHolder;
     private boolean turtleIsVisible;
     private Pen myPen;
+    private int counter;
 
     public TurtleView (Image imageIn, Canvas canvasIn, double xIn, double yIn,
-                       StackPane canvasHolder, Pen penIn) {
+                       StackPane canvasHolder, Pen penIn, int count) {
+        counter = count;
         myImageView = new ImageView();
         myCanvas = canvasIn;
         myImageView.setImage(imageIn);
@@ -163,5 +165,9 @@ public class TurtleView implements Observer {
     public DoubleProperty getHeading () {
         return myHeading;
     }
-
+    
+    @Override
+    public String toString () {
+        return "Turtle " + counter;
+    }
 }

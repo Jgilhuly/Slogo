@@ -1,9 +1,11 @@
 package ui.elements;
 
 import java.io.File;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,14 +26,17 @@ public class TPropertiesElement {
 
     private VBox myBaseNode;
     private ResourceBundle myResources;
+    private ObservableList<TurtleView> tViewList;
     private TurtleView tView;
     private Pen myPen;
     private Stage myStage;
     private GUI myGui;
 
-    public TPropertiesElement (final ResourceBundle resourcesIn, TurtleView tViewIn,
+    public TPropertiesElement (final ResourceBundle resourcesIn, ObservableList<TurtleView> tViewInList,
                                Pen penIn, Stage stageIn, GUI guiIn) {
-        tView = tViewIn;
+        tViewList = tViewInList;
+        // only one turtle working
+        tView = tViewList.get(0);
         myResources = resourcesIn;
         myPen = penIn;
         myStage = stageIn;
@@ -59,8 +64,12 @@ public class TPropertiesElement {
         Button createNewTurtleButton =
                 bm.makeButton(myResources.getString("CreateNewTurtle"),
                               e -> myGui.makeTurtleView(GUI.DEFAULT_TURTLE_IMAGE_PATH));
+        // added code
+        Button showTurtleImagesButton =
+                bm.makeButton(myResources.getString("ShowTurtleImages"),
+                              e -> displayMultipleTurtleImages());
         turtleButtons.getChildren().addAll(turtleVisibleButton, chooseNewTurtleImageButton,
-                                           createNewTurtleButton);
+                                           createNewTurtleButton, showTurtleImagesButton);
 
         ToggleGroup lineStyleGroup = new ToggleGroup();
         ToggleButton normal =
@@ -75,6 +84,12 @@ public class TPropertiesElement {
 
         myBaseNode.getChildren().addAll(penUpDown, turtleButtons, makeTurtleHeadingBox(), normal,
                                         dashed, dotted);
+    }
+
+    // added code
+    private void displayMultipleTurtleImages () {
+        TurtleImageViewElement tviewelement = new TurtleImageViewElement(tViewList);
+        tviewelement.init();
     }
 
     private HBox makeTurtleHeadingBox () {

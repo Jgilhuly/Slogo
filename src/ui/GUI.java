@@ -7,6 +7,7 @@ import ui.elements.InfoElement;
 import ui.elements.MenuBarElement;
 import ui.elements.TPropertiesElement;
 import ui_table.TableElements;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -28,7 +29,7 @@ public class GUI {
     private Stage myStage;
     private BorderPane myRoot;
     private SceneUpdater mySceneUpdater;
-    private List<TurtleView> turtleViews;
+    private ObservableList<TurtleView> turtleViews;
     private Pen myPen;
 
     private IOElement ioPane;
@@ -36,6 +37,7 @@ public class GUI {
     private InfoElement infoPane;
     private MenuBarElement menuPane;
     private TPropertiesElement propertiesPane;
+    private int counter;
 
     private String DEFAULT_LANG = "English";
     private String[] languages = { "Chinese", "English", "French", "German",
@@ -70,11 +72,11 @@ public class GUI {
         myRoot.setRight(infoPane.getBaseNode());
 
         myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
-        turtleViews = new ArrayList<TurtleView>();
-        turtleViews.add(makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH));
+        turtleViews = FXCollections.observableArrayList();
+        makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH);
 
         propertiesPane =
-                new TPropertiesElement(myResources, turtleViews.get(0), myPen, myStage, this);
+                new TPropertiesElement(myResources, turtleViews, myPen, myStage, this);
         myRoot.setLeft(propertiesPane.getMyBaseNode());
 
         menuPane = new MenuBarElement(myResources, canvasPane, ioPane,
@@ -95,15 +97,16 @@ public class GUI {
      */
     public TurtleView makeTurtleView (String imagePath) {
         Image turtleImage = new Image(GUI.class.getResourceAsStream(imagePath));
-
+       
         TurtleView newTurtle = new TurtleView(turtleImage, canvasPane.getCanvas(), canvasPane
                 .getCanvas().getWidth() / 2,
                                               canvasPane.getCanvas().getHeight() / 2,
-                                              canvasPane.getBaseNode(), myPen);
+                                              canvasPane.getBaseNode(), myPen, counter++);
 
         mySceneUpdater.createTurtle(newTurtle);
         infoPane = new InfoElement(this);
         myRoot.setRight(infoPane.getBaseNode());
+        turtleViews.add(newTurtle);
         return newTurtle;
     }
 
