@@ -31,4 +31,5 @@ public class CanvasElement {
     public void setBackground (Background background) {
         canvasHolder.setBackground(background);
     }
+    
 }

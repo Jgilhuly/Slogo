@@ -12,7 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Pair;
 
 
-public class TurtleView implements Observer {
+public class TurtleView extends ImageView implements Observer {
     private ImageView myImageView;
     private Canvas myCanvas;
     private double canvasCenterX;
@@ -141,7 +141,7 @@ public class TurtleView implements Observer {
      * 
      * @param image
      */
-    public void setImage (Image image) {
+    public void applyImage (Image image) {
         myCanvasHolder.getChildren().remove(myImageView);
 
         double oldX = myImageView.getX();

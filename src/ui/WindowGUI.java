@@ -7,8 +7,11 @@ import ui.elements.IOElement;
 import ui.elements.InfoElement;
 import ui.elements.MenuBarElement;
 import ui.elements.TPropertiesElement;
+import ui.elements.TurtleViewsElement;
 import ui_table.TableElements;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -34,7 +37,7 @@ public class WindowGUI implements iGUI{
     private Stage myStage;
     private BorderPane myRoot;
     private Controller myController;
-    private List<TurtleView> turtleViews;
+    private ObservableList<Node> turtleViews;
     private Pen myPen;
 
     private IOElement ioPane;
@@ -42,7 +45,8 @@ public class WindowGUI implements iGUI{
     private InfoElement infoPane;
     private MenuBarElement menuPane;
     private TPropertiesElement propertiesPane;
-
+    private TurtleViewsElement turtlePane;
+    
     private String DEFAULT_LANG = "English";
     private String[] languages = { "Chinese", "English", "French", "German",
                                   "Italian", "Japanese", "Korean", "Portuguese", "Russian",
@@ -76,17 +80,18 @@ public class WindowGUI implements iGUI{
         myRoot.setRight(infoPane.getBaseNode());
 
         myPen = new Pen(canvasPane.getCanvas(), Color.BLUE, true);
-        turtleViews = new ArrayList<TurtleView>();
+        turtleViews = FXCollections.observableArrayList();
         turtleViews.add(makeTurtleView(DEFAULT_TURTLE_IMAGE_PATH));
 
         propertiesPane =
-                new TPropertiesElement(myResources, turtleViews.get(0), myPen, myStage, this);
+                new TPropertiesElement(myResources, ((List<Node>)turtleViews).get(0), myPen, myStage, this);
         myRoot.setLeft(propertiesPane.getMyBaseNode());
 
         menuPane = new MenuBarElement(myResources, canvasPane, ioPane,
                                       DEFAULT_BACKGROUND, languages, DEFAULT_LANG, myPen, this);
         myRoot.setTop(menuPane.getBaseNode());
-
+        turtlePane = new TurtleViewsElement(turtleViews);
+        turtlePane.initialize();
         myScene = new Scene(myRoot, myStage.getWidth(), myStage.getHeight());
         setupKeyboardCommands();
         myStage.setScene(myScene);

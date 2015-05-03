@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ui.Pen;
 import ui.TurtleView;
+import ui.WindowGUI;
 import ui.iGUI;
 import util.ButtonMaker;
 
@@ -37,6 +38,14 @@ public class TPropertiesElement {
         myStage = stageIn;
         myGui = guiIn;
         init();
+    }
+
+    public TPropertiesElement (ResourceBundle myResources2,
+                               Node node,
+                               Pen myPen2,
+                               Stage myStage2,
+                               WindowGUI guiIn) {
+        // TODO Auto-generated constructor stub
     }
 
     private void init () {

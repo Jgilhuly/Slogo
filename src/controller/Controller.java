@@ -57,7 +57,7 @@ public class Controller {
         myGUI.addCommandHistory(input);
 
     }
-
+    
 
 
     private void addCommandHistory (String name, CommandTreeNode prev) {

@@ -1,7 +1,5 @@
 package ui;
 
-//THIS ENTIRE FILE IS A PART OF MY MASTERPIECE
-//GEORGIA TSE
 
 public interface iGUI {
     public static final String DEFAULT_TURTLE_IMAGE_PATH = "/resources/images/turtleImage.png";

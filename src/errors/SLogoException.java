@@ -16,10 +16,10 @@ import javafx.stage.Stage;
  */
 public abstract class SLogoException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-	private static final int X_COOR = 300;
-	private static final int Y_COOR = 200;
-	private Stage popupStage;
 
+        private static final int X_COOR = 300;
+        private static final int Y_COOR = 200;
+        private Stage popupStage;
 	protected SLogoException(String format) {
 		super(String.format(format));
 		fillInStackTrace();
